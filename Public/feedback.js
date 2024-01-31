@@ -29,7 +29,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Do something with the received variable
 });
 
+function goToProfile() {
 
+    window.location.href = '/profilePage';
+}
 
 document.getElementById("feedbackButton").addEventListener("click", function() {
 
@@ -69,23 +72,31 @@ downloadButton.addEventListener('click', function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             //response from the backend here
             console.log('Response from backend: ' + xhr.responseText); //xhr.responsetext is the url
-            //download the file
-            const xhr2 = new XMLHttpRequest();
-            xhr2.responseType = 'blob';
-            xhr2.onload = (event) => { //test
-                const blob = xhr2.response;
-                //console.log(blob);
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob); //
-                a.download = eventName +" Presentation"; 
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            };
+            if (xhr.responseText) {
+                //download the file
+                const xhr2 = new XMLHttpRequest();
+                console.log("here1");
+                xhr2.responseType = 'blob';
+                xhr2.onload = (event) => { //test
+                    const blob = xhr2.response;
+                    console.log(blob);
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob); //
+                    a.download = eventName +" Presentation"; 
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                };
+                
+                xhr2.open('GET', xhr.responseText);
+                xhr2.send();
+            } else {
+                console.log("here 2");
+                alert("The Presenter has not uploaded any files to share.");
+            }
             
-            xhr2.open('GET', xhr.responseText);
-            xhr2.send();
         } else {
+            
             console.error();
 
         }
@@ -186,4 +197,9 @@ function displayChanges() {
 function displayThankYou() {
     document.getElementById("contact-section").style.display = "none";
     document.getElementById("thankYou-section").style.display = "block";
+}
+
+function goToProfile(){
+    
+  window.location.href = '/profilePage';
 }

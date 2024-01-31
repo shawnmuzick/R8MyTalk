@@ -4,7 +4,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { db, auth, createQR, getQRURL, addToAnswers, sendFeedbackToDB, sendContactInfoToDB,uploadSharedFiles,
-     spaceToHyphen, hyphenToSpace, readEventInfoFromDB, readContactInfoFromDb, getFileDownloadURL } from "./auth.js";
+     spaceToHyphen, hyphenToSpace, readEventInfoFromDB, readContactInfoFromDb, getFileDownloadURL, deleteEventFromStorage } from "./util.js";
 import session from "express-session"
 import cookieParser from "cookie-parser"
 import { doc, getFirestore, collection, addDoc, getDocs, setDoc, getDoc, deleteDoc, updateDoc } from "firebase/firestore"
@@ -166,7 +166,7 @@ app.post('/feedbackSelection', (req, res) => {
     //console.log("Uid: " + uid)
     //console.log("Event name being sent: " + eventName)
 
-    if (eventName !== 'Test-Survey') {
+    if (eventName !== 'Test-Survey' && answer.length > 4) {
         sendFeedbackToDB(question, answer, uid, eventName);
     }
 
@@ -179,8 +179,13 @@ app.post("/deleteEvent", isAuthenticated, async(req, res) => {
         const user = req.session.user;
         const eventName = req.body.eventName;
         console.log(eventName);
-
-        await deleteDoc(doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName)));
+        try {
+            await deleteDoc(doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName)));
+            await deleteEventFromStorage(spaceToHyphen(eventName), user.uid); //dont think working right
+        } catch (error) {
+            console.log("error deleting");
+        }
+        
 
     })
     //change custom question
@@ -343,6 +348,8 @@ app.get("/profilePage", async(req, res) => {
     }
 
 });
+
+//for getting chart data
 app.post("/getData", isAuthenticated, async(req, res) => {
     const user = req.session.user;
     const eventName = req.body.eventName;
@@ -365,7 +372,11 @@ app.get("/review/:eventName", isAuthenticated, async(req, res) => { //COMEBACK
         const dbEventInfo = await readEventInfoFromDB(user.uid, eventName)
             //console.log("Here be the object in INDEX: ")
             //console.log(dbEventInfo); //dont know why it prints out twice per 1 click
-        const noFeedback = Object.values(dbEventInfo.Inspiring).every(value => value === 0); //just check if one quality doesnt have any votes
+        //const noFeedback = Object.values(dbEventInfo.Inspiring).every(value => value === 0); //just check if one quality doesnt have any votes
+        var noFeedback = false;
+        if (dbEventInfo.CustomAnswer == undefined) {
+            noFeedback = true;
+        }
         const customQ = dbEventInfo.customQuestion;
         console.log("CUSTOM QUESTION: " + customQ);
         console.log(noFeedback);
@@ -408,7 +419,7 @@ app.post('/createEvent', async(req, res) => {
     try {
 
         const newDocRef = collection(db, "theFireUsers/", user.uid, "userEventList");
-        console.log(newDocRef);
+        //console.log(newDocRef);
 
 
         //what we went to put into the db 
@@ -462,16 +473,10 @@ app.post('/downloadFile', async(req, res) => {
     const {uid, eventName }= req.body;
     console.log(uid);
     console.log(eventName);
-    try {
-        const downloadURL = await getFileDownloadURL(uid, eventName);
-        //console.log(downloadURL);
-        res.send(downloadURL);
-    }
-    catch (error) {
-        console.log("Problem downloading File" +error);
-    }
     
-    
+    const downloadURL = await getFileDownloadURL(uid, eventName);
+    console.log("download URL: " + downloadURL);
+    res.send(downloadURL);
 
 })
 //make sure filename matches what is called in static code
@@ -481,11 +486,13 @@ app.post('/uploadFile', upload.single('uploadedFile'), isAuthenticated, async(re
     const fileToUpload = req.file; //using multer middleware stuff...
     console.log(eventName);
     console.log(fileToUpload);
-    //PROB NEED TO PUT IN TRY CATCH COMEBACK
+    //last sprint change, might not work idk
     try {
-        uploadSharedFiles(fileToUpload, user.uid, eventName);
+        await uploadSharedFiles(fileToUpload, user.uid, eventName);
+        res.status(200).send(" uploaded successfully?");
     }catch (error) {
         console.log("problem uploading file" + error);
+        res.status(500).send("Error uploading file");
     }
     
    

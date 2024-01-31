@@ -64,12 +64,18 @@
                                         <th>Role</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+
+                                <tbody class="fs-4">
                                     <% contacts.forEach(contact => { %>
                                         <% Object.entries(contact.eventData).forEach(([email, data]) => { %>
                                             <tr>
                                                 <td>
-                                                    <%= contact.eventName %>
+
+                                                    <a name="eventPage" class="eventLink" data-event-name="<%= contact.eventName.replace(/ /g, '-') %>" href="/review/<%= encodeURIComponent(contact.eventName.trim()).replace(/%20/g, '-') %>">
+                                                        <%= contact.eventName %>
+                                                    </a>
+
+
                                                 </td>
                                                 <td>
                                                     <%= email.replace(/_/g, '.') %>
@@ -116,7 +122,7 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/ajaxFunctions.js"></script>
+    <script src="assets/js/profilePageHandler.js"></script>
     <script src="assets/js/handleContacts.js"></script>
 
 

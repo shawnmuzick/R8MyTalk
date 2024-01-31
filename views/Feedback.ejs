@@ -73,16 +73,26 @@
         <div class="contactButton-container">
             <button type="button" class="button primary" onclick="contactBackEnd()">Submit</button>
         </div>
-        <br>
-        
-        <div class="contactButton-container2" id="moveHigher">
-            <button type="button" class="button primary" id="btnDownloadFile">Download Presentation Now!!!</button>
-        </div>
+
+
+
+
     </section>
 
     <section id="thankYou-section" style="display: none;">
-        <h3 id="thankYouMessage">Thank you for your feedback!</h3>
+        <h3 id="thankYouMessage" style="margin-bottom: 1em;">Thank you for your feedback!</h3>
+        <% if(eventName == "Test-Survey") { %>
+            <button class="button primary backToProfileButton" id="profileButton" onclick="goToProfile()">Go back to profile page</button>
+
+            <% }else{ %>
+                <div class="contactButton-container2" id="moveHigher">
+                    <button type="button" style="margin-top: 1em;" class="button primary" id="btnDownloadFile">Download Presentation Now!!!</button>
+                </div>
+                <% } %>
+
     </section>
+
+
 
     <!-- Scripts -->
     <script src="/assets/js/jquery.min.js"></script>

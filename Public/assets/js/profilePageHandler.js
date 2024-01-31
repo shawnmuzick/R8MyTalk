@@ -133,16 +133,16 @@ document.addEventListener('click', function(event) {
 document.addEventListener('change', function() {
     //want to send back the eventName
     const uploadedFile = document.getElementById('uploadedFile');
-    console.log(eventNameGlobal);
     const fileName = document.getElementById('uploadedFileName');
     const uploadButton = document.getElementById('btnSubmitFile');
     const fileData = new FormData();
     if (uploadedFile.files.length > 0) {
         // Display the filename
-        fileName.textContent = `Selected file: ${uploadedFile.files[0].name}`;
+        fileName.textContent = `Selected file:  ${uploadedFile.files[0].name}`;
         fileData.append('uploadedFile', uploadedFile.files[0]);
         fileData.append('eventName', eventNameGlobal);
     }
+   
     uploadButton.addEventListener('click', function() {
         //send to backend
         const xhr = new XMLHttpRequest();

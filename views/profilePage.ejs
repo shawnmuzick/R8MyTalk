@@ -141,21 +141,19 @@
 
                                     <div class="modal-body text-center">
                                         <p style="color: #272833;" class="display-6 mb-3">Edit the Unique Question</p>
-                                        <p style="color: #272833;" class="fs-5">Alter your unique question here</p>
+
                                     </div>
 
                                     <div class="form-group text-dark">
 
-                                        <label for="title" class="text-dark mb-0 fs-5 ">  <span class="badge bg-warning">1.</span> What is your new unique question?</label><br>
+                                        <label for="title" class="text-dark mb-0 fs-5 text-center ">  </span> What is your new unique question?</label><br>
                                         <input type="text" id="newCustomQ" name="newCustomQ" placeholder="New Unique Question" required class="text-dark border border-dark "><br><br>
 
-
-                                        <button type="submit" name ="submitCustomQ" class="btn btn-primary bg-warning border-warning">Submit</button>
-
-
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" name="submitCustomQ" class="btn btn-primary bg-warning border-warning " style="margin-right: 1em;">Submit</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                        
                                 </form>
 
                                 </div>
@@ -179,16 +177,22 @@
                                 <!--form class="text-primary" action="/uploadFile" method="POST" enctype="multipart/form-data"-->
                                 <form class="text-primary">
                                     <div class="modal-body text-center">
-                                        <p style="color: #272833;" class="display-6 mb-3">Upload a File to Share</p>
+                                        <p style="color: #272833;" class="display-6 mb-3 mt-4">Upload a File to Share</p>
                                     </div>
 
                                     <div class="form-group text-dark">
-                                        <input type="file" id="uploadedFile" name="uploadedFile">
+                                        <div class="d-flex justify-content-center">
+                                            <input type="file" id="uploadedFile" name="uploadedFile" class="align-items-center">
+                                        </div>
+                                        
                                         <div id="uploadedFileName"></div>
                                         <br>
                                         <br>
-                                        <button type="submit" name ="btnSubmitFile" id = "btnSubmitFile"class="btn btn-primary bg-warning border-warning">Submit</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" style="margin-right: 1em;"  name="btnSubmitFile" id="btnSubmitFile" class="btn btn-primary bg-warning border-warning">Submit</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                        
 
                                     </div>
                                 </form>
@@ -227,6 +231,7 @@
                                         <td>
                                             <a name="eventPage" class="eventLink" data-event-name="<%= eventArray[i].localEventName.replace(/ /g, '-') %>" href="/review/<%= encodeURIComponent(eventArray[i].localEventName.trim()).replace(/%20/g, '-') %>">
                                                 <%= eventArray[i].localEventName %>
+
                                             </a>
 
                                         </td>
@@ -260,12 +265,15 @@
                                         <td>
                                             <td id="dropdown-menu" class="text-center">
                                                 <!-- Dropdown with ellipsis link as the trigger -->
-                                                <div class="dropdown custom-dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" name="ellipsisDropdown" data-event-name="<%= eventArray[i].localEventName %>" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                                <div class="dropdown custom-dropdown text-center">
+                                                    <button class="btn btn-secondary dropdown-toggle text-center" type="button" name="ellipsisDropdown" data-event-name="<%= eventArray[i].localEventName %>" data-bs-toggle="dropdown" aria-expanded="false"></button>
                                                     <ul class="dropdown-menu" aria-labelledby="ellipsisDropdown">
                                                     
-                                                        <li><a class="dropdown-item" name="editCustomQuestion" data-bs-toggle="modal" data-bs-target="#editQuestionModel" data-bs-whatever="@getbootstrap" data-event-name="<%= eventArray[i].localEventName %>"
+                                                        <li><a class="dropdown-item" name="editCustomQuestion" data-bs-toggle="modal" data-bs-target="#editQuestionModel" data-bs-whatever="@getbootstrap"  data-question="<%= eventArray[i].localEventFields.customQuestion %>"  
+                                                            data-event-name="<%= eventArray[i].localEventName %>"
                                                                 href="#">Edit Custom Question</a></li>
+
+
                                                         <li><a class="dropdown-item" name="btnUploadFile" data-bs-toggle="modal" data-bs-target="#uploadFileModal" data-bs-whatever="@getbootstrap" data-event-name="<%= eventArray[i].localEventName %>"
                                                             href="#">Upload Files to Share</a></li>
                                                         <li><a class="dropdown-item" name="deleteEvent" data-event-name="<%= eventArray[i].localEventName %>" href="#/">Delete Event</a></li>
@@ -308,7 +316,7 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/ajaxFunctions.js"></script>
+    <script src="assets/js/profilePageHandler.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!--^^^ viewing qr and go to Survey button-->
     <script>

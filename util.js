@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, increment, updateDoc, doc, FieldValue, getDoc, arrayUnion, setDoc, getDocs } from "firebase/firestore"
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import qr from "qrcode"
 
@@ -78,25 +78,46 @@ export async function createQR(url, userFolder, fileName, eventName) {
 }
 
 export async function uploadSharedFiles(file, uid, eventName) { 
+    try {
+        const metadata = {
+            contentType: file.mimetype, 
+        };
+        const storageRef = ref(storage, uid + "/" +spaceToHyphen(eventName) +"/"+ file.fieldname); //COMEBACK //test
+        await uploadBytes(storageRef, file.buffer, metadata);
+        console.log("uploaded correctly?");
+    } catch (error) {
+        console.error("problem uploading", error);
+        throw error;
+    }
     
-    const metadata = {
-        contentType: file.mimetype, 
-    };
-    const storageRef = ref(storage, uid + "/" +spaceToHyphen(eventName) +"/"+ file.fieldname); //COMEBACK
-    uploadBytes(storageRef, file.buffer, metadata).then((snapshot) => {
-        console.log("uploaded?");
-    })
 
+}
+export async function deleteEventFromStorage(eventName, uid) {
+    
+    
+    try {
+        const fileRef = ref(storage,uid +"/" +eventName + "/" +  "uploadedFile" );
+        const qrRef = ref(storage,uid +"/" +eventName + "/" + eventName + ".png" );
+        
+        await deleteObject(qrRef);
+        await deleteObject(fileRef);
+    } catch(error) {
+        console.log(error);
+    }
+    
+    
 }
 
 export async function getFileDownloadURL(userFolder, eventName) {
     try {
         const storageRef = ref(storage, userFolder + "/" + eventName + "/uploadedFile");
         const url = await getDownloadURL(storageRef);
-        //console.log(url);
+        console.log(url);
         return url;
     } catch (error) {
-
+        
+        console.log(error);
+        return null;
     }
 }
 
@@ -132,7 +153,7 @@ export async function readEventInfoFromDB(uid, eventName) {
         const data = eventDoc.data();
         //dont need to reformat all data, fine to just return
         if (eventDoc.exists()) {
-            console.log(data); 
+            //console.log(data); 
             return data;
         } else {
             console.log("Document does not exist!");
@@ -176,7 +197,7 @@ export function addToAnswers(question, answer) { //not being used RIP
             surveyResponseStruct.qualitiesImprovedAns = answer;
             //on last question print out each item for testing
             Object.keys(surveyResponseStruct).forEach(key => {
-                console.log(key, " = ", surveyResponseStruct[key]);
+                //console.log(key, " = ", surveyResponseStruct[key]);
             })
             break;
 
@@ -380,9 +401,9 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
             //}
 
 
-            console.log("Before Increment: " + JSON.stringify(data[question], null, 2)); //this prints specific array
+            //console.log("Before Increment: " + JSON.stringify(data[question], null, 2)); //this prints specific array
             // console.log("Before Increment: " + JSON.stringify(data.question, null, 2));//this does not work
-            console.log("Type of Actionable: " + typeof data.Actionable);
+            //console.log("Type of Actionable: " + typeof data.Actionable);
 
 
 

@@ -43,14 +43,27 @@ import { DateTime } from "luxon";
 // use a default of 3000
 const PORT = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const upload = multer();
+const upload = multer({
+  //storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 1000000000, // 1000MB
+  },
+  rename: function (fieldname, filename) {
+    return filename.replace(/\W+/g, "-").toLowerCase() + Date.now();
+  },
+  onFileUploadStart: function (file) {
+    console.log(file.fieldname + " is starting ...");
+  },
+  onFileUploadData: function (file, data) {
+    console.log(data.length + " of " + file.fieldname + " arrived");
+  },
+  onFileUploadComplete: function (file) {
+    console.log(file.fieldname + " uploaded to  " + file.path);
+  },
+});
 const app = express();
 
 app.use(bodyParser.json());
-
-// DEPLOYMENT TEST
-//app.use(express.static(__dirname + "/Public"));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(cookieParser());
@@ -62,7 +75,6 @@ app.use(
     cookie: { maxAge: 120000 * 720 }, //120000 = 2 min
   })
 );
-
 /*
  * If the user is authenticated, proceed to the next middleware or route handler
  * If the user is not authenticated, redirect to the login page or any other page
@@ -441,22 +453,45 @@ app.post("/downloadFile", async (req, res) => {
   res.send(downloadURL);
 });
 
-//make sure filename matches what is called in static code
-app.post("/uploadFile", upload.single("uploadedFile"), isAuthenticated, async (req, res) => {
-  console.log("/uploadFile");
-  const user = req.session.user;
-  const eventName = req.body.eventName;
-  const fileToUpload = req.file; //using multer middleware stuff...
-  console.log(eventName);
-  console.log(fileToUpload);
+function logger(req, res, next) {
+  console.log("this is the logger");
+  next();
+}
+
+function handleUpload(req, res, next) {
   try {
-    await uploadSharedFiles(fileToUpload, user.uid, eventName);
-    res.status(200).send(" uploaded successfully?");
+    console.log("no errors");
+    next();
   } catch (error) {
-    console.log(`problem uploading file ${error}`);
-    res.status(500).send("Error uploading file");
+    console.log("multer error");
+    next();
   }
-});
+}
+
+//make sure filename matches what is called in static code
+app.post(
+  "/uploadFile",
+  //logger,
+  upload.single("uploadedFile"),
+  isAuthenticated,
+  async (req, res) => {
+    console.log("/uploadFile");
+    const user = req.session.user;
+    const eventName = req.body.eventName;
+    const fileToUpload = req.file; //using multer middleware stuff...
+    console.log(eventName);
+    console.log(fileToUpload);
+    try {
+      const result = await uploadSharedFiles(fileToUpload, user.uid, eventName);
+      console.log(result);
+      res.status(200);
+      res.send({ message: "Upload OK" });
+    } catch (error) {
+      console.log(`problem uploading file ${error}`);
+      res.status(500).send("Error uploading file");
+    }
+  }
+);
 
 app.get("/logout", async (req, res) => {
   console.log("/logout");

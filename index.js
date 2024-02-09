@@ -1,43 +1,43 @@
-import express from "express";
-import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import {
-  db,
-  auth,
-  createQR,
-  getQRURL,
-  addToAnswers,
-  sendFeedbackToDB,
-  sendContactInfoToDB,
-  uploadSharedFiles,
-  spaceToHyphen,
-  hyphenToSpace,
-  readEventInfoFromDB,
-  readContactInfoFromDb,
-  getFileDownloadURL,
-  deleteEventFromStorage,
-} from "./util.js";
-import session from "express-session";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import express from "express";
+import session from "express-session";
 import {
-  doc,
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  setDoc,
-  getDoc,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
-import {
-  updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import multer from "multer";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { DateTime } from "luxon";
+import multer from "multer";
+import {
+  addToAnswers,
+  auth,
+  createQR,
+  db,
+  deleteEventFromStorage,
+  getFileDownloadURL,
+  getQRURL,
+  hyphenToSpace,
+  readContactInfoFromDb,
+  readEventInfoFromDB,
+  sendContactInfoToDB,
+  sendFeedbackToDB,
+  spaceToHyphen,
+  uploadSharedFiles,
+} from "./util.js";
 
 // Use the enviormental port number and if there is none
 // use a default of 3000
@@ -48,16 +48,15 @@ const upload = multer({
   limits: {
     fileSize: 1000000000, // 1000MB
   },
-  rename: function (fieldname, filename) {
-    return filename.replace(/\W+/g, "-").toLowerCase() + Date.now();
-  },
-  onFileUploadStart: function (file) {
+  rename: (fieldname, filename) =>
+    filename.replace(/\W+/g, "-").toLowerCase() + Date.now(),
+  onFileUploadStart: (file) => {
     console.log(file.fieldname + " is starting ...");
   },
-  onFileUploadData: function (file, data) {
+  onFileUploadData: (file, data) => {
     console.log(data.length + " of " + file.fieldname + " arrived");
   },
-  onFileUploadComplete: function (file) {
+  onFileUploadComplete: (file) => {
     console.log(file.fieldname + " uploaded to  " + file.path);
   },
 });
@@ -73,7 +72,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 120000 * 720 }, //120000 = 2 min
-  })
+  }),
 );
 /*
  * If the user is authenticated, proceed to the next middleware or route handler
@@ -190,7 +189,15 @@ app.post("/deleteEvent", isAuthenticated, async (req, res) => {
   const eventName = req.body.eventName;
   console.log(eventName);
   try {
-    await deleteDoc(doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName)));
+    await deleteDoc(
+      doc(
+        db,
+        "theFireUsers",
+        user.uid,
+        "userEventList",
+        spaceToHyphen(eventName),
+      ),
+    );
     await deleteEventFromStorage(spaceToHyphen(eventName), user.uid); //dont think working right
   } catch (error) {
     console.log("error deleting");
@@ -203,7 +210,13 @@ app.post("/editCustomQ", async (req, res) => {
   const user = req.session.user;
   const customQ = req.body.customQuestion;
   const eventName = req.body.eventName;
-  const docRef = doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName));
+  const docRef = doc(
+    db,
+    "theFireUsers",
+    user.uid,
+    "userEventList",
+    spaceToHyphen(eventName),
+  );
 
   console.log(`custom in index: ${customQ}`);
   console.log(`Event Name in index: ${eventName}`);
@@ -237,7 +250,11 @@ app.post("/register", async (req, res) => {
   const userName = req.body.userName;
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, userEmail, userPassword);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword,
+    );
     const user = userCredential.user;
     await updateProfile(user, { displayName: userName });
     req.session.user = user;
@@ -274,7 +291,11 @@ app.post("/login", async (req, res) => {
   const userPassword = req.body.password;
 
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword,
+    );
     // Signed in
     const user = userCredential.user;
     req.session.user = user;
@@ -397,7 +418,12 @@ app.post("/createEvent", async (req, res) => {
   const talkType = req.body.talkType;
 
   try {
-    const newDocRef = collection(db, "theFireUsers/", user.uid, "userEventList");
+    const newDocRef = collection(
+      db,
+      "theFireUsers/",
+      user.uid,
+      "userEventList",
+    );
     console.log(newDocRef);
 
     //what we went to put into the db
@@ -490,7 +516,7 @@ app.post(
       console.log(`problem uploading file ${error}`);
       res.status(500).send("Error uploading file");
     }
-  }
+  },
 );
 
 app.get("/logout", async (req, res) => {

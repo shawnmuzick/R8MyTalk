@@ -1,11 +1,11 @@
 //want to send back the eventName
-let uploadedFile = document.getElementById("uploadedFile");
-let fileName = document.getElementById("uploadedFileName");
-let uploadButton = document.getElementById("btnSubmitFile");
-let fileData = new FormData();
+const uploadedFile = document.getElementById("uploadedFile");
+const fileName = document.getElementById("uploadedFileName");
+const uploadButton = document.getElementById("btnSubmitFile");
+const fileData = new FormData();
 var eventNameGlobal; // we need to grab event name
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", (event) => {
   if (event.target.name === "ellipsisDropdown") {
     eventNameGlobal = event.target.getAttribute("data-event-name");
     console.log("Global Event Name:" + eventNameGlobal);
@@ -29,7 +29,7 @@ document.addEventListener("click", function (event) {
     xhr.send(JSON.stringify(data));
 
     // Handle the response from the backend if needed
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         //response from the backend here
         console.log("Response from backend: " + xhr.responseText); //xhr.responsetext is the url
@@ -108,7 +108,7 @@ document.addEventListener("click", function (event) {
     xhr.send(JSON.stringify(data));
 
     //response from the backend if needed
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         console.log("Response from backend: " + xhr.responseURL);
         window.location.href = xhr.responseURL;
@@ -118,7 +118,7 @@ document.addEventListener("click", function (event) {
 });
 
 //clicked an event
-document.addEventListener("click", function (event) {
+document.addEventListener("click", (event) => {
   if (event.target.name === "eventPage") {
     //redirect to the page with the correct name
     const eventName = event.target.getAttribute("data-event-name");
@@ -128,7 +128,7 @@ document.addEventListener("click", function (event) {
 });
 
 //uploading File
-document.addEventListener("change", function () {
+document.addEventListener("change", () => {
   if (uploadedFile.files.length > 0) {
     // Display the filename
     fileName.textContent = `Selected file:  ${uploadedFile.files[0].name}`;

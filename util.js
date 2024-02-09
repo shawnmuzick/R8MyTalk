@@ -1,20 +1,30 @@
 import dotenv from "dotenv";
 import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  increment,
-  updateDoc,
-  doc,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import {
   FieldValue,
-  getDoc,
+  addDoc,
   arrayUnion,
-  setDoc,
+  collection,
+  doc,
+  getDoc,
   getDocs,
+  getFirestore,
+  increment,
+  setDoc,
+  updateDoc,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import qr from "qrcode";
 
 dotenv.config();
@@ -36,7 +46,13 @@ export const auth = getAuth(fbapp);
 const storage = getStorage(fbapp);
 
 export function registerUser(email, password, successCallback, errorCallback) {
-  createUserWithEmailAndPassword(auth, email, password, successCallback, errorCallback)
+  createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+    successCallback,
+    errorCallback,
+  )
     .then((userCredential) => {
       const user = userCredential.user;
       successCallback(user);
@@ -66,10 +82,16 @@ export async function createQR(url, userFolder, fileName, eventName) {
   try {
     // Generate the QR code
     const qrCodeData = await qr.toDataURL(url);
-    const qrCodeBuffer = Buffer.from(qrCodeData.replace(/^data:image\/png;base64,/, ""), "base64");
+    const qrCodeBuffer = Buffer.from(
+      qrCodeData.replace(/^data:image\/png;base64,/, ""),
+      "base64",
+    );
     //console.log(qrCodeData);
 
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/" + fileName);
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/" + fileName,
+    );
 
     const metadata = {
       contentType: "image/png",
@@ -90,7 +112,10 @@ export async function uploadSharedFiles(file, uid, eventName) {
     const metadata = {
       contentType: file.mimetype,
     };
-    const storageRef = ref(storage, uid + "/" + spaceToHyphen(eventName) + "/" + file.fieldname); //COMEBACK //test
+    const storageRef = ref(
+      storage,
+      uid + "/" + spaceToHyphen(eventName) + "/" + file.fieldname,
+    ); //COMEBACK //test
     const result = await uploadBytes(storageRef, file.buffer, metadata);
     return result;
   } catch (error) {
@@ -101,7 +126,10 @@ export async function uploadSharedFiles(file, uid, eventName) {
 export async function deleteEventFromStorage(eventName, uid) {
   try {
     const fileRef = ref(storage, uid + "/" + eventName + "/" + "uploadedFile");
-    const qrRef = ref(storage, uid + "/" + eventName + "/" + eventName + ".png");
+    const qrRef = ref(
+      storage,
+      uid + "/" + eventName + "/" + eventName + ".png",
+    );
 
     await deleteObject(qrRef);
     await deleteObject(fileRef);
@@ -112,7 +140,10 @@ export async function deleteEventFromStorage(eventName, uid) {
 
 export async function getFileDownloadURL(userFolder, eventName) {
   try {
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/uploadedFile");
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/uploadedFile",
+    );
     const url = await getDownloadURL(storageRef);
     console.log(url);
     return url;
@@ -125,7 +156,10 @@ export async function getFileDownloadURL(userFolder, eventName) {
 export async function getQRURL(userFolder, eventName) {
   try {
     eventName = spaceToHyphen(eventName);
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/" + eventName + ".png"); //COMEBACK
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/" + eventName + ".png",
+    ); //COMEBACK
     const url = await getDownloadURL(storageRef);
     console.log(url);
     return url;
@@ -230,7 +264,9 @@ export async function readContactInfoFromDb(uid) {
             console.log("ALL Data: ", aContactData);
 
             const emailFields = Object.entries(aContactData)
-              .filter(([key, value]) => typeof key === "string" && key.includes("@"))
+              .filter(
+                ([key, value]) => typeof key === "string" && key.includes("@"),
+              )
               .reduce((acc, [key, value]) => {
                 acc[key] = value;
                 return acc;
@@ -250,7 +286,7 @@ export async function readContactInfoFromDb(uid) {
           } else {
             console.log(`No data found for event: ${theEventName}`);
           }
-        })
+        }),
       );
     } catch (error) {
       console.error("ERROR on sub-reference: ", error);
@@ -263,7 +299,14 @@ export async function readContactInfoFromDb(uid) {
   return contactsArray;
 }
 
-export async function sendContactInfoToDB(fullName, phoneNumber, email, role, uid, eventName) {
+export async function sendContactInfoToDB(
+  fullName,
+  phoneNumber,
+  email,
+  role,
+  uid,
+  eventName,
+) {
   /*console.log("first name: " + firstName);
     console.log("last name: " + lastName);
 
@@ -385,7 +428,9 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
             RATHER AN OBJECT!!!!!
             WILL ONLY WORK HARD CODED, data.question does not work
             */
-      const originalArray = Object.keys(data[question]).map((key) => data[question][key]); //grab array from firestore
+      const originalArray = Object.keys(data[question]).map(
+        (key) => data[question][key],
+      ); //grab array from firestore
       console.log("OG Array: " + originalArray);
 
       try {

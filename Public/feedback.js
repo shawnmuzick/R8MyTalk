@@ -13,7 +13,7 @@ document.getElementById("eventName").textContent = eventName.replace(/-/g, " ");
 //here is my custom question
 const questions = [customQuestion, defaultQuestion];
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   // Access the variableToSend from the data attribute
   customQuestion = questionElement.dataset.variable;
   console.log("Variable received in Feedback.js:", customQuestion);
@@ -24,7 +24,7 @@ function goToProfile() {
   window.location.href = "/profilePage";
 }
 
-document.getElementById("feedbackButton").addEventListener("click", function () {
+document.getElementById("feedbackButton").addEventListener("click", () => {
   if (currentQuestionIndex < questions.length) {
     //const question =  document.getElementById("questionElement")
     const question = questions[currentQuestionIndex]; // Save current question
@@ -45,7 +45,7 @@ document.getElementById("feedbackButton").addEventListener("click", function () 
 });
 
 //this appears to be the download button event listener
-document.getElementById("btnDownloadFile").addEventListener("click", function () {
+document.getElementById("btnDownloadFile").addEventListener("click", () => {
   console.log("download presentation button event");
   //get the download URL from backend for the user
   const xhr = new XMLHttpRequest();
@@ -56,7 +56,7 @@ document.getElementById("btnDownloadFile").addEventListener("click", function ()
     eventName: urlParts.eventName,
   });
   xhr.send(data);
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       //response from the backend here
       console.log("Response from backend: " + xhr.responseText); //xhr.responsetext is the url

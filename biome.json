@@ -12,6 +12,11 @@
   "formatter": {
     "indentWidth": 2,
     "indentStyle": "space",
-    "lineWidth": 80
+    "lineWidth": 80,
+    "ignore": [
+      "./Public/assets/js/*.min.*",
+      "./Public/assets/js/main.js",
+      "./Public/assets/js/util.js"
+    ]
   }
 }

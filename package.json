@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-start": "nodemon index.js"
+    "dev-start": "nodemon index.js",
+    "dev-format": "npx @biomejs/biome format ./ --write",
+    "dev-lint": "npx @biomejs/biome check --apply ./ && npx @biomejs/biome lint ./",
+    "dev-build": "npm run dev-format && npm run dev-lint"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +33,7 @@
     "qrcode": "^1.5.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
     "nodemon": "^3.0.3"
   }
 }

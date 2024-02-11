@@ -7,7 +7,12 @@
     "enabled": true,
     "rules": {
       "recommended": true
-    }
+    },
+    "ignore": [
+      "./Public/assets/js/*.min.*",
+      "./Public/assets/js/main.js",
+      "./Public/assets/js/util.js"
+    ]
   },
   "formatter": {
     "indentWidth": 2,

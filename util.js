@@ -72,12 +72,15 @@ export function loginUser(email, password, successCallback, errorCallback) {
       errorCallback(error);
     });
 }
+
 export function spaceToHyphen(string) {
   return string.replace(/ /g, "-");
 }
+
 export function hyphenToSpace(string) {
-  return string.replace(/-/g, " ");
+  return string ? string.replace(/-/g, " ") : "";
 }
+
 export async function createQR(url, userFolder, fileName, eventName) {
   try {
     // Generate the QR code
@@ -86,8 +89,6 @@ export async function createQR(url, userFolder, fileName, eventName) {
       qrCodeData.replace(/^data:image\/png;base64,/, ""),
       "base64",
     );
-    //console.log(qrCodeData);
-
     const storageRef = ref(
       storage,
       userFolder + "/" + eventName + "/" + fileName,
@@ -100,14 +101,12 @@ export async function createQR(url, userFolder, fileName, eventName) {
     uploadBytes(storageRef, qrCodeBuffer, metadata).then((snapshot) => {
       console.log("Uploaded a blob or file!");
     });
-    console.log(`QR code for ${url} stored as ${fileName}`);
   } catch (error) {
     console.error("Error generating and storing QR code:", error);
   }
 }
 
 export async function uploadSharedFiles(file, uid, eventName) {
-  console.log("Upload file handler", file.mimetype, file);
   try {
     const metadata = {
       contentType: file.mimetype,
@@ -130,7 +129,6 @@ export async function deleteEventFromStorage(eventName, uid) {
       storage,
       uid + "/" + eventName + "/" + eventName + ".png",
     );
-
     await deleteObject(qrRef);
     await deleteObject(fileRef);
   } catch (error) {
@@ -145,7 +143,6 @@ export async function getFileDownloadURL(userFolder, eventName) {
       userFolder + "/" + eventName + "/uploadedFile",
     );
     const url = await getDownloadURL(storageRef);
-    console.log(url);
     return url;
   } catch (error) {
     console.log(error);
@@ -159,7 +156,7 @@ export async function getQRURL(userFolder, eventName) {
     const storageRef = ref(
       storage,
       userFolder + "/" + eventName + "/" + eventName + ".png",
-    ); //COMEBACK
+    );
     const url = await getDownloadURL(storageRef);
     console.log(url);
     return url;
@@ -176,14 +173,13 @@ const surveyResponseStruct = {
   areasEnjoyedAns: "",
   qualitiesImprovedAns: "",
 };
+
 export async function readEventInfoFromDB(uid, eventName) {
   try {
     const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
     const eventDoc = await getDoc(eventRef);
     const data = eventDoc.data();
-    //dont need to reformat all data, fine to just return
     if (eventDoc.exists()) {
-      //console.log(data);
       return data;
     } else {
       console.log("Document does not exist!");
@@ -192,110 +188,72 @@ export async function readEventInfoFromDB(uid, eventName) {
     console.error("Error getting document:", error);
   }
 }
+
 export function addToAnswers(question, answer) {
   //not being used RIP
 
-  //console.log("THE QUESTION: " + question); //left here for testing
   switch (question) {
     case "Actionable":
       surveyResponseStruct.actionableAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "Engaging":
       surveyResponseStruct.engagingAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "Interactive":
       surveyResponseStruct.interactiveAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "Inspiring":
       surveyResponseStruct.inspiringAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "Relevant":
       surveyResponseStruct.relevantAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "What areas of presentation did you enjoy?":
       surveyResponseStruct.areasEnjoyedAns = answer;
-      //console.log("THE ANSWER: " + answer); //testing
       break;
     case "What qualities of the presentation do you think could be improved?":
       surveyResponseStruct.qualitiesImprovedAns = answer;
-      //on last question print out each item for testing
-      Object.keys(surveyResponseStruct).forEach((key) => {
-        //console.log(key, " = ", surveyResponseStruct[key]);
-      });
       break;
-
     default:
       console.log("SOMETHING WENT WRONG");
   }
 }
 
 export async function readContactInfoFromDb(uid) {
-  console.log("UID coming in: " + uid);
-  // ,ake an array to send back
+  // we're going to add the event Name & any contact info from each event
   const contactsArray = [];
-
   try {
     const userRef = doc(db, "theFireUsers", uid);
-    const userDoc = await getDoc(userRef);
-    const userData = userDoc.data();
+    const userEventListRef = collection(userRef, "userEventList");
+    const userEventListDocs = await getDocs(userEventListRef);
 
-    // we're going to add the event Name & any contact info from each event
-    try {
-      const userEventListRef = collection(userRef, "userEventList");
-      const userEventListDocs = await getDocs(userEventListRef);
+    // Use Promise.all to wait for all async operations to complete
+    await Promise.all(
+      userEventListDocs.docs.map(async (eventDoc) => {
+        // right now eventDoc.id is the event name
+        const theEventName = eventDoc.id;
+        const aContactRef = doc(userEventListRef, theEventName);
+        const aContactDoc = await getDoc(aContactRef);
 
-      // Use Promise.all to wait for all async operations to complete
-      await Promise.all(
-        userEventListDocs.docs.map(async (eventDoc) => {
-          // right now eventDoc.id is the event name
-          console.log("Event Name: ", eventDoc.id);
-          const theEventName = eventDoc.id;
-
-          const aContactRef = doc(userEventListRef, theEventName);
-          const aContactDoc = await getDoc(aContactRef);
-
-          if (aContactDoc.exists()) {
-            const aContactData = aContactDoc.data();
-            console.log("ALL Data: ", aContactData);
-
-            const emailFields = Object.entries(aContactData)
-              .filter(
-                ([key, value]) => typeof key === "string" && key.includes("@"),
-              )
-              .reduce((acc, [key, value]) => {
-                acc[key] = value;
-                return acc;
-              }, {});
-
-            const filteredContact = {
-              eventName: theEventName,
-              eventData: emailFields,
-            };
-
-            //console.log("Testing initial object: ", filteredContact.eventName);
-
-            // Log only email-like fields in filteredContact.eventData
-            //console.log("Filtered Contact Data:", filteredContact.eventData);
-
-            contactsArray.push(filteredContact);
-          } else {
-            console.log(`No data found for event: ${theEventName}`);
-          }
-        }),
-      );
-    } catch (error) {
-      console.error("ERROR on sub-reference: ", error);
-    }
+        if (aContactDoc.exists()) {
+          const emailFields = Object.entries(aContactDoc.data())
+            .filter(
+              ([key, value]) => typeof key === "string" && key.includes("@"),
+            )
+            .reduce((acc, [key, value]) => {
+              acc[key] = value;
+              return acc;
+            }, {});
+          contactsArray.push({
+            eventName: theEventName,
+            eventData: emailFields,
+          });
+        }
+      }),
+    );
   } catch (error) {
-    console.error("Error getting user document:", error);
+    console.error("ERROR on sub-reference: ", error);
   }
-
-  console.log("END function");
   return contactsArray;
 }
 
@@ -307,14 +265,6 @@ export async function sendContactInfoToDB(
   uid,
   eventName,
 ) {
-  /*console.log("first name: " + firstName);
-    console.log("last name: " + lastName);
-
-    console.log("email: " + email);
-    console.log("role: " + role);
-    console.log("uid: " + uid);
-    console.log("eventName: " + eventName);*/
-
   try {
     const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
     const eventDoc = await getDoc(eventRef);
@@ -332,23 +282,13 @@ export async function sendContactInfoToDB(
 }
 
 export async function sendFeedbackToDB(question, answer, uid, eventName) {
-  console.log("THE QUESTION IN AUTH:  " + question);
-  console.log("THE ANSWER IN AUTH:  " + answer);
-
   //if written feedback question
   if (question == "How would you describe this event to a friend?") {
     //change question to the name of appropiate array in Firestore
     question = "Testimonial";
-
-    console.log("The eventName: " + eventName);
-    console.log("The question: " + question);
-    console.log("The answer: " + answer);
-
     const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
     // Retrieve the document
     const eventDoc = await getDoc(eventRef);
-
-    const data = eventDoc.data();
     try {
       if (eventDoc.exists) {
         //console.log("Before Addition: " + JSON.stringify(data[question], null, 2)); //this prints specific array
@@ -400,11 +340,6 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
         console.log("SOMETHING BAD");
         return; // Exit the function if the answer is not recognized
     }
-    //ALL FOR TESTING
-    console.log("The eventName: " + eventName);
-    console.log("The index: " + index);
-    console.log("The question: " + question);
-    console.log("The answer: " + answer);
 
     const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
 
@@ -413,17 +348,7 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
     //why
 
     if (eventDoc.exists()) {
-      //console.log("Before Increment: " + JSON.stringify(data.question, null, 2));
-      //console.log("EVENT DOC EXISTS");
       const data = eventDoc.data();
-      // if (!data[question]) { //MAYBE NEEDED for second question, third question...
-      //  data[question] = { question }; //make sure quesiton is properly defined
-      //}
-
-      //console.log("Before Increment: " + JSON.stringify(data[question], null, 2)); //this prints specific array
-      // console.log("Before Increment: " + JSON.stringify(data.question, null, 2));//this does not work
-      //console.log("Type of Actionable: " + typeof data.Actionable);
-
       /**   FIRESTORE DOES NOT TREAT THE ARRAY AS AN ARRAY
             RATHER AN OBJECT!!!!!
             WILL ONLY WORK HARD CODED, data.question does not work
@@ -431,8 +356,6 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
       const originalArray = Object.keys(data[question]).map(
         (key) => data[question][key],
       ); //grab array from firestore
-      console.log("OG Array: " + originalArray);
-
       try {
         const copiedArray = [...originalArray]; //copy the array locally
         copiedArray[index] += 1; //increment that spit
@@ -446,7 +369,6 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
         });
 
         console.log("Array item incremented successfully.");
-        //console.log("After Increment: " + JSON.stringify(data, null, 2));
       } catch {
         console.log("Something went wrong");
       }
@@ -459,7 +381,6 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
     const eventDoc = await getDoc(eventRef);
     question = "CustomAnswer";
 
-    const data = eventDoc.data();
     try {
       if (eventDoc.exists) {
         await updateDoc(eventRef, {

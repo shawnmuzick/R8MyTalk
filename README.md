@@ -28,7 +28,34 @@ node index.js
 - the application will run on port 3000, by default. View the running application in your browser at localhost:3000
 
 ## Contributing
-Please push changes to the dev branch, not the main brach. Main will be linked with the production environment. We will use the dev branch for development and testing.
+
+### Branching Strategy
+We will follow a conventional branching strategy:
+```
+main
+|
+- dev
+|	|
+|	- feat-{nameOfFeature}
+|	- feat-{nameOfFeature}
+|	- feat-{nameOfFeature}
+|
+- hotfix
+```
+When implementing a new feature, please create a branch from dev named as "feat-{nameOfFeature}". When the feature is complete, please submit a pull request into dev. The code will be reviewed and merged pending approval. 
+
+Main will be linked with the production environment.
+
+### Commit Messages
+Please use conventional message prefixes:
+```
+feat		– new feature
+fix			– bug fix
+chore		– bump dependencies, update docs, etc
+refactor	– refactoring code
+test 		– create new tests or fix existing ones
+revert 		– revert some previous commit
+```
 
 ## Todo
 - check for breaking changes in package "open" from v9 to v10

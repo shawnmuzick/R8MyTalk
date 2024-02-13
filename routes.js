@@ -256,7 +256,7 @@ router.post(
       const fileToUpload = req.file; //from multer middleware
       const result = await uploadSharedFiles(fileToUpload, user.uid, eventName);
       res.status(200);
-      res.send({ message: "Upload OK" });
+      res.json({ message: "Upload OK" });
     } catch (error) {
       console.log(`problem uploading file ${error}`);
       res.status(500).send("Error uploading file");
@@ -369,6 +369,9 @@ router.post("/register", async (req, res) => {
 /**A route to render the profile page ejs template
  * get the user's event list from storage,
  * push the list into the template
+ * forEach is a (misleadingly named) method on the querySnapshot object type
+ * see: https://firebase.google.com/docs/reference/js/v8/firebase.firestore.QuerySnapshot
+ * you can't convert it to a normal for...of, because it is not iterable
  */
 router.get("/profilePage", isAuthenticated, async (req, res) => {
   const user = req.session.user;

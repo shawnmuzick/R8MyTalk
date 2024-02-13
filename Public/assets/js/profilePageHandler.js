@@ -137,24 +137,29 @@ document.addEventListener("change", () => {
   }
 });
 
+/**This function uploads a file to the endpont via the fetch API
+ * You must prevent the default form behavior, or 2 requests will
+ * be sent to the backend
+ * The content type headers should be empty for file uploads
+ */
 uploadButton.addEventListener("click", uploadClickHandler);
-function uploadClickHandler(event) {
-  try {
-    console.log("on upload click");
-    //send to backend
-    const xhr = new XMLHttpRequest();
-    console.log("request class", xhr);
-    console.log("hit the submit button");
-    xhr.open("POST", "/uploadFile", true);
-    //xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-    xhr.send(fileData);
-    //probably should log for errors
-    console.log("finished upload on click");
-  } catch (error) {
-    console.log("yeah you should have logged for errors here!!!!");
-    console.log(error);
-  }
+async function uploadClickHandler(event) {
   event.preventDefault(); //Prevent default link behavior
+  try {
+    const response = await fetch("/uploadFile", {
+      method: "POST",
+      //headers: { "Content-Type": "multipart/form-data" },
+      body: fileData,
+    });
+    //present the user with a status message
+    const result = await response.json();
+    document.getElementById("upload-result-message").innerText =
+      result.message + ": You may close this window";
+  } catch (error) {
+    console.log(error);
+    document.getElementById("upload-result-message").innerText =
+      error + ": You may close this window";
+  }
 }
 
 function handleNavbarLinkClick(event) {

@@ -234,9 +234,12 @@ router.post("/goToSurveyButton", async (req, res) => {
  * FILE UPLOAD/DOWNLOAD ROUTES
  *******************************************************/
 
-/**A route to download a file after submitting feedback */
+/** A route to download a file after submitting feedback
+ *  This returns a URL to a firebase file, not an actual file
+ */
 router.post("/downloadFile", async (req, res) => {
   const { uid, eventName } = req.body;
+  console.log(uid, eventName);
   const downloadURL = await getFileDownloadURL(uid, eventName);
   res.send(downloadURL);
 });

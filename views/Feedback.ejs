@@ -2,107 +2,115 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable=no>
-    <title>Survey</title>
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="stylesheet" href="/assets/css/feedback.css">
-    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable=no>
+	<title>Survey</title>
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="/assets/css/feedback.css">
+	<noscript>
+		<link rel="stylesheet" href="/assets/css/noscript.css" />
+	</noscript>
 
-    <!--Joe added this custom .css for responsiveness on smaller mobile devices -->
-    <link rel="stylesheet" href="/assets/css/survey.css">
+	<!--Joe added this custom .css for responsiveness on smaller mobile devices -->
+	<link rel="stylesheet" href="/assets/css/survey.css">
 
 </head>
 
 <body>
 
-    <!-- Banner -->
-    <section id="banner2">
-        <div class="content">
-            <span class="image"><img src="/assets/css/images/homepagelogo.png" alt="" /></span>
-            <!-- <h1>Speakers Talk</h1> -->
+	<!-- Banner -->
+	<section id="banner2">
+		<div class="content">
+			<span class="image"><img src="/assets/css/images/homepagelogo.png" alt="" /></span>
+			<!-- <h1>Speakers Talk</h1> -->
 
 
-            <h2 id="eventName"></h2>
+			<h2 id="eventName"></h2>
 
-        </div>
-    </section>
-
-
-    <div id="container">
-        <!-- Square question container -->
-        <section id="question-container">
-            <h3 id="questionElement" data-variable="<%= customQ %>">
-                <%= customQ %>
-            </h3>
-        </section>
-
-        <section id="feedbackSection">
-            <!-- Square textbox -->
-            <textarea name="message" id="message" placeholder="Enter your message"></textarea>
-        </section>
-    </div>
-
-    <section id="survey-ending">
-        <button type="button" class="button primary" id="feedbackButton">Next</button>
-    </section>
+		</div>
+	</section>
 
 
-    <section id="contact-section" style="display: none;">
+	<div id="container">
+		<!-- Square question container -->
+		<section id="question-container">
+			<h3 id="questionElement" data-variable="<%= customQ %>">
+				<%= customQ %>
+			</h3>
+		</section>
 
-        <div class="contactButton-container">
-            <h3 id="contactInfo">Contact Information</h3>
-        </div>
+		<section id="feedbackSection">
+			<!-- Square textbox -->
+			<textarea name="message" id="message" placeholder="Enter your message"></textarea>
+		</section>
+	</div>
 
-        <!-- Textarea containers -->
-        <div class="contactButton-container">
-            <textarea name="message" id="fullName" placeholder="Enter your name (optional)" style="width: 30em; height: 60px; resize: none;"></textarea>
-        </div>
-        <div class="contactButton-container">
-            <textarea name="message" id="phoneNumber" placeholder="Enter your phone number (optional)" style="width: 30em; height: 60px; resize: none;"></textarea>
-        </div>
-        <div class="contactButton-container">
-            <textarea name="message" id="email" placeholder="Enter your email (required) " style="width: 30em; height: 60px; resize: none;"></textarea>
-        </div>
-
-        <div class="contactButton-container">
-            <textarea name="message" id="role" placeholder="What is your role? (required) " style="width: 30em; height: 60px; resize: none;"></textarea>
-        </div>
-
-        <!-- Button containers -->
-        <div class="contactButton-container">
-            <button type="button" class="button primary" onclick="contactBackEnd()">Submit</button>
-        </div>
+	<section id="survey-ending">
+		<button type="button" class="button primary" id="feedbackButton">Next</button>
+	</section>
 
 
+	<section id="contact-section" style="display: none;">
 
+		<div class="contactButton-container">
+			<h3 id="contactInfo">Contact Information</h3>
+		</div>
 
-    </section>
+		<!-- Textarea containers -->
+		<div class="contactButton-container">
+			<textarea name="message" id="fullName" placeholder="Enter your name (optional)"
+				style="width: 30em; height: 60px; resize: none;"></textarea>
+		</div>
+		<div class="contactButton-container">
+			<textarea name="message" id="phoneNumber" placeholder="Enter your phone number (optional)"
+				style="width: 30em; height: 60px; resize: none;"></textarea>
+		</div>
+		<div class="contactButton-container">
+			<textarea name="message" id="email" placeholder="Enter your email (required) "
+				style="width: 30em; height: 60px; resize: none;"></textarea>
+		</div>
 
-    <section id="thankYou-section" style="display: none;">
-        <h3 id="thankYouMessage" style="margin-bottom: 1em;">Thank you for your feedback!</h3>
-        <% if(eventName == "Test-Survey") { %>
-            <button class="button primary backToProfileButton" id="profileButton" onclick="goToProfile()">Go back to profile page</button>
+		<div class="contactButton-container">
+			<textarea name="message" id="role" placeholder="What is your role? (required) "
+				style="width: 30em; height: 60px; resize: none;"></textarea>
+		</div>
 
-            <% }else{ %>
-                <div class="contactButton-container2" id="moveHigher">
-                    <button type="button" style="margin-top: 1em;" class="button primary" id="btnDownloadFile">Download Presentation Now!!!</button>
-                </div>
-                <% } %>
-
-    </section>
+		<!-- Button containers -->
+		<div class="contactButton-container">
+			<button type="button" class="button primary" id="contact-submit-btn">Submit</button>
+		</div>
 
 
 
-    <!-- Scripts -->
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/jquery.dropotron.min.js"></script>
-    <script src="/assets/js/jquery.scrollex.min.js"></script>
-    <script src="/assets/js/browser.min.js"></script>
-    <script src="/assets/js/util.js"></script>
-    <script src="/assets/js/main.js"></script>
-    <script src="/feedback.js">
-    </script>
+
+	</section>
+
+	<section id="thankYou-section" style="display: none;">
+		<h3 id="thankYouMessage" style="margin-bottom: 1em;">Thank you for your feedback!</h3>
+		<% if(eventName=="Test-Survey" ) { %>
+			<button class="button primary backToProfileButton" id="profileButton" onclick="goToProfile()">Go back to
+				profile page</button>
+
+			<% }else{ %>
+				<div class="contactButton-container2" id="moveHigher">
+					<button type="button" style="margin-top: 1em;" class="button primary" id="btnDownloadFile">Download
+						Presentation Now!!!</button>
+				</div>
+				<% } %>
+
+	</section>
+
+
+
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.dropotron.min.js"></script>
+	<script src="/assets/js/jquery.scrollex.min.js"></script>
+	<script src="/assets/js/browser.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<script src="/assets/js/main.js"></script>
+	<script src="/feedback.js">
+	</script>
 </body>
 
 </html>

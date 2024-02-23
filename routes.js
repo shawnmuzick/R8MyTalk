@@ -289,6 +289,8 @@ router.post("/contactForm", (req, res) => {
   res.json({ message: "Form data received successfully!" });
   if (eventName !== "Test-Survey") {
     sendContactInfoToDB(fullName, phoneNumber, email, role, uid, eventName);
+    res.status(200);
+    res.json({ message: "Test submitted OK" });
   }
 });
 

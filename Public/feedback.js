@@ -69,7 +69,7 @@ function UpdateDownloadButtonDisplay(buttonText) {
  */
 document
   .getElementById("btnDownloadFile")
-  .addEventListener("click", async () => {
+  ?.addEventListener("click", async (event) => {
     UpdateDownloadButtonDisplay(
       "Please wait while your file is being downloaded...",
     );
@@ -135,7 +135,8 @@ async function sendToBackEnd(question, answer) {
  */
 document
   .getElementById("contact-submit-btn")
-  .addEventListener("click", async () => {
+  .addEventListener("click", async (event) => {
+    event.preventDefault();
     const urlParts = parseURL(window.location.href);
     const fullName = document.getElementById("fullName").value;
     const phoneNumber = document.getElementById("phoneNumber").value;
@@ -176,3 +177,9 @@ function displayThankYou() {
   document.getElementById("contact-section").style.display = "none";
   document.getElementById("thankYou-section").style.display = "block";
 }
+
+document
+  .getElementById("profileButton")
+  ?.addEventListener("click", async (event) => {
+    window.location.href = "/profilePage";
+  });

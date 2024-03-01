@@ -230,6 +230,16 @@ router.post("/goToSurveyButton", async (req, res) => {
   eventName = spaceToHyphen(eventName);
   res.redirect(`/survey/${user.uid}/${eventName}`);
 });
+
+/**A route to post data from the contact form */
+router.post("/contactForm", (req, res) => {
+  const { fullName, phoneNumber, email, role, uid, eventName } = req.body;
+  res.json({ message: "Form data received successfully!" });
+  if (eventName !== "Test-Survey") {
+    sendContactInfoToDB(fullName, phoneNumber, email, role, uid, eventName);
+  }
+});
+
 /********************************************************
  * FILE UPLOAD/DOWNLOAD ROUTES
  *******************************************************/
@@ -278,15 +288,6 @@ router.get("/", (req, res) => {
 router.get("/homePage", (req, res) => {
   const user = req.session.user;
   res.render("homePage", { user });
-});
-
-/**A route to render the contact form */
-router.post("/contactForm", (req, res) => {
-  const { fullName, phoneNumber, email, role, uid, eventName } = req.body;
-  res.json({ message: "Form data received successfully!" });
-  if (eventName !== "Test-Survey") {
-    sendContactInfoToDB(fullName, phoneNumber, email, role, uid, eventName);
-  }
 });
 
 /**A route to render the contacts page */

@@ -30,6 +30,8 @@ app.use(express.static(`${__dirname}/Public`));
 app.use("/", router);
 
 // Listens to the port for request
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+export default server;

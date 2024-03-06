@@ -1,5 +1,7 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+/**
+ * This file should contain routes and functionality
+ * related to rendering pages.
+ */
 import express from "express";
 import {
   createUserWithEmailAndPassword,
@@ -18,8 +20,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { DateTime } from "luxon";
-import { upload } from "./config_multer.js";
-import { isAuthenticated } from "./custom_middlewares.js";
+import { upload } from "../config_multer.js";
+import { isAuthenticated } from "../custom_middlewares.js";
+import { __dirname } from "../index.js";
 import {
   addToAnswers,
   auth,
@@ -35,15 +38,14 @@ import {
   sendFeedbackToDB,
   spaceToHyphen,
   uploadSharedFiles,
-} from "./util.js";
-const router = express.Router();
-const __dirname = dirname(fileURLToPath(import.meta.url));
+} from "../util.js";
+const view_router = express.Router();
 /********************************************************
  * EVENT ROUTES
  *******************************************************/
 
 /**A route to get chart data for event review dashboard */
-router.post("/getData", isAuthenticated, async (req, res) => {
+view_router.post("/getData", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = req.body.eventName;
@@ -55,7 +57,7 @@ router.post("/getData", isAuthenticated, async (req, res) => {
 });
 
 /**A route to create a QR code for an event */
-router.post("/qrButton", async (req, res) => {
+view_router.post("/qrButton", async (req, res) => {
   console.log("/qrButton");
   const user = req.session.user;
   const { rowIndex, eventName } = req.body;
@@ -66,12 +68,12 @@ router.post("/qrButton", async (req, res) => {
 });
 
 /**A route to render a survey page for an event*/
-router.get("/survey/:uid/:eventName", (req, res) => {
+view_router.get("/survey/:uid/:eventName", (req, res) => {
   res.sendFile(`${__dirname}/Public/survey.html`);
 });
 
 /**A route to delete an event from storage */
-router.post("/deleteEvent", isAuthenticated, async (req, res) => {
+view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = spaceToHyphen(req.body.eventName);
@@ -85,7 +87,7 @@ router.post("/deleteEvent", isAuthenticated, async (req, res) => {
 });
 
 /**A route to render the review page for a given eventname parameter */
-router.get("/review/:eventName", isAuthenticated, async (req, res) => {
+view_router.get("/review/:eventName", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = req.params.eventName;
@@ -106,7 +108,7 @@ router.get("/review/:eventName", isAuthenticated, async (req, res) => {
 });
 
 /**A route to post a new event record */
-router.post("/createEvent", async (req, res) => {
+view_router.post("/createEvent", async (req, res) => {
   const user = req.session.user;
   let eventName = req.body.eventName;
   eventName = spaceToHyphen(eventName);
@@ -163,7 +165,7 @@ router.post("/createEvent", async (req, res) => {
  * FEEDBACK ROUTES
  *******************************************************/
 /**A route to render the feedback page for an event */
-router.get("/feedback/:uid/:eventName", async (req, res) => {
+view_router.get("/feedback/:uid/:eventName", async (req, res) => {
   try {
     const { uid, eventName } = req.params;
     let customQ = "";
@@ -181,7 +183,7 @@ router.get("/feedback/:uid/:eventName", async (req, res) => {
 });
 
 /**A route to post feedback answers for an event */
-router.post("/feedbackSelection", (req, res) => {
+view_router.post("/feedbackSelection", (req, res) => {
   const { uid, eventName } = req.body;
   const question = req.body.feedbackQuestion;
   const answer = req.body.feedbackAnswer;
@@ -192,7 +194,7 @@ router.post("/feedbackSelection", (req, res) => {
 });
 
 /**A route to edit custom event questions */
-router.post("/editCustomQ", async (req, res) => {
+view_router.post("/editCustomQ", async (req, res) => {
   const user = req.session.user;
   const customQ = req.body.customQuestion;
   const eventName = req.body.eventName;
@@ -207,7 +209,7 @@ router.post("/editCustomQ", async (req, res) => {
 });
 
 /**A route to post emoji selections for an event */
-router.post("/emojiSelection", (req, res) => {
+view_router.post("/emojiSelection", (req, res) => {
   const { sendQuestion, emoji, uid, eventName } = req.body;
   const cleanQuestion = sendQuestion.replace("?", "");
   if (eventName !== "Test-Survey") {
@@ -217,14 +219,14 @@ router.post("/emojiSelection", (req, res) => {
 });
 
 /**A route to go to the survey test*/
-router.post("/goToTestSurveyButton", async (req, res) => {
+view_router.post("/goToTestSurveyButton", async (req, res) => {
   const user = req.session.user;
   const eventName = "Test-Survey";
   res.redirect(`/survey/${user.uid}/${eventName}`);
 });
 
 /**A route to go to the survey*/
-router.post("/goToSurveyButton", async (req, res) => {
+view_router.post("/goToSurveyButton", async (req, res) => {
   const user = req.session.user;
   let { eventName } = req.body;
   eventName = spaceToHyphen(eventName);
@@ -232,7 +234,7 @@ router.post("/goToSurveyButton", async (req, res) => {
 });
 
 /**A route to post data from the contact form */
-router.post("/contactForm", (req, res) => {
+view_router.post("/contactForm", (req, res) => {
   const { fullName, phoneNumber, email, role, uid, eventName } = req.body;
   res.json({ message: "Form data received successfully!" });
   if (eventName !== "Test-Survey") {
@@ -245,7 +247,7 @@ router.post("/contactForm", (req, res) => {
  *******************************************************/
 
 /**A route to download a file after submitting feedback */
-router.post("/downloadFile", async (req, res) => {
+view_router.post("/downloadFile", async (req, res) => {
   const { uid, eventName } = req.body;
   const downloadURL = await getFileDownloadURL(uid, eventName);
   res.send(downloadURL);
@@ -255,7 +257,7 @@ router.post("/downloadFile", async (req, res) => {
  * A route to upload a file reward for event reviewers
  * make sure filename matches what is called in static code
  */
-router.post(
+view_router.post(
   "/uploadFile",
   upload.single("uploadedFile"),
   isAuthenticated,
@@ -279,31 +281,31 @@ router.post(
  *******************************************************/
 
 /**A route to redirect "/" to the homepage */
-router.get("/", (req, res) => {
+view_router.get("/", (req, res) => {
   const user = req.session.user;
   res.render("homePage", { user });
 });
 
 /**A route to render the homepage */
-router.get("/homePage", (req, res) => {
+view_router.get("/homePage", (req, res) => {
   const user = req.session.user;
   res.render("homePage", { user });
 });
 
 /**A route to render the contacts page */
-router.get("/contacts", isAuthenticated, async (req, res) => {
+view_router.get("/contacts", isAuthenticated, async (req, res) => {
   const user = req.session.user;
   const contacts = await readContactInfoFromDb(user.uid);
   res.render("contacts", { user, contacts });
 });
 
 /**A route to display the user login page */
-router.get("/login", (req, res) => {
+view_router.get("/login", (req, res) => {
   res.sendFile(`${__dirname}/Public/login.html`);
 });
 
 /**A route to post a user login, redirect to profile page */
-router.post("/login", async (req, res) => {
+view_router.post("/login", async (req, res) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -319,7 +321,7 @@ router.post("/login", async (req, res) => {
 });
 
 /***A route to log a user out, redirect to home page */
-router.get("/logout", async (req, res) => {
+view_router.get("/logout", async (req, res) => {
   req.session.destroy((error) => {
     if (error) {
       console.log(error);
@@ -330,7 +332,7 @@ router.get("/logout", async (req, res) => {
 });
 
 /**A route to display the new user registration page */
-router.get("/register", (req, res) => {
+view_router.get("/register", (req, res) => {
   res.sendFile(`${__dirname}/Public/register.html`);
 });
 
@@ -338,7 +340,7 @@ router.get("/register", (req, res) => {
  * user.uid contains the user's UID
  * doc(the database, the name of the collection, what we send in for document ID)
  */
-router.post("/register", async (req, res) => {
+view_router.post("/register", async (req, res) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -371,7 +373,7 @@ router.post("/register", async (req, res) => {
  * get the user's event list from storage,
  * push the list into the template
  */
-router.get("/profilePage", isAuthenticated, async (req, res) => {
+view_router.get("/profilePage", isAuthenticated, async (req, res) => {
   const user = req.session.user;
   const docRef = doc(db, "theFireUsers", user.uid); //starting reference point
   const docSnap = await getDoc(docRef);
@@ -403,4 +405,4 @@ router.get("/profilePage", isAuthenticated, async (req, res) => {
   }
 });
 
-export default router;
+export default view_router;

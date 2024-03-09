@@ -1,5 +1,19 @@
+/**
+ * This file contains tests for login/logout routes
+ */
 import request from "supertest";
+import session from "supertest-session";
 import server from "../index.js";
+
+let loginSession;
+
+beforeEach(() => {
+  loginSession = session(server);
+});
+
+afterEach(() => {
+  loginSession = null;
+});
 
 /**
  * Test a user login
@@ -9,7 +23,7 @@ describe("/login", () => {
     //get the credentials
     const username = process.env.TEST_LOGIN_USERNAME;
     const password = process.env.TEST_LOGIN_PASSWORD;
-    const res = await request(server)
+    const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
 
@@ -33,7 +47,7 @@ describe("/login and logout", () => {
     //get the credentials
     const username = process.env.TEST_LOGIN_USERNAME;
     const password = process.env.TEST_LOGIN_PASSWORD;
-    const res = await request(server)
+    const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
 

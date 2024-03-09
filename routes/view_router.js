@@ -77,7 +77,9 @@ view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = spaceToHyphen(req.body.eventName);
-    await deleteDoc(doc(db, "theFireUsers", user.uid, "userEventList", eventName));
+    await deleteDoc(
+      doc(db, "theFireUsers", user.uid, "userEventList", eventName),
+    );
     await deleteEventFromStorage(eventName, user.uid);
   } catch (error) {
     console.log("error deleting");
@@ -123,7 +125,12 @@ view_router.post("/createEvent", async (req, res) => {
   const talkType = req.body.talkType;
 
   try {
-    const newDocRef = collection(db, "theFireUsers/", user.uid, "userEventList");
+    const newDocRef = collection(
+      db,
+      "theFireUsers/",
+      user.uid,
+      "userEventList",
+    );
 
     //what we want to put into the db
     //no longer using enjoy or improve
@@ -191,7 +198,13 @@ view_router.post("/editCustomQ", async (req, res) => {
   const user = req.session.user;
   const customQ = req.body.customQuestion;
   const eventName = req.body.eventName;
-  const docRef = doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName));
+  const docRef = doc(
+    db,
+    "theFireUsers",
+    user.uid,
+    "userEventList",
+    spaceToHyphen(eventName),
+  );
   await updateDoc(docRef, { customQuestion: customQ });
 });
 
@@ -260,7 +273,7 @@ view_router.post(
       console.log(`problem uploading file ${error}`);
       res.status(500).send("Error uploading file");
     }
-  }
+  },
 );
 
 /********************************************************
@@ -297,7 +310,7 @@ view_router.post("/login", async (req, res) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     req.session.user = userCredential.user;
     console.log(`log in ${req.body.email} `);
@@ -335,7 +348,7 @@ view_router.post("/register", async (req, res) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     const user = userCredential.user;
     await updateProfile(user, { displayName: req.body.userName });

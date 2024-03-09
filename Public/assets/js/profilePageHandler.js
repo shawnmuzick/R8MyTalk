@@ -170,19 +170,27 @@ document.addEventListener("change", () => {
  */
 uploadButton.addEventListener("click", async (event) => {
   event.preventDefault(); //Prevent default link behavior
+  document.getElementById("upload-result-message").innerText =
+    "Please wait while your file uploads...";
   try {
     const response = await fetch("/uploadFile", {
       method: "POST",
       //headers: { "Content-Type": "multipart/form-data" },
       body: fileData,
     });
-    //present the user with a status message
+    //present the user with a status message and checkmark icon
     const result = await response.json();
     document.getElementById("upload-result-message").innerText =
       result.message + ": You may close this window";
+    document.getElementById("icon_done").style.visibility = "visible";
   } catch (error) {
     console.log(error);
+    //present the user with a status message and error icon
     document.getElementById("upload-result-message").innerText =
-      error + ": You may close this window";
+      error +
+      ": Please close this window and try again or contact your Administrator";
+    document.getElementById("icon_done").src =
+      "/images/icon_material_error.svg";
+    document.getElementById("icon_done").style.visibility = "visible";
   }
 });

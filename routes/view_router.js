@@ -313,9 +313,11 @@ view_router.post("/login", async (req, res) => {
       req.body.password,
     );
     req.session.user = userCredential.user;
+    console.log(`log in ${req.body.email} `);
     res.redirect("/profilePage");
   } catch (error) {
     error.customData = "Invalid Login";
+    console.log(`failed log in ${req.body.email}`);
     res.render("login", { error });
   }
 });
@@ -326,6 +328,7 @@ view_router.get("/logout", async (req, res) => {
     if (error) {
       console.log(error);
     }
+    console.log(`logged out`);
     res.clearCookie("connectr.sid");
     res.redirect("/homePage");
   });

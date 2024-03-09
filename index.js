@@ -4,8 +4,9 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
 import session from "express-session";
-import router from "./routes.js";
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import api_router from "./routes/api_router.js";
+import view_router from "./routes/view_router.js";
+export const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -27,9 +28,12 @@ app.use(
 app.use(express.static(`${__dirname}/Public`));
 
 // handle page and api routing
-app.use("/", router);
+app.use("/api", api_router);
+app.use("/", view_router);
 
 // Listens to the port for request
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+export default server;

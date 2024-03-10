@@ -40,6 +40,22 @@ describe("/login", () => {
 });
 
 /**
+ * Test a user login
+ */
+describe("/login failure", () => {
+  it("log in a user", async () => {
+    const res = await loginSession
+      .post("/login")
+      .send({ email: "u", password: "p" });
+    expect(res.header["content-type"].toLowerCase()).toBe(
+      "text/html; charset=utf-8",
+    );
+    expect(res.statusCode).toBe(401);
+    await server.close();
+  });
+});
+
+/**
  * Test a user login and logout
  */
 describe("/login and logout", () => {

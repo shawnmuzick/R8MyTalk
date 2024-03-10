@@ -22,7 +22,9 @@ describe("/uploadFile", () => {
   async function getAuthSession() {
     const username = process.env.TEST_LOGIN_USERNAME;
     const password = process.env.TEST_LOGIN_PASSWORD;
-    const res = await loginSession.post("/login").send({ email: username, password: password });
+    const res = await loginSession
+      .post("/login")
+      .send({ email: username, password: password });
     expect([200, 302]).toContain(res.statusCode);
     return loginSession;
   }
@@ -39,6 +41,56 @@ describe("/uploadFile", () => {
     expect(res2.body.message).toBe("Upload OK");
     expect([200]).toContain(res2.statusCode);
 
+    await server.close();
+  });
+});
+
+/**
+ * Test a file upload failure
+ */
+describe("/uploadFile failure", () => {
+  async function getAuthSession() {
+    const username = process.env.TEST_LOGIN_USERNAME;
+    const password = process.env.TEST_LOGIN_PASSWORD;
+    const res = await loginSession
+      .post("/login")
+      .send({ email: username, password: password });
+    expect([200, 302]).toContain(res.statusCode);
+    return loginSession;
+  }
+  it("upload a file", async () => {
+    const authSession = await getAuthSession();
+    const res2 = await authSession.post("/uploadFile");
+    expect([500]).toContain(res2.statusCode);
+    await server.close();
+  });
+});
+
+/**
+ * Test a file download
+ */
+describe("/downloadFile", () => {
+  it("download a file", async () => {
+    const eventName = process.env.TEST_EVENT_NAME;
+    const eventUid = process.env.TEST_EVENT_UID;
+    const res = await loginSession
+      .post("/downloadFile")
+      .send({ uid: eventUid, eventName: eventName });
+    expect(res.text).toContain("https://firebasestorage");
+    expect(res.statusCode).toBe(200);
+    await server.close();
+  });
+});
+
+/**
+ * Test a file download failure
+ */
+describe("/downloadFile failure", () => {
+  it("download a file", async () => {
+    const res = await loginSession
+      .post("/downloadFile")
+      .send({ uid: " ", eventName: " " });
+    expect(res.statusCode).toBe(500);
     await server.close();
   });
 });

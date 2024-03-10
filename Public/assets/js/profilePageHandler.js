@@ -163,6 +163,34 @@ document.addEventListener("change", () => {
   }
 });
 
+/**
+ * This function updates the icon in the file upload modal
+ * @param {string} src - the image source
+ * @param {string} visibility - the visibility property
+ * @param {string} animation - the animation string
+ */
+function updateUploadIcon(src, visibility, animation) {
+  const icon = document.getElementById("icon_done");
+  icon.style.animation = animation;
+  icon.src = src;
+  icon.style.visibility = visibility;
+}
+
+/**
+ * This function updates the status text in the file upload modal
+ * @param {string} message - the text to display
+ */
+function updateUploadMessage(message) {
+  document.getElementById("upload-result-message").innerText = message;
+}
+
+function resetUploadForm() {
+  const input = document.getElementById("uploadedFile");
+  input.files = null;
+  updateUploadIcon("/images/icon_material_done.svg", "hidden", "");
+  updateUploadMessage("");
+}
+
 /**This function uploads a file to the endpont via the fetch API
  * You must prevent the default form behavior, or 2 requests will
  * be sent to the backend
@@ -170,27 +198,34 @@ document.addEventListener("change", () => {
  */
 uploadButton.addEventListener("click", async (event) => {
   event.preventDefault(); //Prevent default link behavior
-  document.getElementById("upload-result-message").innerText =
-    "Please wait while your file uploads...";
+  updateUploadMessage("Please wait while your file uploads...");
+  updateUploadIcon(
+    "/images/icon_material_progress.svg",
+    "visible",
+    "1s spinner-rotate infinite",
+  );
+
   try {
     const response = await fetch("/uploadFile", {
       method: "POST",
       //headers: { "Content-Type": "multipart/form-data" },
       body: fileData,
     });
-    //present the user with a status message and checkmark icon
     const result = await response.json();
-    document.getElementById("upload-result-message").innerText =
-      result.message + ": You may close this window";
-    document.getElementById("icon_done").style.visibility = "visible";
+    updateUploadIcon("/images/icon_material_done.svg", "", "visible");
+    updateUploadMessage(result.message + ": You may close this window");
   } catch (error) {
     console.log(error);
-    //present the user with a status message and error icon
-    document.getElementById("upload-result-message").innerText =
+    updateUploadIcon("/images/icon_material_error.svg", "", "visible");
+    updateUploadMessage(
       error +
-      ": Please close this window and try again or contact your Administrator";
-    document.getElementById("icon_done").src =
-      "/images/icon_material_error.svg";
-    document.getElementById("icon_done").style.visibility = "visible";
+        ": Please close this window and try again or contact your Administrator",
+    );
   }
 });
+
+document
+  .getElementById("btnCloseFile")
+  .addEventListener("click", async (event) => {
+    resetUploadForm();
+  });

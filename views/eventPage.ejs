@@ -101,9 +101,8 @@
 
                         <div class="containerFeedback">
                             <div class="left-column">
-
                                 <ul class="alt">
-                                    <% try {
+                                    <% if (dbEventInfo.Testimonial) { // Check if dbEventInfo.Testimonial exists
                                     for (let i = dbEventInfo.Testimonial.length - 1; i >= Math.floor(dbEventInfo.Testimonial.length / 2); i--) { %>
                                         <li>
                                             <div class="talk-bubble tri-right border round btm-left-in">
@@ -113,14 +112,12 @@
                                             </div>
                                         </li>
                                     <% }
-                                    } catch (error) {
-                                        console.error("An error occurred:", error);
                                     } %>
                                 </ul>
-
                             </div>
+
                             <div class="right-column">
-                                <% try {
+                                <% if (dbEventInfo.Testimonial) { // Check if dbEventInfo.Testimonial exists
                                 for (let i = dbEventInfo.Testimonial.length - 1; i >= Math.floor(dbEventInfo.Testimonial.length / 2); i--) { %>
                                     <ul class="alt">
                                         <li>
@@ -132,8 +129,6 @@
                                         </li>
                                     </ul>
                                 <% }
-                                } catch (error) {
-                                    console.error("An error occurred:", error);
                                 } %>
                             </div>
 
@@ -146,13 +141,12 @@
                     <!--Testimonials-->
                     <header>
                         <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
-
                         <div class="containerFeedback">
 
                             <div class="left-column">
-                                <ul class="alt">
-                                    <% try {
-                                    for (let i = 0; i < Math.floor(dbEventInfo.CustomAnswer.length / 2); i++) { %>
+                                <% if (dbEventInfo.CustomAnswer) { // Check if dbEventInfo.CustomAnswer exists
+                                for (let i = 0; i < Math.floor(dbEventInfo.CustomAnswer.length / 2); i++) { %>
+                                    <ul class="alt">
                                         <li>
                                             <div class="talk-bubble tri-right border round btm-left-in">
                                                 <div class="talktext">
@@ -160,15 +154,13 @@
                                                 </div>
                                             </div>
                                         </li>
-                                    <% }
-                                    } catch (error) {
-                                        console.error("An error occurred:", error);
-                                    } %>
-                                </ul>
+                                    </ul>
+                                <% }
+                                } %>
                             </div>
 
                             <div class="right-column">
-                                <% try {
+                                <% if (dbEventInfo.CustomAnswer) { // Check if dbEventInfo.CustomAnswer exists
                                 for (let i = dbEventInfo.CustomAnswer.length - 1; i >= Math.floor(dbEventInfo.CustomAnswer.length / 2); i--) { %>
                                     <ul class="alt">
                                         <li>
@@ -180,8 +172,6 @@
                                         </li>
                                     </ul>
                                 <% }
-                                } catch (error) {
-                                    console.error("An error occurred:", error);
                                 } %>
                             </div>
 

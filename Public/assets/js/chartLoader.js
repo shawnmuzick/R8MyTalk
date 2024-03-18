@@ -1,43 +1,45 @@
 //load the chart data
 document.addEventListener("DOMContentLoaded", async () => {
-  const eventName = document
-    .getElementById("eventNameDisplay")
-    .getAttribute("data-event-name"); //get the eventName from the title
+  try {
+    const eventNameElement = document.getElementById("eventNameDisplay");
+    const eventName = eventNameElement.getAttribute("data-event-name");
 
-  var actChart = document.getElementById("actionable").getContext("2d");
-  var engChart = document.getElementById("engaging").getContext("2d");
-  var insChart = document.getElementById("inspiring").getContext("2d");
-  var intChart = document.getElementById("interactive").getContext("2d");
-  var relChart = document.getElementById("relevant").getContext("2d");
+    var actChart = document.getElementById("actionable").getContext("2d");
+    var engChart = document.getElementById("engaging").getContext("2d");
+    var insChart = document.getElementById("inspiring").getContext("2d");
+    var intChart = document.getElementById("interactive").getContext("2d");
+    var relChart = document.getElementById("relevant").getContext("2d");
 
-  var dbEventInfo;
+    var dbEventInfo;
 
-  fetch("/getData", {
-    method: "POST",
-    body: JSON.stringify({ eventName }), //send the name to get the right data
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      dbEventInfo = data;
-      createDoughnut(actChart, dbEventInfo.Actionable);
-      createDoughnut(engChart, dbEventInfo.Engaging);
-      createDoughnut(insChart, dbEventInfo.Inspiring);
-      createDoughnut(intChart, dbEventInfo.Interactive);
-      createDoughnut(relChart, dbEventInfo.Relevant);
-
-      // Event listener attached to button to download CSV report
-      document
-        .getElementById("downloadReportButton")
-        .addEventListener("click", () => {
-          downloadCSV(dbEventInfo);
-        });
-    })
-    .catch((error) => {
-      console.error(error);
+    const response = await fetch("/getData", {
+      method: "POST",
+      body: JSON.stringify({ eventName }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    if (!response.ok) {
+      console.error("Failed to fetch data");
+      return;
+    }
+
+    dbEventInfo = await response.json();
+    createDoughnut(actChart, dbEventInfo.Actionable);
+    createDoughnut(engChart, dbEventInfo.Engaging);
+    createDoughnut(insChart, dbEventInfo.Inspiring);
+    createDoughnut(intChart, dbEventInfo.Interactive);
+    createDoughnut(relChart, dbEventInfo.Relevant);
+
+    document
+      .getElementById("downloadReportButton")
+      .addEventListener("click", () => {
+        downloadCSV(dbEventInfo);
+      });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 function createDoughnut(canvasElement, data) {

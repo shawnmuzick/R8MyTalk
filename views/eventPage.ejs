@@ -33,6 +33,12 @@
 
                         <h2 style="text-align: center;">No Feedback Yet!</h2>
                         <%} else {%>
+
+                        <!--Button to download Feedback Report CSV-->
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 35px; margin-bottom: 40px;">
+                            <button id="downloadReportButton" class="button primary" type="submit">Download Feedback Report</button>
+                        </div>
+
                             <!--NEW CHART STUFF!!-->
                             <div class="canvas-row">
                                 <div class="legend">
@@ -55,7 +61,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div class="canvas-row">
+                            </div>
                             <div class="canvas-row">
                                 <div class="chart">
                                     <h2>Actionable</h2>

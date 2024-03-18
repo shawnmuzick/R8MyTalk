@@ -5,6 +5,9 @@ This project is for Parents2Partners, developed by students of CCSU. This projec
 
 If you are a future developer of this project, please fork this repo and continue development. There is no need to submit your changes upstream to this repo, though feel free to reach out to us with questions about the project. The previous developer provided us with a word document user manual that we will share with you.
 
+The production application can be viewed here: https://r8temytalk-nkqs.onrender.com/
+It is using a free hosting plan, and is normal for it to be slow to start up
+
 ## Prerequisites
 - install nodejs LTS v20 for your platform via https://nodejs.org/en/download/
 
@@ -66,9 +69,10 @@ revert 		– revert some previous commit
 - Allow for the speaker to create a profile that includes a photograph and adding social media 
 - Allow the app to generate a list of emails, saved for each event. 
 
-## Doing
-- create docs
-- bump deps
-
-## Done
-- remove passport.js dependencies
+## Backlog priority
+- file upload/download is top priority
+- download leads/email list
+- downloadable feedback report 
+- next is speaker profile page
+- website
+- low priority is logo/colors

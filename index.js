@@ -11,7 +11,7 @@ export const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "256Mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(cookieParser());

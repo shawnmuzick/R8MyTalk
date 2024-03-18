@@ -146,7 +146,8 @@ export async function getFileDownloadURL(userFolder, eventName) {
     return url;
   } catch (error) {
     console.log(error);
-    return null;
+    throw error;
+    // return null;
   }
 }
 

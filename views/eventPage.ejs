@@ -25,6 +25,8 @@
     <!-- Main -->
     <div id="main" class="wrapper style1">
         <div class="container">
+            <!-- Error message is placed here if caught in chartLoader.js -->
+            <div id="error-message"></div>
             <header class="major">
                 <h2 class="feedbackHeader" id="eventNameDisplay" data-event-name="<%= eventName.replace(/ /g, '-') %>">
                     <%= eventName.replace(/-/g, ' ') %> Feedback
@@ -90,101 +92,70 @@
                     </div>
                 </div>
 
-
                 <!--END NEW CHART STUFF-->
                 <!-- Content -->
                 <section id="content">
-
                     <!--Testimonials-->
                     <header>
                         <h2 class="feedbackHeader">Testimonials</h2>
-
                         <div class="containerFeedback">
                             <div class="left-column">
-
                                 <ul class="alt">
-                                    <% try {
-                                    for (let i = dbEventInfo.Testimonial.length - 1; i >= Math.floor(dbEventInfo.Testimonial.length / 2); i--) { %>
+                                    <% for (let i = dbEventInfo?.Testimonial?.length - 1;
+                                            i >= Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
                                         <li>
                                             <div class="talk-bubble tri-right border round btm-left-in">
-                                                <div class="talktext">
-                                                    <p>"<%= dbEventInfo.Testimonial[i] %>"</p>
-                                                </div>
+                                                <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
                                             </div>
                                         </li>
-                                    <% }
-                                    } catch (error) {
-                                        console.error("An error occurred:", error);
-                                    } %>
+                                    <% } %>
                                 </ul>
-
                             </div>
+
                             <div class="right-column">
-                                <% try {
-                                for (let i = dbEventInfo.Testimonial.length - 1; i >= Math.floor(dbEventInfo.Testimonial.length / 2); i--) { %>
+                                <% for (let i = dbEventInfo?.Testimonial?.length - 1;
+                                        i >= Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
                                     <ul class="alt">
                                         <li>
                                             <div class="talk-bubble tri-right border round btm-right">
-                                                <div class="talktext">
-                                                    <p>"<%= dbEventInfo.Testimonial[i] %>"</p>
-                                                </div>
+                                                <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
                                             </div>
                                         </li>
                                     </ul>
-                                <% }
-                                } catch (error) {
-                                    console.error("An error occurred:", error);
-                                } %>
+                                <% } %>
                             </div>
-
                         </div>
                     </header>
                 </section>
 
                 <section id="content">
-
                     <!--Testimonials-->
                     <header>
                         <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
-
                         <div class="containerFeedback">
-
                             <div class="left-column">
-                                <ul class="alt">
-                                    <% try {
-                                    for (let i = 0; i < Math.floor(dbEventInfo.CustomAnswer.length / 2); i++) { %>
-                                        <li>
-                                            <div class="talk-bubble tri-right border round btm-left-in">
-                                                <div class="talktext">
-                                                    <p>"<%= dbEventInfo.CustomAnswer[i] %>"</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    <% }
-                                    } catch (error) {
-                                        console.error("An error occurred:", error);
-                                    } %>
-                                </ul>
-                            </div>
-
-                            <div class="right-column">
-                                <% try {
-                                for (let i = dbEventInfo.CustomAnswer.length - 1; i >= Math.floor(dbEventInfo.CustomAnswer.length / 2); i--) { %>
+                                <% for (let i = 0; i < Math.floor((dbEventInfo?.CustomAnswer?.length ?? 0) / 2); i++) { %>
                                     <ul class="alt">
                                         <li>
-                                            <div class="talk-bubble tri-right border round btm-right">
-                                                <div class="talktext">
-                                                    <p>"<%= dbEventInfo.CustomAnswer[i] %>"</p>
-                                                </div>
+                                            <div class="talk-bubble tri-right border round btm-left-in">
+                                                <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
                                             </div>
                                         </li>
                                     </ul>
-                                <% }
-                                } catch (error) {
-                                    console.error("An error occurred:", error);
-                                } %>
+                                <% } %>
                             </div>
 
+                            <div class="right-column">
+                                <% for (let i = (dbEventInfo?.CustomAnswer?.length ?? 0) - 1; i >= Math.floor(((dbEventInfo?.CustomAnswer?.length ?? 0) ?? 0) / 2); i--) { %>
+                                    <ul class="alt">
+                                        <li>
+                                            <div class="talk-bubble tri-right border round btm-right">
+                                                <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                <% } %>
+                            </div>
                         </div>
                     </header>
                 </section>

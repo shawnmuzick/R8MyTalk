@@ -126,7 +126,7 @@ function contactBackEnd() {
   const curURL = window.location.href;
   const urlParts = parseURL(curURL);
 
-  const fullName = document.getElementById("fullName").value || "__";
+  const fullName = document.getElementById("fullName").value || " ";
   const phoneNumber = document.getElementById("phoneNumber").value;
   const email = document.getElementById("email").value;
   const role = document.getElementById("role").value;
@@ -136,17 +136,13 @@ function contactBackEnd() {
     alert("Please Enter a Valid input"); // Display error message
     return; // Prevent form submission
   }
-  if(!validateEmail(email)){
-    alert("Please Enter your Email"); 
-    return; 
+  if (!validateEmail(email)) {
+    alert("Please Enter your Email");
+    return;
   }
-  if(!role){
-    alert("Please Enter your Role"); 
-    return; 
-  }
-  if(!isValidPhoneNumber(phoneNumber)){
-    alert("Please Enter your Phone Number."); 
-    return; 
+  if (!role) {
+    alert("Please Enter your Role");
+    return;
   }
 
   fetch("/contactForm", {
@@ -171,17 +167,10 @@ function contactBackEnd() {
   displayThankYou();
 }
 function validateEmail(email) {
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const re =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
-
-function isValidPhoneNumber(phoneNumber) {
-  const phoneRegex = /^$|^\d{10}$/;
-  return phoneRegex.test(phoneNumber);
-}
-
-
-
 
 function displayChanges() {
   // Hide the feedback section and show the contact section

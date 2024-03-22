@@ -22,7 +22,7 @@ function SetEventName() {
   const eventName = urlParts.eventName;
   document.getElementById("eventName").textContent = eventName.replace(
     /-/g,
-    " "
+    " ",
   );
 }
 SetEventName();
@@ -71,7 +71,7 @@ document
   .getElementById("btnDownloadFile")
   ?.addEventListener("click", async (event) => {
     UpdateDownloadButtonDisplay(
-      "Please wait while your file is being downloaded..."
+      "Please wait while your file is being downloaded...",
     );
     const urlParts = parseURL(window.location.href);
     try {
@@ -104,7 +104,7 @@ document
     } catch (error) {
       console.log(error);
       UpdateDownloadButtonDisplay(
-        "The Presenter has not uploaded any files to share."
+        "The Presenter has not uploaded any files to share.",
       );
     }
   });

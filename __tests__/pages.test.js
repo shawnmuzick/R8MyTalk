@@ -1,3 +1,6 @@
+/**
+ * This file contains tests for routes that render pages
+ */
 import request from "supertest";
 import server from "../index.js";
 

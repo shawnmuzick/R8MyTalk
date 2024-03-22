@@ -1,93 +1,113 @@
 const questionElement = document.getElementById("questionElement");
 const textareaElement = document.querySelector("#message");
-const curURL = window.location.href;
-const urlParts = parseURL(curURL);
-const eventName = urlParts.eventName;
 const defaultQuestion = "How would you describe this event to a friend?";
 let currentQuestionIndex = 0;
 let customQuestion;
-
-// Event name should load as soon as the HTML page loads
-document.getElementById("eventName").textContent = eventName.replace(/-/g, " ");
-
-//here is my custom question
 const questions = [customQuestion, defaultQuestion];
+
+/**
+ * Parse a url to get the event uuid and the eventname
+ */
+function parseURL(url) {
+  const pathSections = new URL(url).pathname.split("/");
+  return { uid: pathSections[2], eventName: pathSections[3] };
+}
+
+/**
+ * Event name should load as soon as the HTML page loads
+ * Invoke the function when the page loads
+ */
+function SetEventName() {
+  const urlParts = parseURL(window.location.href);
+  const eventName = urlParts.eventName;
+  document.getElementById("eventName").textContent = eventName.replace(
+    /-/g,
+    " ",
+  );
+}
+SetEventName();
 
 document.addEventListener("DOMContentLoaded", () => {
   // Access the variableToSend from the data attribute
   customQuestion = questionElement.dataset.variable;
   console.log("Variable received in Feedback.js:", customQuestion);
-  // Do something with the received variable
 });
 
-function goToProfile() {
-  window.location.href = "/profilePage";
+document
+  .getElementById("feedbackButton")
+  .addEventListener("click", async () => {
+    if (currentQuestionIndex < questions.length) {
+      const question = questions[currentQuestionIndex]; // Save current question
+      const answer = textareaElement.value; // Save current answer
+      await sendToBackEnd(question, answer); // Send info
+
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        questionElement.textContent = questions[currentQuestionIndex];
+      } else {
+        // Load the survey form or perform any other action
+        displayChanges();
+      }
+      textareaElement.value = "";
+    }
+  });
+
+/**
+ * Update the display text of the download button with a status message
+ * Disable it from being clicked again
+ */
+function UpdateDownloadButtonDisplay(buttonText) {
+  const btn = document.getElementById("btnDownloadFile");
+  btn.innerText = buttonText;
+  btn.disabled = true;
 }
 
-document.getElementById("feedbackButton").addEventListener("click", () => {
-  if (currentQuestionIndex < questions.length) {
-    //const question =  document.getElementById("questionElement")
-    const question = questions[currentQuestionIndex]; // Save current question
-    const answer = textareaElement.value; // Save current answer
-    sendToBackEnd(question, answer); // Send info
-
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      questionElement.textContent = questions[currentQuestionIndex];
-    } else {
-      // Load the survey form or perform any other action
-      displayChanges();
-    }
-
-    textareaElement.value = "";
-    console.log(currentQuestionIndex);
-  }
-});
-
-//this appears to be the download button event listener
-document.getElementById("btnDownloadFile").addEventListener("click", () => {
-  console.log("download presentation button event");
-  //get the download URL from backend for the user
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/downloadFile", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  const data = JSON.stringify({
-    uid: urlParts.uid,
-    eventName: urlParts.eventName,
-  });
-  xhr.send(data);
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      //response from the backend here
-      console.log("Response from backend: " + xhr.responseText); //xhr.responsetext is the url
-      if (xhr.responseText) {
-        console.log("responseText");
-        //download the file
-        const xhr2 = new XMLHttpRequest();
-        xhr2.responseType = "blob";
-        xhr2.onload = (event) => {
-          //test
-          const blob = xhr2.response;
-          console.log(blob);
-          const a = document.createElement("a");
-          a.href = URL.createObjectURL(blob);
-          a.download = eventName + " Presentation";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        };
-
-        xhr2.open("GET", xhr.responseText);
-        xhr2.send();
-      } else {
-        console.log("here 2");
-        alert("The Presenter has not uploaded any files to share.");
+/**
+ * An event listener to download files for the event when the survey has been completed
+ * First, get the firebase download url from the backend
+ * Then, get the file using the url
+ */
+document
+  .getElementById("btnDownloadFile")
+  ?.addEventListener("click", async (event) => {
+    UpdateDownloadButtonDisplay(
+      "Please wait while your file is being downloaded...",
+    );
+    const urlParts = parseURL(window.location.href);
+    try {
+      // Get the firbase url from the backend
+      const response = await fetch("/downloadFile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: urlParts.uid,
+          eventName: urlParts.eventName,
+        }),
+      });
+      const firebaseUrl = await response.text();
+      // if we didn't get a url, then there's no files, error and update display
+      if (!firebaseUrl.includes("firebasestorage")) {
+        throw new Error("No files");
       }
-    } else {
-      console.error();
+
+      // Get the file using the url
+      const firebaseResponse = await fetch(firebaseUrl, { method: "GET" });
+      const blob = await firebaseResponse.blob();
+      const file = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = file;
+      a.download = urlParts.eventName + " Presentation";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      UpdateDownloadButtonDisplay("Download Complete!");
+    } catch (error) {
+      console.log(error);
+      UpdateDownloadButtonDisplay(
+        "The Presenter has not uploaded any files to share.",
+      );
     }
-  };
-});
+  });
 
 function parseURL(url) {
   const path = new URL(url);
@@ -172,8 +192,10 @@ function validateEmail(email) {
   return re.test(email);
 }
 
+/**
+ * Hide the feedback section and show the contact section
+ */
 function displayChanges() {
-  // Hide the feedback section and show the contact section
   document.getElementById("feedbackSection").style.display = "none";
   document.getElementById("question-container").style.display = "none";
   document.getElementById("survey-ending").style.display = "none";
@@ -185,6 +207,8 @@ function displayThankYou() {
   document.getElementById("thankYou-section").style.display = "block";
 }
 
-function goToProfile() {
-  window.location.href = "/profilePage";
-}
+document
+  .getElementById("profileButton")
+  ?.addEventListener("click", async (event) => {
+    window.location.href = "/profilePage";
+  });

@@ -52,19 +52,26 @@ view_router.post("/getData", isAuthenticated, async (req, res) => {
     const dbEventInfo = await readEventInfoFromDB(user.uid, eventName);
     res.send(dbEventInfo);
   } catch (error) {
-    console.log("SOMETHING BAD HAPPENED: ", error);
+    console.log("Error getting data: ", error);
+    res.status(500);
+    res.send({ message: error });
   }
 });
 
 /**A route to create a QR code for an event */
 view_router.post("/qrButton", async (req, res) => {
-  console.log("/qrButton");
-  const user = req.session.user;
-  const { rowIndex, eventName } = req.body;
-  console.log(rowIndex, eventName);
-  const url = await getQRURL(user.uid, eventName);
-  console.log(url);
-  res.send(url);
+  try {
+    const user = req.session.user;
+    const { rowIndex, eventName } = req.body;
+    console.log(rowIndex, eventName);
+    const url = await getQRURL(user.uid, eventName);
+    console.log(url);
+    res.send(url);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send({ message: error });
+  }
 });
 
 /**A route to render a survey page for an event*/
@@ -184,28 +191,37 @@ view_router.get("/feedback/:uid/:eventName", async (req, res) => {
 
 /**A route to post feedback answers for an event */
 view_router.post("/feedbackSelection", (req, res) => {
-  const { uid, eventName } = req.body;
-  const question = req.body.feedbackQuestion;
-  const answer = req.body.feedbackAnswer;
-  if (eventName !== "Test-Survey" && answer.length > 4) {
-    sendFeedbackToDB(question, answer, uid, eventName);
+  try {
+    const { uid, eventName } = req.body;
+    const question = req.body.feedbackQuestion;
+    const answer = req.body.feedbackAnswer;
+    if (eventName !== "Test-Survey" && answer.length > 4) {
+      sendFeedbackToDB(question, answer, uid, eventName);
+    }
+    res.json({ status: "Success", message: "Data received successfully." });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "error", message: error });
   }
-  res.json({ status: "Success", message: "Data received successfully." });
 });
 
 /**A route to edit custom event questions */
 view_router.post("/editCustomQ", async (req, res) => {
-  const user = req.session.user;
-  const customQ = req.body.customQuestion;
-  const eventName = req.body.eventName;
-  const docRef = doc(
-    db,
-    "theFireUsers",
-    user.uid,
-    "userEventList",
-    spaceToHyphen(eventName),
-  );
-  await updateDoc(docRef, { customQuestion: customQ });
+  try {
+    const user = req.session.user;
+    const customQ = req.body.customQuestion;
+    const eventName = req.body.eventName;
+    const docRef = doc(
+      db,
+      "theFireUsers",
+      user.uid,
+      "userEventList",
+      spaceToHyphen(eventName),
+    );
+    await updateDoc(docRef, { customQuestion: customQ });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 /**A route to post emoji selections for an event */
@@ -248,9 +264,18 @@ view_router.post("/contactForm", (req, res) => {
 
 /**A route to download a file after submitting feedback */
 view_router.post("/downloadFile", async (req, res) => {
-  const { uid, eventName } = req.body;
-  const downloadURL = await getFileDownloadURL(uid, eventName);
-  res.send(downloadURL);
+  try {
+    const { uid, eventName } = req.body;
+    console.log("params:", uid, eventName);
+    const downloadURL = await getFileDownloadURL(uid, eventName);
+    console.log("url", downloadURL);
+    res.status(200);
+    res.send(downloadURL);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send({ message: error });
+  }
 });
 
 /**
@@ -318,6 +343,7 @@ view_router.post("/login", async (req, res) => {
   } catch (error) {
     error.customData = "Invalid Login";
     console.log(`failed log in ${req.body.email}`);
+    res.status(401);
     res.render("login", { error });
   }
 });

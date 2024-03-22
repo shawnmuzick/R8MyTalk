@@ -138,10 +138,25 @@ document
   .addEventListener("click", async (event) => {
     event.preventDefault();
     const urlParts = parseURL(window.location.href);
-    const fullName = document.getElementById("fullName").value;
+    const fullName = document.getElementById("fullName").value || " ";
     const phoneNumber = document.getElementById("phoneNumber").value;
     const email = document.getElementById("email").value;
     const role = document.getElementById("role").value;
+
+    // Validation
+    if (!validateEmail(email) && !role) {
+      alert("Please Enter a Both Email and Role"); // Display error message
+      return; // Prevent form submission
+    }
+    if (!validateEmail(email)) {
+      alert("Please Enter your Email");
+      return;
+    }
+    if (!role) {
+      alert("Please Enter your Role");
+      return;
+    }
+
     try {
       const response = await fetch("/contactForm", {
         method: "POST",
@@ -162,6 +177,11 @@ document
       console.log(error);
     }
   });
+function validateEmail(email) {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 
 /**
  * Hide the feedback section and show the contact section

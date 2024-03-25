@@ -1,16 +1,14 @@
 //load the chart data
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    var dbEventInfo;
     const eventNameElement = document.getElementById("eventNameDisplay");
     const eventName = eventNameElement.getAttribute("data-event-name"); //get the eventname from the title
-
-    var actChart = document.getElementById("actionable").getContext("2d");
-    var engChart = document.getElementById("engaging").getContext("2d");
-    var insChart = document.getElementById("inspiring").getContext("2d");
-    var intChart = document.getElementById("interactive").getContext("2d");
-    var relChart = document.getElementById("relevant").getContext("2d");
-
-    var dbEventInfo;
+    var actChart = document.getElementById("actionable")?.getContext("2d");
+    var engChart = document.getElementById("engaging")?.getContext("2d");
+    var insChart = document.getElementById("inspiring")?.getContext("2d");
+    var intChart = document.getElementById("interactive")?.getContext("2d");
+    var relChart = document.getElementById("relevant")?.getContext("2d");
 
     const response = await fetch("/getData", {
       method: "POST",
@@ -21,7 +19,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     if (!response.ok) {
+      console.log("error response");
       throw new Error("Failed to fetch data");
+    }
+
+    /**
+     * if any of the canvases are missing, the template didn't render them
+     * because there was no feedback, abort this handler.
+     */
+    if (!actChart || !engChart || !insChart || !intChart || !relChart) {
+      return;
     }
 
     dbEventInfo = await response.json();

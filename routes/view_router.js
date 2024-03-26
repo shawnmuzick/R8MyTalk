@@ -99,7 +99,15 @@ view_router.get("/review/:eventName", isAuthenticated, async (req, res) => {
     const user = req.session.user;
     const eventName = req.params.eventName;
     const dbEventInfo = await readEventInfoFromDB(user.uid, eventName);
-    const noFeedback = dbEventInfo.CustomAnswer == undefined ? true : false;
+
+    /*If all of the metric fields are set to 0, then this event recieved no feedback. */
+    const noFeedback =
+      dbEventInfo.Interactive["0"] == 0 &&
+      dbEventInfo.Interactive["1"] == 0 &&
+      dbEventInfo.Interactive["2"] == 0 &&
+      dbEventInfo.Interactive["3"] == 0 &&
+      dbEventInfo.Interactive["4"] == 0;
+
     const customQ = dbEventInfo.customQuestion;
     res.render("eventPage", {
       user,

@@ -25,8 +25,6 @@
     <!-- Main -->
     <div id="main" class="wrapper style1">
         <div class="container">
-            <!-- Error message is placed here if caught in chartLoader.js -->
-            <div id="error-message"></div>
             <header class="major">
                 <h2 class="feedbackHeader" id="eventNameDisplay" data-event-name="<%= eventName.replace(/ /g, '-') %>">
                     <%= eventName.replace(/-/g, ' ') %> Feedback
@@ -34,7 +32,6 @@
 
             </header>
             <% if (noFeedback) { %>
-
                 <h2 style="text-align: center;">No Feedback Yet!</h2>
             <% } else { %>
 
@@ -129,7 +126,7 @@
                 </section>
 
                 <section id="content">
-                    <!--Testimonials-->
+                    <!--Custom Question responses-->
                     <header>
                         <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
                         <div class="containerFeedback">
@@ -159,7 +156,8 @@
                         </div>
                     </header>
                 </section>
-
+                <!-- Error message is placed here if caught in chartLoader.js -->
+                <h3 id="error-message" style="text-align: center; color:red"></h3>
             <% } %>
         </div>
     </div>

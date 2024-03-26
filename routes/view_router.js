@@ -9,13 +9,11 @@ import {
   updateProfile,
 } from "firebase/auth";
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
-  getFirestore,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -24,7 +22,6 @@ import { upload } from "../config_multer.js";
 import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
 import {
-  addToAnswers,
   auth,
   createQR,
   db,
@@ -43,20 +40,6 @@ const view_router = express.Router();
 /********************************************************
  * EVENT ROUTES
  *******************************************************/
-
-/**A route to get chart data for event review dashboard */
-view_router.post("/getData", isAuthenticated, async (req, res) => {
-  try {
-    const user = req.session.user;
-    const eventName = req.body.eventName;
-    const dbEventInfo = await readEventInfoFromDB(user.uid, eventName);
-    res.send(dbEventInfo);
-  } catch (error) {
-    console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
-  }
-});
 
 /**A route to create a QR code for an event */
 view_router.post("/qrButton", async (req, res) => {

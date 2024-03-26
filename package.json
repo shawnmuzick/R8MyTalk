@@ -4,8 +4,20 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "jest": {
+    "testEnvironment": "jest-environment-node",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "detectOpenHandles": true,
+    "transform": {}
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-start": "nodemon index.js",
+    "dev-format": "npx @biomejs/biome format ./ --write",
+    "dev-lint": "npx @biomejs/biome check --apply ./ && npx @biomejs/biome lint ./",
+    "dev-build": "npm run dev-format && npm run dev-lint",
+    "dev-test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
@@ -27,5 +39,13 @@
     "multer": "^1.4.5-lts.1",
     "open": "^9.1.0",
     "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.3",
+    "supertest": "^6.3.4",
+    "supertest-session": "^5.0.1"
   }
 }

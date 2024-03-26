@@ -5,6 +5,9 @@ This project is for Parents2Partners, developed by students of CCSU. This projec
 
 If you are a future developer of this project, please fork this repo and continue development. There is no need to submit your changes upstream to this repo, though feel free to reach out to us with questions about the project. The previous developer provided us with a word document user manual that we will share with you.
 
+The production application can be viewed here: https://r8temytalk-nkqs.onrender.com/
+It is using a free hosting plan, and is normal for it to be slow to start up
+
 ## Prerequisites
 - install nodejs LTS v20 for your platform via https://nodejs.org/en/download/
 
@@ -28,7 +31,34 @@ node index.js
 - the application will run on port 3000, by default. View the running application in your browser at localhost:3000
 
 ## Contributing
-Please push changes to the dev branch, not the main brach. Main will be linked with the production environment. We will use the dev branch for development and testing.
+
+### Branching Strategy
+We will follow a conventional branching strategy:
+```
+main
+|
+- dev
+|	|
+|	- feat-{nameOfFeature}
+|	- feat-{nameOfFeature}
+|	- feat-{nameOfFeature}
+|
+- hotfix
+```
+When implementing a new feature, please create a branch from dev named as "feat-{nameOfFeature}". When the feature is complete, please submit a pull request into dev. The code will be reviewed and merged pending approval. 
+
+Main will be linked with the production environment.
+
+### Commit Messages
+Please use conventional message prefixes:
+```
+feat		– new feature
+fix			– bug fix
+chore		– bump dependencies, update docs, etc
+refactor	– refactoring code
+test 		– create new tests or fix existing ones
+revert 		– revert some previous commit
+```
 
 ## Todo
 - check for breaking changes in package "open" from v9 to v10
@@ -39,9 +69,10 @@ Please push changes to the dev branch, not the main brach. Main will be linked w
 - Allow for the speaker to create a profile that includes a photograph and adding social media 
 - Allow the app to generate a list of emails, saved for each event. 
 
-## Doing
-- create docs
-- bump deps
-
-## Done
-- remove passport.js dependencies
+## Backlog priority
+- file upload/download is top priority
+- download leads/email list
+- downloadable feedback report 
+- next is speaker profile page
+- website
+- low priority is logo/colors

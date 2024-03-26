@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     var intChart = document.getElementById("interactive")?.getContext("2d");
     var relChart = document.getElementById("relevant")?.getContext("2d");
 
+    /**
+     * if any of the canvases are missing, the template didn't render them
+     * because there was no feedback, abort this handler.
+     */
+    if (!actChart || !engChart || !insChart || !intChart || !relChart) {
+      return;
+    }
+
     const response = await fetch("/getData", {
       method: "POST",
       body: JSON.stringify({ eventName }), //send the name to get the right data
@@ -22,15 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("error response");
       throw new Error("Failed to fetch data");
     }
-
-    /**
-     * if any of the canvases are missing, the template didn't render them
-     * because there was no feedback, abort this handler.
-     */
-    if (!actChart || !engChart || !insChart || !intChart || !relChart) {
-      return;
-    }
-
     dbEventInfo = await response.json();
     createDoughnut(actChart, dbEventInfo.Actionable);
     createDoughnut(engChart, dbEventInfo.Engaging);

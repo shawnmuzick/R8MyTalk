@@ -137,19 +137,6 @@ document.addEventListener("click", async (event) => {
 });
 
 /**
- * Handler to review an event page
- * This is bad, and needs to be revised.
- * There's no reason for this to be on the document object
- */
-document.addEventListener("click", (event) => {
-  if (event.target.name === "eventPage") {
-    //redirect to the page with the correct name
-    const eventName = event.target.getAttribute("data-event-name");
-    window.location.href = `/review/${eventName}`;
-  }
-});
-
-/**
  * Handler to listen for file input changes
  * This is bad, and needs to be revised.
  * There's no reason for this to be on the document object

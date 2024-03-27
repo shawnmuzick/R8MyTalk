@@ -4,92 +4,88 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<!--To stay cohesive with the previous team's work I've copied over the template they seem to have used-->
 <html class="black-placeholder" lang="en">
+
 <head>
-    <title>Speaker Search</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/main.css"/>
-    <link rel="stylesheet" href="assets/css/speakerstyles.css"/>
-    <noscript>
-        <link rel="stylesheet" href="assets/css/noscript.css"/>
-    </noscript>
+	<title>Speaker Search</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/speakerstyles.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
 </head>
 
 <body class="is-preload">
-<div id="page-wrapper">
+	<div id="page-wrapper">
 
-    <!-- Navbar -->
-    <%- include('partials/navbar') %>
+		<!-- Navbar -->
+		<%- include('partials/navbar') %>
 
-    <!-- Main -->
-    <div id="main" class="wrapper style1">
-        <div class="container">
-            <header class="major">
-                <label for="searchInput" class="h2 text-white">Speaker Search</label><input type="text" id="searchInput" placeholder="Enter Speaker's Name...">
-            </header>
-            <!-- Content -->
-            <section id="content">
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Phone Number</th>
-                            <th>Role</th>
-                        </tr>
-                        </thead>
-                        <tbody class="fs-4">
-                        <% contacts.forEach(contact => { %>
-                            <% Object.entries(contact.eventData).forEach(([email, data]) => { %>
-                                <tr>
-                                    <td>
-                                        <a name="eventPage" class="eventLink"
-                                           data-event-name="<%= contact.eventName.replace(/ /g, '-') %>"
-                                           href="/review/<%= encodeURIComponent(contact.eventName.trim()).replace(/%20/g, '-') %>">
-                                            <%= contact.eventName %>
-                                        </a>
-                                    </td>
-                                    <td><%= email.replace(/_/g, '.') %></td>
-                                    <td><%= data[0] %></td>
-                                    <td><%= data[1] %></td>
-                                    <td><%= data[2] %></td>
-                                </tr>
-                            <% }); %>
-                        <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
-    </div>
+			<!-- Main -->
+			<div id="main" class="wrapper style1">
+				<div class="container">
+					<header class="major">
+						<label for="searchInput" class="h2 text-white">Speaker Search</label><input type="text"
+							id="searchInput" placeholder="Enter Speaker's Name...">
+					</header>
+					<!-- Content -->
+					<section id="content">
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th>Display Name</th>
+										<th>First Name</th>
+										<th>Last Name</th>
+									</tr>
+								</thead>
+								<tbody class="fs-4">
+									<% users.forEach(user=> { %>
+										<tr>
+											<td>
+												<%= user.displayName%>
+											</td>
+											<td>
+												<%= user.profile.firstName%>
+											</td>
+											<td>
+												<%= user.profile.lastName%>
+											</td>
+										</tr>
+										<% }); %>
+								</tbody>
+							</table>
+						</div>
+					</section>
+				</div>
+			</div>
 
-    <!-- Footer -->
-    <footer id="footer">
-        <ul class="copyright">
-            <li>&copy; Untitled. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-        </ul>
-    </footer>
-</div>
+			<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Untitled. All rights reserved.</li>
+					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</footer>
+	</div>
 
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.scrolly.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/speakerSearchHandler.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/speakerSearchHandler.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
 </body>
+
 </html>

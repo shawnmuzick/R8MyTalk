@@ -3,6 +3,7 @@
  * related to rendering pages.
  */
 import express from "express";
+import { getAuth } from "firebase-admin/auth";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -426,15 +427,54 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
 });
 
 /**A route to render the speakerSearch page */
-view_router.get("/speakerSearch", isAuthenticated, async (req, res) => {
-  const user = req.session.user;
-  const contacts = await readContactInfoFromDb(user.uid);
-  res.render("speakerSearch", { user, contacts });
+view_router.get("/speakerSearch", async (req, res) => {
+  const users = [];
+  try {
+    const listAllUsers = async (nextPageToken) => {
+      const page = await getAuth().listUsers(1000, nextPageToken);
+      page.users.forEach((userRecord) => {
+        users.push({
+          uid: userRecord.uid,
+          displayName: userRecord.displayName,
+        });
+      });
+      if (page.pageToken) {
+        // get the next page if there is one
+        listAllUsers(page.pageToken);
+      }
+    };
+    //run the above, recursively, and return the result
+    await listAllUsers();
+
+    //get the profile data for each user
+    await Promise.all(
+      users.map(async (u) => {
+        const uid = req.params.id;
+        const userRef = doc(db, "theFireUsers", u.uid);
+        const userDoc = await getDoc(userRef);
+        const data = userDoc.data();
+        u.profile = {
+          firstName: data?.firstName ?? "",
+          lastName: data?.lastName ?? "",
+          bio: data?.bio ?? "",
+          socialLink1: data?.socialLink1 ?? "",
+          socialLink2: data?.socialLink2 ?? "",
+          socialLink3: data?.socialLink3 ?? "",
+        };
+      }),
+    );
+
+    //to populate the navbar
+    const user = null;
+    res.render("speakerSearch", { users, user });
+  } catch (error) {
+    console.log("Error getting data: ", error);
+    res.status(500);
+    res.send({ message: error });
+  }
 });
+
 /**A route to render the speakerProfile page */
-view_router.get("/speakerProfile", (req, res) => {
-  const user = req.session.user;
-  res.render("speakerProfile", { user });
-});
+view_router.get("/speakerProfile", (req, res) => {});
 
 export default view_router;

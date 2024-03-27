@@ -8,12 +8,16 @@ import {
   getFeedbackData,
   getSpeakers,
 } from "../controllers/api.js";
+import { getSpeakerProfile } from "../controllers/speakers.js";
 import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
 const api_router = express.Router();
 
 /**A route to get events for a given speaker */
 api_router.get("/data/speakers/:id/events/list", getEventList);
+
+/**A route to get profile data for a given speaker */
+api_router.get("/data/speakers/:id/profile", getSpeakerProfile);
 
 /**
  * This endpoint returns a list of speakers, and their ids

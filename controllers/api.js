@@ -1,6 +1,31 @@
+import { getAuth } from "firebase-admin/auth";
 import { readEventInfoFromDB } from "../util.js";
 
-export async function getSpeakers(req, res) {}
+export async function getSpeakers(req, res) {
+  const users = [];
+  try {
+    const listAllUsers = async (nextPageToken) => {
+      // get the page
+      const result = await getAuth().listUsers(1000, nextPageToken);
+      // stuff the results in an array
+      result.users.forEach((userRecord) => {
+        users.push({
+          uid: userRecord.uid,
+          displayName: userRecord.displayName,
+        });
+      });
+      if (result.pageToken) {
+        // get the next page if there is one
+        listAllUsers(result.pageToken);
+      }
+    };
+    //run the above, recursively, and return the result
+    await listAllUsers();
+    res.json({ data: users });
+  } catch (error) {
+    console.log("Error listing users:", error);
+  }
+}
 
 export async function getFeedbackData(req, res) {
   try {

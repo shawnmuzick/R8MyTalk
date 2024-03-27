@@ -7,6 +7,8 @@ import session from "express-session";
 import api_router from "./routes/api_router.js";
 import view_router from "./routes/view_router.js";
 export const __dirname = dirname(fileURLToPath(import.meta.url));
+import { initializeFirebaseAdmin } from "./util.js";
+initializeFirebaseAdmin();
 
 const PORT = process.env.PORT || 3000;
 const app = express();

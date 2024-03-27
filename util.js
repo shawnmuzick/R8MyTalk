@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
@@ -44,6 +45,14 @@ const fbapp = initializeApp(firebaseConfig);
 export const db = getFirestore(fbapp);
 export const auth = getAuth(fbapp);
 const storage = getStorage(fbapp);
+
+export function initializeFirebaseAdmin() {
+  console.log("initializing firebase");
+  admin.initializeApp({
+    credential: admin.credential.cert("./admin-service-key.json"),
+    databaseURL: process.env.DATABASEURL,
+  });
+}
 
 export function registerUser(email, password, successCallback, errorCallback) {
   createUserWithEmailAndPassword(

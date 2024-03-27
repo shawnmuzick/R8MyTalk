@@ -2,3 +2,4 @@ node_modules
 .env
 coverage
 __tests__/test_file.*
+admin-service-key.json

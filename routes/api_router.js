@@ -3,10 +3,17 @@
  * related to fetching and posting data
  */
 import express from "express";
-import { getFeedbackData, getSpeakers } from "../controllers/api.js";
+import {
+  getEventList,
+  getFeedbackData,
+  getSpeakers,
+} from "../controllers/api.js";
 import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
 const api_router = express.Router();
+
+/**A route to get events for a given speaker */
+api_router.get("/data/speakers/:id/events/list", getEventList);
 
 /**
  * This endpoint returns a list of speakers, and their ids

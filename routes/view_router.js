@@ -425,4 +425,16 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
   }
 });
 
+/**A route to render the speakerSearch page */
+view_router.get("/speakerSearch", isAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  const contacts = await readContactInfoFromDb(user.uid);
+  res.render("speakerSearch", { user, contacts });
+});
+/**A route to render the speakerProfile page */
+view_router.get("/speakerProfile", (req, res) => {
+  const user = req.session.user;
+  res.render("speakerProfile", { user });
+});
+
 export default view_router;

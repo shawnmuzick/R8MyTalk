@@ -1,0 +1,4 @@
+/* Adjust placeholder text color in searchbar */
+#searchInput::placeholder {
+    color: lightgray !important;
+}

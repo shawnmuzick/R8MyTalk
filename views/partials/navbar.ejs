@@ -1,7 +1,7 @@
 <header id="header">
     <h1 id="logo">
-        
-        
+
+
         <a href="../homePage">
             <span>R</span>
             <span>8</span>
@@ -18,25 +18,30 @@
     <nav id="nav" class="homepage-li">
         <ul>
             <li><a href="../homePage">Home</a></li>
-    
-            
+            <!--Adding link to speaker search page, should be accessible by anyone-->
+            <li><a href="../speakerSearch">Speaker Search</a></li>
+            <!--Link to Speaker Profile page, for testing purposes-->
+            <li><a href="../speakerProfile">Speaker Profile</a></li>
+
+
+
             <% if (user) { %>
 
                 <li><a href="../contacts">Contacts</a></li>
 
-              
+
                 <li>
                     <a href = "../profilePage"><%= "Hi, " + user.displayName %></a>
                     <ul>
                         <li><a href = "../profilePage">Profile Page</a></li>
                         <li><a href="../logout" name="logout">Logout</a></li>
-                        
+
                     </ul>
                 </li>
             <% } else { %>
                 <li><a href="../login" class="button primary">Log In</a></li>
             <% } %>
-            
+
         </ul>
     </nav>
 </header>

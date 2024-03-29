@@ -7,6 +7,7 @@ import {
   getEventList,
   getFeedbackData,
   getSpeakers,
+  searchUsers,
 } from "../controllers/api.js";
 import { getSpeakerProfile } from "../controllers/speakers.js";
 import { isAuthenticated } from "../custom_middlewares.js";
@@ -38,6 +39,19 @@ api_router.get("/data/speakers/list", async (req, res) => {
     res.json({ data: users });
   } catch (error) {
     console.log("Error getting data: ", error);
+    res.status(500);
+    res.send({ message: error });
+  }
+});
+
+/** This route returns users matching the search query */
+api_router.get("/data/speakers/search", async (req, res) => {
+  try {
+    const searchQuery = req.query.q;
+    const matchingUsers = await searchUsers(searchQuery);
+    res.json({ data: matchingUsers });
+  } catch (error) {
+    console.log("Error searching users:", error);
     res.status(500);
     res.send({ message: error });
   }

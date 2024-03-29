@@ -455,6 +455,16 @@ view_router.get("/speakerSearch", async (req, res) => {
 });
 
 /**A route to render the speakerProfile page */
-view_router.get("/speakerProfile", (req, res) => {});
-
+view_router.get("/speakerProfile/:uid", async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const profile = await getSpeakerProfile(uid);
+    // Render the profile page with the user's data
+    res.render("speakerProfile", { profile });
+  } catch (error) {
+    console.log("Error getting profile data:", error);
+    res.status(500);
+    res.send({ message: error });
+  }
+});
 export default view_router;

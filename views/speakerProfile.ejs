@@ -4,120 +4,70 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<!--To stay cohesive with the previous team's work I've copied over the template they seem to have used-->
-<html lang="en">
+<html class="black-placeholder" lang="en">
 
 <head>
-	<title>R8MyTalk</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" type="text/css" />
-	<link rel="stylesheet" href="assets/css/speakerstyles.css" />
-	<noscript>
-		<link rel="stylesheet" href="../Public/assets/css/main.css" />
-	</noscript>
+    <title><%= profile.firstName %> <%= profile.lastName %>'s Profile</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <link rel="stylesheet" href="/assets/css/speakerstyles.css"/>
+    <noscript>
+        <link rel="stylesheet" href="/assets/css/noscript.css"/>
+    </noscript>
 </head>
 
 <body class="is-preload">
-	<div id="page-wrapper">
+<div id="page-wrapper">
 
-		<!-- Navbar -->
-		<%- include('partials/navbar') %>
+    <!-- Main -->
+    <div id="main" class="wrapper style1">
+        <a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light ">Back to Search Results</a>
+        <div class="container">
+            <header class="major">
+                <p class="display-4"><%= profile.firstName %> <%= profile.lastName %></p>
+            </header>
+            <!-- Content -->
+            <section id="content">
+            </section>
+        </div>
+    </div>
 
-			<!-- Banner -->
-			<section id="banner">
-				<div class="content">
-					<header>
-						<h2 id="banner-logo">Speaker Profile Page</h2>
-						<p>In the making.</p>
-					</header>
-					<span class="image"><img src="assets/css/images/loginlogo2.png" alt="" /></span>
-				</div>
-				<a href="#one" class="goto-next scrolly">Next</a>
-			</section>
+    <div class="container">
 
-			<!-- One -->
-			<section id="one" class="spotlight style1 bottom">
-				<span class="image fit main"><img src="assets/css/images/hero.png" alt="" /></span>
-				<div class="content">
-					<div class="container">
-						<div class="row">
-							<div class="col-4 col-12-medium">
-								<header>
-									<h2>Copied from HomePage</h2>
-									<p> R8MyTalk is your all-in-one platform for enhancing your speaking powers with
-										valuable,
-										real-time feedback</p>
-								</header>
-							</div>
-							<div class="col-4 col-12-medium">
-								<p>R8MyTalk is a groundbreaking app that revolutionizes the way speakers
-									engage with their audience. With its real-time feedback and interactive tools,
-									R8MyTalk empowers speakers to receive immediate insights from their audience.
-								</p>
-							</div>
-							<div class="col-4 col-12-medium">
-								<p> By offering valuable data-driven insights and facilitating connections among
-									speakers,
-									R8MyTalk is a dynamic resource for individuals looking to boost their confidence and
-									create
-									more impactful presentations.
-									R8MyTalk is the go-to app for harnessing the power of real-time feedback and
-									audience
-									engagement.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<a href="#two" class="goto-next scrolly">Next</a>
-			</section>
+        <div class="profile-content">
+			<div class="profile-bio">
+                <h2>Bio</h2>
+                <p class="lead"><%= profile.bio || 'No bio available' %></p>
+            </div>
 
-			<!-- Two -->
-			<section id="two" class="spotlight style2 right">
-				<span class="image fit main"><img src="assets/css/images/hero-2.png" alt="" /></span>
-				<div class="content">
-					<header>
-						<h2>Why to choose R8MyTalk</h2>
-					</header>
-					<p>At R8MyTalk, we believe that every speaker has the potential to be great.
-						Our platform is a powerful tool to help you unlock your true speaking potential.
-						We are committed to helping you succeed by providing a supportive and innovative environment for
-						speakers and their audiences.</p>
-					<ul class="actions">
+            <div class="profile-social">
+                <h3>Social Links</h3>
+                <ul>
+                    <% if (profile.socialLink1) { %>
+                        <li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
+                    <% } %>
+                    <% if (profile.socialLink2) { %>
+                        <li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
+                    <% } %>
+                    <% if (profile.socialLink3) { %>
+                        <li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-					</ul>
-				</div>
-				<a href="#three" class="goto-next scrolly">Next</a>
-			</section>
 
-			<!-- Three -->
-			<section id="three" class="spotlight style3 left">
-				<span class="image fit main bottom"><img src="assets/css/images/hero-3.png" /></span>
-				<div class="content">
-					<header>
-						<h2>Join R8MyTalk Community</h2>
-						<p>Elevate your speaking game with R8MyTalk, where real-time feedback transforms your
-							presentations into
-							memorable experiences!</p>
-					</header>
-					<p>Join our community of speakers, presenters, and performers today and explore the possibilities of
-						enhancing your public speaking skills. Together, we can change the way you connect with your
-						audience!</p>
-					<ul class="actions">
+    <!-- Footer -->
+    <%- include('partials/footer') %>
+</div>
 
-					</ul>
-				</div>
-				<a href="#footer" class="goto-next scrolly">Next</a>
-			</section>
-
-			<!-- Footer -->
-			<%- include('partials/footer') %>
-
-	</div>
-
-	<!-- Scripts -->
-	<%- include('partials/scripts') %>
-		<script src="assets/js/speakerProfileHandler.js"></script>
+<!-- Scripts -->
+<%- include('partials/scripts') %>
+<script src="assets/js/speakerProfileHandler.js"></script>
 </body>
 
 </html>

@@ -27,6 +27,22 @@ export async function getSpeakers() {
   }
 }
 
+export async function searchUsers(searchQuery) {
+  let matchingUsers = [];
+  try {
+    const allUsers = await getSpeakers();
+    // Filter the users based on the search query
+    matchingUsers = allUsers.filter((user) => {
+      const fullName = `${user.displayName}`.toLowerCase();
+      return fullName.includes(searchQuery.toLowerCase());
+    });
+    return matchingUsers;
+  } catch (error) {
+    console.log("Error searching users:", error);
+    throw error;
+  }
+}
+
 export async function getFeedbackData(req, res) {
   try {
     const user = req.session.user;

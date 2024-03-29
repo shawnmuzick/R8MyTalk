@@ -3,7 +3,7 @@ import { getAuth } from "firebase-admin/auth";
 import { readEventInfoFromDB } from "../util.js";
 import { db } from "../util.js";
 
-export async function getSpeakers(req, res) {
+export async function getSpeakers() {
   const users = [];
   try {
     const listAllUsers = async (nextPageToken) => {
@@ -21,7 +21,7 @@ export async function getSpeakers(req, res) {
     };
     //run the above, recursively, and return the result
     await listAllUsers();
-    res.json({ data: users });
+    return users;
   } catch (error) {
     console.log("Error listing users:", error);
   }

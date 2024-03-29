@@ -3,7 +3,6 @@
  * related to rendering pages.
  */
 import express from "express";
-import { getAuth } from "firebase-admin/auth";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -20,6 +19,8 @@ import {
 } from "firebase/firestore";
 import { DateTime } from "luxon";
 import { upload } from "../config_multer.js";
+import { getSpeakers } from "../controllers/api.js";
+import { getSpeakerProfile } from "../controllers/speakers.js";
 import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
 import {
@@ -428,39 +429,11 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
 
 /**A route to render the speakerSearch page */
 view_router.get("/speakerSearch", async (req, res) => {
-  const users = [];
   try {
-    const listAllUsers = async (nextPageToken) => {
-      const page = await getAuth().listUsers(1000, nextPageToken);
-      page.users.forEach((userRecord) => {
-        users.push({
-          uid: userRecord.uid,
-          displayName: userRecord.displayName,
-        });
-      });
-      if (page.pageToken) {
-        // get the next page if there is one
-        listAllUsers(page.pageToken);
-      }
-    };
-    //run the above, recursively, and return the result
-    await listAllUsers();
-
-    //get the profile data for each user
+    const users = await getSpeakers();
     await Promise.all(
       users.map(async (u) => {
-        const uid = req.params.id;
-        const userRef = doc(db, "theFireUsers", u.uid);
-        const userDoc = await getDoc(userRef);
-        const data = userDoc.data();
-        u.profile = {
-          firstName: data?.firstName ?? "",
-          lastName: data?.lastName ?? "",
-          bio: data?.bio ?? "",
-          socialLink1: data?.socialLink1 ?? "",
-          socialLink2: data?.socialLink2 ?? "",
-          socialLink3: data?.socialLink3 ?? "",
-        };
+        u.profile = await getSpeakerProfile(u.uid);
       }),
     );
 

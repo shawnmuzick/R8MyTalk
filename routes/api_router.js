@@ -17,13 +17,31 @@ const api_router = express.Router();
 api_router.get("/data/speakers/:id/events/list", getEventList);
 
 /**A route to get profile data for a given speaker */
-api_router.get("/data/speakers/:id/profile", getSpeakerProfile);
+api_router.get("/data/speakers/:id/profile", async (req, res) => {
+  try {
+    const profile = await getSpeakerProfile(req.params.id);
+    res.json({ data: profile });
+  } catch (error) {
+    console.log("Error getting data: ", error);
+    res.status(500);
+    res.send({ message: error });
+  }
+});
 
 /**
  * This endpoint returns a list of speakers, and their ids
  * to be used in the front end speaker search
  */
-api_router.get("/data/speakers/list", getSpeakers);
+api_router.get("/data/speakers/list", async (req, res) => {
+  try {
+    const users = await getSpeakers();
+    res.json({ data: users });
+  } catch (error) {
+    console.log("Error getting data: ", error);
+    res.status(500);
+    res.send({ message: error });
+  }
+});
 
 /**A route to get chart data for event review dashboard */
 api_router.post("/data/events/feedback", isAuthenticated, getFeedbackData);

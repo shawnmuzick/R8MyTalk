@@ -319,7 +319,7 @@ view_router.get("/contacts", isAuthenticated, async (req, res) => {
 
 /**A route to display the user login page */
 view_router.get("/login", (req, res) => {
-  res.sendFile(`${__dirname}/Public/login.html`);
+  res.render("login", { error: null });
 });
 
 /**A route to post a user login, redirect to profile page */
@@ -355,7 +355,7 @@ view_router.get("/logout", async (req, res) => {
 
 /**A route to display the new user registration page */
 view_router.get("/register", (req, res) => {
-  res.sendFile(`${__dirname}/Public/register.html`);
+  res.render("register", { error: null });
 });
 
 /**A route to post a new user registration
@@ -373,10 +373,17 @@ view_router.post("/register", async (req, res) => {
     await updateProfile(user, { displayName: req.body.userName });
     req.session.user = user;
 
-    //what we went to put into the user db on a register
+    //what we want to put into the user db on a register
     //fields we want to add directly tied to the user
     const newDocRef = doc(db, "theFireUsers", user.uid);
-    await setDoc(newDocRef, {});
+    await setDoc(newDocRef, {
+      firstName: req.body.firstName ?? "",
+      lastName: req.body.lastName ?? "",
+      bio: "",
+      socialLink1: "",
+      socialLink2: "",
+      socialLink3: "",
+    });
 
     res.redirect("/profilePage");
   } catch (error) {

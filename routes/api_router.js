@@ -10,8 +10,8 @@ import {
   searchUsers,
 } from "../controllers/api.js";
 import { getSpeakerProfile } from "../controllers/speakers.js";
-import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
+import { isAuthenticated } from "../middleware/custom_middlewares.js";
 const api_router = express.Router();
 
 /**A route to get events for a given speaker */

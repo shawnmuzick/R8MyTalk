@@ -8,17 +8,24 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { DateTime } from "luxon";
-import { upload } from "../config_multer.js";
 import { getSpeakers } from "../controllers/api.js";
 import { getSpeakerProfile } from "../controllers/speakers.js";
-import { isAuthenticated } from "../custom_middlewares.js";
 import { __dirname } from "../index.js";
+import { auth, db } from "../index.js";
+import { upload } from "../middleware/config_multer.js";
+import { isAuthenticated } from "../middleware/custom_middlewares.js";
 import {
-  auth,
   createQR,
-  db,
   deleteEventFromStorage,
   getFileDownloadURL,
   getQRURL,
@@ -61,7 +68,9 @@ view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = spaceToHyphen(req.body.eventName);
-    await deleteDoc(doc(db, "theFireUsers", user.uid, "userEventList", eventName));
+    await deleteDoc(
+      doc(db, "theFireUsers", user.uid, "userEventList", eventName),
+    );
     await deleteEventFromStorage(eventName, user.uid);
   } catch (error) {
     console.log("error deleting");
@@ -115,7 +124,12 @@ view_router.post("/createEvent", async (req, res) => {
   const talkType = req.body.talkType;
 
   try {
-    const newDocRef = collection(db, "theFireUsers/", user.uid, "userEventList");
+    const newDocRef = collection(
+      db,
+      "theFireUsers/",
+      user.uid,
+      "userEventList",
+    );
 
     //what we want to put into the db
     //no longer using enjoy or improve
@@ -189,7 +203,13 @@ view_router.post("/editCustomQ", async (req, res) => {
     const user = req.session.user;
     const customQ = req.body.customQuestion;
     const eventName = req.body.eventName;
-    const docRef = doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName));
+    const docRef = doc(
+      db,
+      "theFireUsers",
+      user.uid,
+      "userEventList",
+      spaceToHyphen(eventName),
+    );
     await updateDoc(docRef, { customQuestion: customQ });
   } catch (error) {
     console.log(error);
@@ -270,7 +290,7 @@ view_router.post(
       console.log(`problem uploading file ${error}`);
       res.status(500).send("Error uploading file");
     }
-  }
+  },
 );
 
 /********************************************************
@@ -307,7 +327,7 @@ view_router.post("/login", async (req, res) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     req.session.user = userCredential.user;
     console.log(`log in ${req.body.email} `);
@@ -316,7 +336,7 @@ view_router.post("/login", async (req, res) => {
     error.customData = "Invalid Login";
     console.log(`failed log in ${req.body.email}`);
     res.status(401);
-    res.render("login", { error });
+    res.render("login", { error, user: null });
   }
 });
 
@@ -346,7 +366,7 @@ view_router.post("/register", async (req, res) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     const user = userCredential.user;
     await updateProfile(user, { displayName: req.body.userName });
@@ -356,6 +376,15 @@ view_router.post("/register", async (req, res) => {
     //fields we want to add directly tied to the user
     const newDocRef = doc(db, "theFireUsers", user.uid);
     await setDoc(newDocRef, {
+      firstName: req.body.firstName ?? "",
+      lastName: req.body.lastName ?? "",
+      bio: "",
+      socialLink1: "",
+      socialLink2: "",
+      socialLink3: "",
+    });
+
+    console.log({
       firstName: req.body.firstName ?? "",
       lastName: req.body.lastName ?? "",
       bio: "",
@@ -420,11 +449,11 @@ view_router.get("/speakerSearch", async (req, res) => {
     await Promise.all(
       users.map(async (u) => {
         u.profile = await getSpeakerProfile(u.uid);
-      })
+      }),
     );
 
     //to populate the navbar
-    const user = null;
+    const user = req.session.user ?? null;
     console.log(users);
     res.render("speakerSearch", { users, user });
   } catch (error) {
@@ -437,10 +466,11 @@ view_router.get("/speakerSearch", async (req, res) => {
 /**A route to render the speakerProfile page */
 view_router.get("/speakerProfile/:uid", async (req, res) => {
   try {
+    const user = req.session.user ?? null;
     const uid = req.params.uid;
     const profile = await getSpeakerProfile(uid);
     // Render the profile page with the user's data
-    res.render("speakerProfile", { profile, user: null });
+    res.render("speakerProfile", { profile, user: user });
   } catch (error) {
     console.log("Error getting profile data:", error);
     res.status(500);

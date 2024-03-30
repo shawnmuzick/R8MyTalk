@@ -45,14 +45,14 @@
 						<h3>Social Links</h3>
 						<ul>
 							<% if (profile.socialLink1) { %>
-								<li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
-								<% } %>
-									<% if (profile.socialLink2) { %>
-										<li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
-										<% } %>
-											<% if (profile.socialLink3) { %>
-												<li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
-												<% } %>
+								<%- include('partials/socialLink',{socialLink:profile.socialLink1}) %>
+							<% } %>
+							<% if (profile.socialLink2) { %>
+								<%- include('partials/socialLink',{socialLink:profile.socialLink2}) %>
+							<% } %>
+							<% if (profile.socialLink3) { %>
+								<%- include('partials/socialLink',{socialLink:profile.socialLink3}) %>
+							<% } %>
 						</ul>
 					</div>
 				</div>
@@ -61,11 +61,9 @@
 	</div>
 
 
-	<!-- Footer -->
 	<%- include('partials/footer') %>
 		</div>
 
-		<!-- Scripts -->
 		<%- include('partials/scripts') %>
 			<script src="/assets/js/speakerProfileHandler.js"></script>
 </body>

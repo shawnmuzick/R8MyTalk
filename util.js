@@ -1,85 +1,59 @@
-import dotenv from "dotenv";
-import admin from "firebase-admin";
-import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
-  FieldValue,
-  addDoc,
   arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
-  getFirestore,
-  increment,
-  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import {
   deleteObject,
   getDownloadURL,
-  getStorage,
   ref,
   uploadBytes,
 } from "firebase/storage";
 import qr from "qrcode";
+import { auth, db, storage } from "./index.js";
+import { SurveyResponse } from "./models/surveyResponse.js";
 
-dotenv.config();
-
-const firebaseConfig = {
-  apiKey: process.env.APIKEY,
-  authDomain: process.env.AUTHDOMAIN,
-  databaseURL: process.env.DATABASEURL,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORAGEBUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID,
-  measurementId: process.env.MEASUREMENTID,
-};
-
-const fbapp = initializeApp(firebaseConfig);
-export const db = getFirestore(fbapp);
-export const auth = getAuth(fbapp);
-const storage = getStorage(fbapp);
-
-export function initializeFirebaseAdmin() {
-  console.log("initializing firebase");
-  admin.initializeApp({
-    credential: admin.credential.cert("./admin-service-key.json"),
-    databaseURL: process.env.DATABASEURL,
-  });
+export async function registerUser(
+  email,
+  password,
+  successCallback,
+  errorCallback,
+) {
+  try {
+    const credential = createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+      successCallback,
+      errorCallback,
+    );
+    const user = credential.user;
+    successCallback(user);
+  } catch (error) {
+    errorCallback(error);
+  }
 }
 
-export function registerUser(email, password, successCallback, errorCallback) {
-  createUserWithEmailAndPassword(
-    auth,
-    email,
-    password,
-    successCallback,
-    errorCallback,
-  )
-    .then((userCredential) => {
-      const user = userCredential.user;
-      successCallback(user);
-    })
-    .catch((error) => {
-      errorCallback(error);
-    });
-}
-
-export function loginUser(email, password, successCallback, errorCallback) {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      successCallback(user);
-    })
-    .catch((error) => {
-      errorCallback(error);
-    });
+export async function loginUser(
+  email,
+  password,
+  successCallback,
+  errorCallback,
+) {
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    const user = credential.user;
+    successCallback(user);
+  } catch (error) {
+    errorCallback(error);
+  }
 }
 
 export function spaceToHyphen(string) {
@@ -156,7 +130,6 @@ export async function getFileDownloadURL(userFolder, eventName) {
   } catch (error) {
     console.log(error);
     throw error;
-    // return null;
   }
 }
 
@@ -174,15 +147,6 @@ export async function getQRURL(userFolder, eventName) {
     console.log(error);
   }
 }
-const surveyResponseStruct = {
-  actionableAns: "",
-  engagingAns: "",
-  interactiveAns: "",
-  inspiringAns: "",
-  relevantAns: "",
-  areasEnjoyedAns: "",
-  qualitiesImprovedAns: "",
-};
 
 export async function readEventInfoFromDB(uid, eventName) {
   try {
@@ -200,7 +164,7 @@ export async function readEventInfoFromDB(uid, eventName) {
 }
 
 export function addToAnswers(question, answer) {
-  //not being used RIP
+  const surveyResponseStruct = new SurveyResponse();
 
   switch (question) {
     case "Actionable":
@@ -287,7 +251,7 @@ export async function sendContactInfoToDB(
       });
     }
   } catch (error) {
-    console.log(error); //prob put weird argument in, or didnt put anything in
+    console.log(error);
   }
 }
 
@@ -316,7 +280,7 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
         console.log("Doc does not exist");
       }
     } catch (error) {
-      console.log(error); //probably put in a weird argument
+      console.log(error);
     }
   }
 
@@ -355,7 +319,6 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
 
     // Retrieve the document
     const eventDoc = await getDoc(eventRef);
-    //why
 
     if (eventDoc.exists()) {
       const data = eventDoc.data();

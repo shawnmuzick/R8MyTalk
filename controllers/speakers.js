@@ -3,7 +3,7 @@
  */
 
 import { doc, getDoc } from "@firebase/firestore";
-import { db } from "../util.js";
+import { db } from "../index.js";
 
 export async function getSpeakerProfile(uid) {
   try {

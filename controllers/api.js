@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
 import { getAuth } from "firebase-admin/auth";
+import { db } from "../index.js";
 import { readEventInfoFromDB } from "../util.js";
-import { db } from "../util.js";
 
 export async function getSpeakers() {
   const users = [];

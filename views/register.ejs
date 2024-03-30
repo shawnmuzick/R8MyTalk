@@ -1,69 +1,49 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Landed by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
+  <head>
+    <title>Register | R8MyTalk</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <%- include('partials/styles') %>
+  </head>
 
-<head>
-	<title>Register | R8MyTalk</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<script src="../index.js"></script>
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
-</head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <%- include('partials/navbar') %>
 
-<body class="is-preload">
-	<div id="page-wrapper">
+      <!-- Main -->
+      <div id="main" class="wrapper style1">
+        <div class="container">
+          <header class="major">
+            <h2>Register</h2>
+            <!--p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p-->
+          </header>
 
-		<!-- Navbar -->
-		<%- include('partials/navbar') %>
+          <img src="assets/css/images/loginlogo2.png" class="center" alt="" />
 
-			<!-- Main -->
-			<div id="main" class="wrapper style1">
-				<div class="container">
-					<header class="major">
-						<h2>Register</h2>
-						<!--p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p-->
-					</header>
+          <section id="content">
+            <div class="jumbotron text-center text-primary">
+              <% if (error) { %>
+              <h2><%= error.customData %></h2>
 
-					<img src="assets/css/images/loginlogo2.png" class="center" alt="" />
+              <% } %>
+              <!-- Register Form -->
+              <%- include('forms/registerForm') %>
+              <li><a href="/login">Already Have Account?</a></li>
+            </div>
+          </section>
+        </div>
+      </div>
 
-					<section id="content">
-						<div class="jumbotron text-center text-primary">
+      <!-- Footer -->
+      <%- include('partials/footer') %>
+    </div>
 
-							<% if (error) { %>
-								<h2>
-
-									<%= error.customData %>
-								</h2>
-
-								<% } %>
-									<!-- Register Form -->
-									<%- include('forms/registerForm') %>
-										<li><a href="login">Already Have Account?</a></li>
-
-						</div>
-					</section>
-
-				</div>
-			</div>
-
-			<!-- Footer -->
-			<%- include('partials/footer') %>
-
-	</div>
-
-	<!-- Scripts -->
-	<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
-	<%- include('partials/scripts') %>
-
-</body>
-
+    <%- include('partials/scripts') %>
+  </body>
 </html>

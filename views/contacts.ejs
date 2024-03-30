@@ -12,17 +12,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="assets/css/main.css" />
-
+    <%- include('partials/styles') %>
 	<style>
 		.addMargin {
 			margin-top: 1em;
 		}
 	</style>
-
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
 </head>
 
 <body class="is-preload">
@@ -36,22 +31,17 @@
 				<div class="container">
 					<header class="major">
 						<h2>Contacts </h2>
-
 					</header>
-
 
 
 					<!-- Content -->
 
 					<section id="content">
-
 						<div class="d-flex align-items-center justify-content-center mb-1">
 							<button id="exportButton" class="button primary" type="submit"
 								style="margin-top: 35px; margin-left: 30px; margin-bottom: 40px; padding-left: 40px; padding-right: 40px;">Download
 								Contacts</button>
 						</div>
-
-
 
 						<div class="table-wrapper">
 							<table>
@@ -111,8 +101,8 @@
 
 	<!-- Scripts -->
 	<%- include('partials/scripts') %>
-		<script src="assets/js/profilePageHandler.js"></script>
-		<script src="assets/js/handleContacts.js"></script>
+		<script src="/assets/js/profilePageHandler.js"></script>
+		<script src="/assets/js/handleContacts.js"></script>
 
 </body>
 

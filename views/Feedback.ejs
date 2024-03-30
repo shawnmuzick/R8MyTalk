@@ -1,78 +1,60 @@
 <!DOCTYPE html>
 <html class="black-placeholder" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no" />
+    <title>Survey | R8MyTalk</title>
+    <%- include('partials/styles') %>
+    <link rel="stylesheet" href="/assets/css/feedback.css" />
+    <link rel="stylesheet" href="/assets/css/survey.css" />
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable=no>
-	<title>Survey | R8MyTalk</title>
-	<link rel="stylesheet" href="/assets/css/main.css" />
-	<link rel="stylesheet" href="/assets/css/feedback.css">
-	<noscript>
-		<link rel="stylesheet" href="/assets/css/noscript.css" />
-	</noscript>
-	<link rel="stylesheet" href="/assets/css/survey.css">
-</head>
+  <body>
+    <div class="page-wrapper">
+      <div id="main" class="wrapper style1">
+        <%- include('partials/banner') %>
 
-<body>
-	<div class="page-wrapper">
+        <div id="container">
+          <!-- Square question container -->
+          <section id="question-container">
+            <h3 id="questionElement" data-variable="<%= customQ %>"><%= customQ %></h3>
+          </section>
 
-		<div id="main" class="wrapper style1">
-			<!-- Banner -->
-			<section id="banner2">
-				<div class="content">
-					<span class="image"><img src="/assets/css/images/homepagelogo.png" alt="" /></span>
-					<h2 id="eventName"></h2>
-				</div>
-			</section>
+          <section id="feedbackSection">
+            <!-- Square textbox -->
+            <textarea name="message" id="message" placeholder="Enter your message"></textarea>
+          </section>
+        </div>
 
+        <section id="survey-ending">
+          <button type="button" class="button primary" id="feedbackButton">Next</button>
+        </section>
 
-			<div id="container">
-				<!-- Square question container -->
-				<section id="question-container">
-					<h3 id="questionElement" data-variable="<%= customQ %>">
-						<%= customQ %>
-					</h3>
-				</section>
+        <%- include('forms/contactForm') %>
 
-				<section id="feedbackSection">
-					<!-- Square textbox -->
-					<textarea name="message" id="message" placeholder="Enter your message"></textarea>
-				</section>
-			</div>
+        <section id="thankYou-section" style="display: none">
+          <h3 id="thankYouMessage" style="margin-bottom: 1em">Thank you for your feedback!</h3>
+          <% if(eventName=="Test-Survey" ) { %>
+          <button class="button primary backToProfileButton" id="profileButton">
+            Go back to profile page
+          </button>
 
-			<section id="survey-ending">
-				<button type="button" class="button primary" id="feedbackButton">Next</button>
-			</section>
-
-
-			<!-- Scripts -->
-			<%- include('forms/contactForm') %>
-
-				<section id="thankYou-section" style="display: none;">
-					<h3 id="thankYouMessage" style="margin-bottom: 1em;">Thank you for your feedback!</h3>
-					<% if(eventName=="Test-Survey" ) { %>
-						<button class="button primary backToProfileButton" id="profileButton">Go back to
-							profile page</button>
-
-						<% }else{ %>
-							<div class="contactButton-container2" id="moveHigher">
-								<button type="button" style="margin-top: 1em;" class="button primary"
-									id="btnDownloadFile">Download
-									Presentation Now!!!</button>
-							</div>
-							<% } %>
-
-				</section>
-
-		</div>
-	</div>
-	<!-- Footer -->
-	<%- include('partials/footer') %>
-
-
-		<!-- Scripts -->
-		<%- include('partials/scripts') %>
-			<script src="/feedback.js"></script>
-</body>
-
+          <% }else{ %>
+          <div class="contactButton-container2" id="moveHigher">
+            <button
+              type="button"
+              style="margin-top: 1em"
+              class="button primary"
+              id="btnDownloadFile"
+            >
+              Download Presentation Now!!!
+            </button>
+          </div>
+          <% } %>
+        </section>
+      </div>
+    </div>
+    <%- include('partials/footer') %> <%- include('partials/scripts') %>
+    <script src="/feedback.js"></script>
+  </body>
 </html>

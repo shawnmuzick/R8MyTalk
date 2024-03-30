@@ -13,7 +13,7 @@ export async function getSpeakerProfile(uid) {
     return {
       firstName: data?.firstName ?? "",
       lastName: data?.lastName ?? "",
-      bio: data?.bio ?? "",
+      bio: data?.Bio ?? "",
       socialLink1: data?.socialLink1 ?? "",
       socialLink2: data?.socialLink2 ?? "",
       socialLink3: data?.socialLink3 ?? "",

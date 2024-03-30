@@ -1,5 +1,17 @@
-import { arrayUnion, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import qr from "qrcode";
 import { db, storage } from "./index.js";
 
@@ -15,8 +27,14 @@ export async function createQR(url, userFolder, fileName, eventName) {
   try {
     // Generate the QR code
     const qrCodeData = await qr.toDataURL(url);
-    const qrCodeBuffer = Buffer.from(qrCodeData.replace(/^data:image\/png;base64,/, ""), "base64");
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/" + fileName);
+    const qrCodeBuffer = Buffer.from(
+      qrCodeData.replace(/^data:image\/png;base64,/, ""),
+      "base64",
+    );
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/" + fileName,
+    );
 
     const metadata = {
       contentType: "image/png",
@@ -35,7 +53,10 @@ export async function uploadSharedFiles(file, uid, eventName) {
     const metadata = {
       contentType: file.mimetype,
     };
-    const storageRef = ref(storage, uid + "/" + spaceToHyphen(eventName) + "/" + file.fieldname); //COMEBACK //test
+    const storageRef = ref(
+      storage,
+      uid + "/" + spaceToHyphen(eventName) + "/" + file.fieldname,
+    ); //COMEBACK //test
     const result = await uploadBytes(storageRef, file.buffer, metadata);
     return result;
   } catch (error) {
@@ -46,7 +67,10 @@ export async function uploadSharedFiles(file, uid, eventName) {
 export async function deleteEventFromStorage(eventName, uid) {
   try {
     const fileRef = ref(storage, uid + "/" + eventName + "/" + "uploadedFile");
-    const qrRef = ref(storage, uid + "/" + eventName + "/" + eventName + ".png");
+    const qrRef = ref(
+      storage,
+      uid + "/" + eventName + "/" + eventName + ".png",
+    );
     await deleteObject(qrRef);
     await deleteObject(fileRef);
   } catch (error) {
@@ -56,7 +80,10 @@ export async function deleteEventFromStorage(eventName, uid) {
 
 export async function getFileDownloadURL(userFolder, eventName) {
   try {
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/uploadedFile");
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/uploadedFile",
+    );
     const url = await getDownloadURL(storageRef);
     return url;
   } catch (error) {
@@ -68,7 +95,10 @@ export async function getFileDownloadURL(userFolder, eventName) {
 export async function getQRURL(userFolder, eventName) {
   try {
     eventName = spaceToHyphen(eventName);
-    const storageRef = ref(storage, userFolder + "/" + eventName + "/" + eventName + ".png");
+    const storageRef = ref(
+      storage,
+      userFolder + "/" + eventName + "/" + eventName + ".png",
+    );
     const url = await getDownloadURL(storageRef);
     console.log(url);
     return url;
@@ -110,7 +140,9 @@ export async function readContactInfoFromDb(uid) {
 
         if (aContactDoc.exists()) {
           const emailFields = Object.entries(aContactDoc.data())
-            .filter(([key, value]) => typeof key === "string" && key.includes("@"))
+            .filter(
+              ([key, value]) => typeof key === "string" && key.includes("@"),
+            )
             .reduce((acc, [key, value]) => {
               acc[key] = value;
               return acc;
@@ -120,7 +152,7 @@ export async function readContactInfoFromDb(uid) {
             eventData: emailFields,
           });
         }
-      })
+      }),
     );
   } catch (error) {
     console.error("ERROR on sub-reference: ", error);
@@ -128,7 +160,14 @@ export async function readContactInfoFromDb(uid) {
   return contactsArray;
 }
 
-export async function sendContactInfoToDB(fullName, phoneNumber, email, role, uid, eventName) {
+export async function sendContactInfoToDB(
+  fullName,
+  phoneNumber,
+  email,
+  role,
+  uid,
+  eventName,
+) {
   try {
     const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
     const eventDoc = await getDoc(eventRef);
@@ -216,7 +255,9 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
             RATHER AN OBJECT!!!!!
             WILL ONLY WORK HARD CODED, data.question does not work
             */
-      const originalArray = Object.keys(data[question]).map((key) => data[question][key]); //grab array from firestore
+      const originalArray = Object.keys(data[question]).map(
+        (key) => data[question][key],
+      ); //grab array from firestore
       try {
         const copiedArray = [...originalArray]; //copy the array locally
         copiedArray[index] += 1; //increment that spit

@@ -319,7 +319,7 @@ view_router.get("/contacts", isAuthenticated, async (req, res) => {
 
 /**A route to display the user login page */
 view_router.get("/login", (req, res) => {
-  res.render("login", { error: null });
+  res.render("login", { error: null, user: null });
 });
 
 /**A route to post a user login, redirect to profile page */
@@ -355,7 +355,7 @@ view_router.get("/logout", async (req, res) => {
 
 /**A route to display the new user registration page */
 view_router.get("/register", (req, res) => {
-  res.render("register", { error: null });
+  res.render("register", { error: null, user: null });
 });
 
 /**A route to post a new user registration

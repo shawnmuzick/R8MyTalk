@@ -7,67 +7,75 @@
 <html class="black-placeholder" lang="en">
 
 <head>
-    <title><%= profile.firstName %> <%= profile.lastName %>'s Profile</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/css/main.css"/>
-    <link rel="stylesheet" href="/assets/css/speakerstyles.css"/>
-    <noscript>
-        <link rel="stylesheet" href="/assets/css/noscript.css"/>
-    </noscript>
+	<title>
+		<%= profile.firstName %>
+			<%= profile.lastName %>'s Profile
+	</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="/assets/css/speakerstyles.css" />
+	<noscript>
+		<link rel="stylesheet" href="/assets/css/noscript.css" />
+	</noscript>
 </head>
 
 <body class="is-preload">
-<div id="page-wrapper">
+	<div id="page-wrapper">
 
-    <!-- Main -->
-    <div id="main" class="wrapper style1">
-        <a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light ">Back to Search Results</a>
-        <div class="container">
-            <header class="major">
-                <p class="display-4"><%= profile.firstName %> <%= profile.lastName %></p>
-            </header>
-            <!-- Content -->
-            <section id="content">
-            </section>
-        </div>
-    </div>
+		<!-- Main -->
+		<div id="main" class="wrapper style1">
+			<a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light ">Back to Search Results</a>
+			<div class="container">
+				<header class="major">
+					<p class="display-4">
+						<%= profile.firstName %>
+							<%= profile.lastName %>
+					</p>
+				</header>
+				<!-- Content -->
+				<section id="content">
+				</section>
+			</div>
+		</div>
 
-    <div class="container">
+		<div class="container">
 
-        <div class="profile-content">
-			<div class="profile-bio">
-                <h2>Bio</h2>
-                <p class="lead"><%= profile.bio || 'No bio available' %></p>
-            </div>
+			<div class="profile-content">
+				<div class="profile-bio">
+					<h2>Bio</h2>
+					<p class="lead">
+						<%= profile.bio || 'No bio available' %>
+					</p>
+				</div>
 
-            <div class="profile-social">
-                <h3>Social Links</h3>
-                <ul>
-                    <% if (profile.socialLink1) { %>
-                        <li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
-                    <% } %>
-                    <% if (profile.socialLink2) { %>
-                        <li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
-                    <% } %>
-                    <% if (profile.socialLink3) { %>
-                        <li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
-    </div>
+				<div class="profile-social">
+					<h3>Social Links</h3>
+					<ul>
+						<% if (profile.socialLink1) { %>
+							<li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
+							<% } %>
+								<% if (profile.socialLink2) { %>
+									<li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
+									<% } %>
+										<% if (profile.socialLink3) { %>
+											<li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
+											<% } %>
+					</ul>
+				</div>
+			</div>
+		</div>
 
 
-    <!-- Footer -->
-    <%- include('partials/footer') %>
-</div>
+		<!-- Footer -->
+		<%- include('partials/footer') %>
+	</div>
 
-<!-- Scripts -->
-<%- include('partials/scripts') %>
-<script src="assets/js/speakerProfileHandler.js"></script>
+	<!-- Scripts -->
+	<%- include('partials/scripts') %>
+		<script src="assets/js/speakerProfileHandler.js"></script>
 </body>
 
 </html>

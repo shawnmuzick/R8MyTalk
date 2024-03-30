@@ -12,7 +12,8 @@ export function isAuthenticated(req, res, next) {
 
 /** This middleware renders a 404 page if no other middleware responded */
 export function pageNotFound(req, res, next) {
+  const user = req.session.user ?? null;
   res.status(404);
-  res.render("404", { user: null, error: null });
+  res.render("404", { user: user, error: null });
   next();
 }

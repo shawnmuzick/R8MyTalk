@@ -9,7 +9,7 @@
 <head>
 	<title>
 		<%= profile.firstName %>
-			<%= profile.lastName %>'s Profile
+			<%= profile.lastName %>'s Profile | R8MyTalk
 	</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -25,57 +25,62 @@
 <body class="is-preload">
 	<div id="page-wrapper">
 
-		<!-- Main -->
-		<div id="main" class="wrapper style1">
+		<!-- Navbar -->
+		<%- include('partials/navbar') %>
+
+			<!-- Main -->
+			<div id="main" class="wrapper style1">
+				<div class="container">
+					<header class="major">
+						<p class="display-4">
+							<%= profile.firstName %>
+								<%= profile.lastName %>
+						</p>
+					</header>
+				</div>
+			</div>
+
+			<section>
+				<div class="container">
+					<div class="profile-content">
+						<div class="profile-bio">
+							<h2>Bio</h2>
+							<p class="lead">
+								<%= profile.bio || 'No bio available' %>
+							</p>
+						</div>
+					</div>
+			</section>
+
+			<section>
+				<div class="container">
+					<div class="profile-social">
+						<h3>Social Links</h3>
+						<ul>
+							<% if (profile.socialLink1) { %>
+								<li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
+								<% } %>
+									<% if (profile.socialLink2) { %>
+										<li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
+										<% } %>
+											<% if (profile.socialLink3) { %>
+												<li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
+												<% } %>
+						</ul>
+					</div>
+				</div>
+			</section>
 			<a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light ">Back to Search Results</a>
-			<div class="container">
-				<header class="major">
-					<p class="display-4">
-						<%= profile.firstName %>
-							<%= profile.lastName %>
-					</p>
-				</header>
-				<!-- Content -->
-				<section id="content">
-				</section>
-			</div>
-		</div>
-
-		<div class="container">
-
-			<div class="profile-content">
-				<div class="profile-bio">
-					<h2>Bio</h2>
-					<p class="lead">
-						<%= profile.bio || 'No bio available' %>
-					</p>
-				</div>
-
-				<div class="profile-social">
-					<h3>Social Links</h3>
-					<ul>
-						<% if (profile.socialLink1) { %>
-							<li><a href="<%= profile.socialLink1 %>" target="_blank">Link 1</a></li>
-							<% } %>
-								<% if (profile.socialLink2) { %>
-									<li><a href="<%= profile.socialLink2 %>" target="_blank">Link 2</a></li>
-									<% } %>
-										<% if (profile.socialLink3) { %>
-											<li><a href="<%= profile.socialLink3 %>" target="_blank">Link 3</a></li>
-											<% } %>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-
-		<!-- Footer -->
-		<%- include('partials/footer') %>
 	</div>
 
-	<!-- Scripts -->
-	<%- include('partials/scripts') %>
-		<script src="assets/js/speakerProfileHandler.js"></script>
+
+	<!-- Footer -->
+	<%- include('partials/footer') %>
+		</div>
+
+		<!-- Scripts -->
+		<%- include('partials/scripts') %>
+			<script src="assets/js/speakerProfileHandler.js"></script>
 </body>
 
 </html>

@@ -446,6 +446,7 @@ view_router.get("/speakerSearch", async (req, res) => {
 
     //to populate the navbar
     const user = null;
+    console.log(users);
     res.render("speakerSearch", { users, user });
   } catch (error) {
     console.log("Error getting data: ", error);
@@ -460,7 +461,7 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     const uid = req.params.uid;
     const profile = await getSpeakerProfile(uid);
     // Render the profile page with the user's data
-    res.render("speakerProfile", { profile });
+    res.render("speakerProfile", { profile, user: null });
   } catch (error) {
     console.log("Error getting profile data:", error);
     res.status(500);

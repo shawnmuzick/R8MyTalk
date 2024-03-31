@@ -1,0 +1,117 @@
+<!-- Create Event Form -->
+<form class="text-primary" action="/createEvent" method="POST">
+  <div class="modal-body text-center">
+    <p style="color: #272833" class="display-6 mb-3">Create a New Engagement</p>
+    <p style="color: #272833" class="fs-5">
+      This form allows you to create a new engagement, and tasks will also show up.
+    </p>
+  </div>
+
+  <div class="form-group text-dark">
+    <label for="title" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">1.</span> What's Your Talk Title?
+    </label>
+    <br />
+    <input
+      type="text"
+      id="eventName"
+      name="eventName"
+      placeholder="Talk Title"
+      required
+      class="text-dark border border-dark"
+    />
+    <br />
+    <br />
+
+    <label for="title" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">2.</span> Add a question unique to your event
+    </label>
+    <br />
+    <input
+      type="text"
+      id="eventCustomQuestion"
+      name="eventCustomQuestion"
+      placeholder="Custom Question"
+      required
+      class="text-dark border border-dark"
+    />
+    <br />
+    <br />
+
+    <label for="organizer" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">3.</span> Who's the event organizer or organization?
+    </label>
+    <br />
+    <input
+      type="text"
+      id="organizer"
+      name="organizer"
+      placeholder="Enter organizer or company"
+      required
+      class="text-dark border border-dark"
+    />
+    <br />
+    <br />
+
+    <label for="talkDate" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">4.</span> When's your talk?
+    </label>
+    <br />
+    <input
+      type="date"
+      id="talkDate"
+      name="talkDate"
+      required
+      class="text-dark border border-dark"
+    />
+    <br />
+    <br />
+
+    <label class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">5.</span> Is your talk in person or virtual?
+    </label>
+    <br />
+
+    <input type="radio" id="inPerson" name="talkType" value="In Person" required />
+    <label for="inPerson" class="text-dark fs-5">In-person</label>
+    <br />
+    <input type="radio" id="virtual" name="talkType" value="Virtual" required />
+    <label for="virtual" class="text-dark mb-1 fs-5">Virtual</label>
+
+    <br />
+    <br />
+
+    <label for="attendees" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">6.</span> How many attendees were there?
+    </label>
+    <br />
+    <input
+      type="number"
+      id="attendees"
+      name="attendees"
+      placeholder="Audience size"
+      required
+      class="text-dark border border-dark"
+    />
+    <br />
+    <br />
+
+    <label for="payment" class="text-dark mb-0 fs-5">
+      <span class="badge bg-warning">7.</span> How much did you get paid for this talk?
+    </label>
+    <br />
+    <input
+      type="text"
+      id="eventEarnings"
+      name="eventEarnings"
+      placeholder="Track earnings"
+      required
+      class="text-dark border border-dark"
+      oninput="formatCurrency(this)"
+    />
+    <br />
+    <br />
+  </div>
+  <button type="submit" class="btn btn-primary bg-warning border-warning">Create Event</button>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</form>

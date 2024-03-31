@@ -13,7 +13,6 @@
         <div class="container">
           <header class="major">
             <h2>Register</h2>
-            <!--p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p-->
           </header>
 
           <img src="assets/css/images/loginlogo2.png" class="center" alt="" />
@@ -23,16 +22,13 @@
               <% if (error) { %>
               <h2><%= error.customData %></h2>
 
-              <% } %>
-              <!-- Register Form -->
-              <%- include('forms/registerForm') %>
+              <% } %> <%- include('forms/registerForm') %>
               <li><a href="/login">Already Have Account?</a></li>
             </div>
           </section>
         </div>
       </div>
 
-      <!-- Footer -->
       <%- include('partials/footer') %>
     </div>
 

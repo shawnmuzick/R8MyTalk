@@ -68,7 +68,10 @@ export async function uploadProfilePicture(file, uid) {
     const metadata = {
       contentType: file.mimetype,
     };
-    const storageRef = ref(storage, uid + "/" + "profilePicture/");
+    const storageRef = ref(
+      storage,
+      uid + "/" + "profilePicture/" + file.fieldName,
+    );
     const result = await uploadBytes(storageRef, file.buffer, metadata);
     return result;
   } catch (error) {

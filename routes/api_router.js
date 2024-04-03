@@ -13,6 +13,7 @@ import {
   getProfilePictureURL,
   getSpeakerProfile,
   getStorageItems,
+  uploadProfilePicture,
 } from "../controllers/speakers.js";
 import { __dirname } from "../index.js";
 import { upload } from "../middleware/config_multer.js";
@@ -62,8 +63,15 @@ api_router.post(
   upload.single("uploadedFile"),
   isAuthenticated,
   async (req, res) => {
-    console.log("user_id", req.params.id);
-    res.json({ message: "not yet implemented" });
+    try {
+      console.log("user_id", req.params.id);
+      const result = await uploadProfilePicture();
+      res.status(200);
+      res.json({ message: "Upload OK" });
+    } catch (error) {
+      console.log(`problem uploading file ${error}`);
+      res.status(500).send("Error uploading file");
+    }
   },
 );
 

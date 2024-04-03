@@ -18,11 +18,31 @@
 
       <!-- Main -->
       <div id="main" class="wrapper style1">
+        <!-- if we have a profile picture, format this way -->
+        <% if (profile?.profilePictureUrl) { %>
+        <div id="container" style="display: flex; justify-content: center; margin-bottom: 20px">
+          <img
+            src="<%=profile?.profilePictureUrl%>"
+            style="width: 250px; height: 250px; border-radius: 50%"
+          />
+        </div>
         <div class="container">
           <header class="major">
-            <p class="display-4"><%= profile.firstName %> <%= profile.lastName %></p>
+            <p class="display-4" style="margin: 0px"><%= profile.firstName %></p>
+            <p class="display-4" style="margin: 0px"><%= profile.lastName %></p>
           </header>
         </div>
+
+        <!-- otherwise, format this way -->
+        <% } else { %>
+        <div class="container">
+          <header class="major">
+            <p class="display-4" style="margin: 0px">
+              <%= profile.firstName %> <%= profile.lastName %>
+            </p>
+          </header>
+        </div>
+        <% } %>
 
         <section>
           <div class="container">

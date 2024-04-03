@@ -19,7 +19,10 @@ import {
 } from "firebase/firestore";
 import { DateTime } from "luxon";
 import { getSpeakers } from "../controllers/api.js";
-import { getSpeakerProfile } from "../controllers/speakers.js";
+import {
+  getProfilePictureURL,
+  getSpeakerProfile,
+} from "../controllers/speakers.js";
 import { __dirname } from "../index.js";
 import { auth, db } from "../index.js";
 import { upload } from "../middleware/config_multer.js";
@@ -469,6 +472,7 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     const user = req.session.user ?? null;
     const uid = req.params.uid;
     const profile = await getSpeakerProfile(uid);
+    profile.profilePictureUrl = await getProfilePictureURL(uid);
     // Render the profile page with the user's data
     res.render("speakerProfile", { profile, user: user });
   } catch (error) {

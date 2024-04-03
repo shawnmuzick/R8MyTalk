@@ -1,47 +1,6 @@
 import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
-import { getAuth } from "firebase-admin/auth";
 import { db } from "../index.js";
 import { readEventInfoFromDB } from "../util.js";
-
-export async function getSpeakers() {
-  const users = [];
-  try {
-    const listAllUsers = async (nextPageToken) => {
-      const page = await getAuth().listUsers(1000, nextPageToken);
-      page.users.forEach((userRecord) => {
-        users.push({
-          uid: userRecord.uid,
-          displayName: userRecord.displayName,
-        });
-      });
-      if (page.pageToken) {
-        // get the next page if there is one
-        listAllUsers(page.pageToken);
-      }
-    };
-    //run the above, recursively, and return the result
-    await listAllUsers();
-    return users;
-  } catch (error) {
-    console.log("Error listing users:", error);
-  }
-}
-
-export async function searchUsers(searchQuery) {
-  let matchingUsers = [];
-  try {
-    const allUsers = await getSpeakers();
-    // Filter the users based on the search query
-    matchingUsers = allUsers.filter((user) => {
-      const fullName = `${user.displayName}`.toLowerCase();
-      return fullName.includes(searchQuery.toLowerCase());
-    });
-    return matchingUsers;
-  } catch (error) {
-    console.log("Error searching users:", error);
-    throw error;
-  }
-}
 
 export async function getFeedbackData(req, res) {
   try {

@@ -3,16 +3,13 @@
  * related to fetching and posting data
  */
 import express from "express";
-import {
-  getEventList,
-  getFeedbackData,
-  getSpeakers,
-  searchUsers,
-} from "../controllers/api.js";
+import { getEventList, getFeedbackData } from "../controllers/events.js";
 import {
   getProfilePictureURL,
   getSpeakerProfile,
+  getSpeakers,
   getStorageItems,
+  searchUsers,
   uploadProfilePicture,
 } from "../controllers/speakers.js";
 import { __dirname } from "../index.js";

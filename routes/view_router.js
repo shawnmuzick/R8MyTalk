@@ -18,7 +18,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { DateTime } from "luxon";
-import { getSpeakers } from "../controllers/api.js";
+import { getSpeakers } from "../controllers/speakers.js";
 import {
   getProfilePictureURL,
   getSpeakerProfile,

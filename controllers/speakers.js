@@ -32,14 +32,27 @@ export async function getSpeakers() {
 }
 
 export async function searchUsers(searchQuery) {
-  let matchingUsers = [];
   try {
+    let matchingUsers = [];
     const allUsers = await getSpeakers();
+    await Promise.all(
+      allUsers.map(async (u) => {
+        u.profile = await getSpeakerProfile(u.uid);
+      }),
+    );
     // Filter the users based on the search query
     matchingUsers = allUsers.filter((user) => {
-      const fullName = `${user.displayName}`.toLowerCase();
-      return fullName.includes(searchQuery.toLowerCase());
+      console.log(user);
+      const displayName = `${user.displayName}`.toLowerCase();
+      const lastName = `${user.profile.lastName}`.toLowerCase();
+      const firstName = `${user.profile.firstName}`.toLowerCase();
+      return (
+        displayName.includes(searchQuery.toLowerCase()) ||
+        lastName.includes(searchQuery.toLowerCase()) ||
+        firstName.includes(searchQuery.toLowerCase())
+      );
     });
+
     return matchingUsers;
   } catch (error) {
     console.log("Error searching users:", error);

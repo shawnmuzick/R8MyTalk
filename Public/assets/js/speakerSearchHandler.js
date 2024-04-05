@@ -11,15 +11,22 @@ searchForm.addEventListener("submit", async (event) => {
         `/api/data/speakers/search?q=${searchQuery}`,
       );
       const { data } = await response.json();
+      console.log(data);
       // Clear previous search results
       searchResults.innerHTML = "";
       if (data.length > 0) {
         // Display the matching users
         data.forEach((user) => {
+          console.log(user);
           const userElement = document.createElement("a");
           userElement.href = `/speakerProfile/${user.uid}`;
           userElement.className = "display-3";
-          userElement.textContent = user.displayName;
+          userElement.textContent =
+            user?.displayName +
+            " " +
+            user?.profile.lastName +
+            " " +
+            user?.profile.firstName;
           searchResults.appendChild(userElement);
           searchResults.appendChild(document.createElement("br"));
         });

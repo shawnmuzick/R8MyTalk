@@ -15,21 +15,21 @@
 
   <nav id="nav" class="homepage-li">
     <ul>
-      <li><a href="../homePage">Home</a></li>
+      <li><a href="/homePage">Home</a></li>
       <!--Adding link to speaker search page, should be accessible by anyone-->
-      <li><a href="../speakerSearch">Speaker Search</a></li>
+      <li><a href="/speakerSearch">Speaker Search</a></li>
 
       <% if (user) { %>
 
-      <li><a href="../contacts">Contacts</a></li>
+      <li><a href="/contacts">Contacts</a></li>
       <li><a href=""></a></li>
       <li><a href="/speakerProfile/edit/<%=user.uid%>">Edit My Profile</a></li>
 
       <li>
-        <a href="../profilePage"><%= "Hi, " + user.displayName %></a>
+        <a href="/profilePage"><%= "Hi, " + user.displayName %></a>
         <ul>
-          <li><a href="../profilePage">Profile Page</a></li>
-          <li><a href="../logout" name="logout">Logout</a></li>
+          <li><a href="/profilePage">Profile Page</a></li>
+          <li><a href="/logout" name="logout">Logout</a></li>
         </ul>
       </li>
       <% } else { %>

@@ -22,6 +22,8 @@
       <% if (user) { %>
 
       <li><a href="../contacts">Contacts</a></li>
+      <li><a href=""></a></li>
+      <li><a href="/speakerProfile/edit/<%=user.uid%>">Edit My Profile</a></li>
 
       <li>
         <a href="../profilePage"><%= "Hi, " + user.displayName %></a>
@@ -31,7 +33,7 @@
         </ul>
       </li>
       <% } else { %>
-      <li><a href="../login" class="button primary">Log In</a></li>
+      <li><a href="/login" class="button primary">Log In</a></li>
       <% } %>
     </ul>
   </nav>

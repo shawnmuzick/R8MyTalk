@@ -1,0 +1,15 @@
+<!-- Profile Form -->
+<form>
+  <div class="contactButton-container">
+    <h3 id="contactInfo">Your Profile</h3>
+  </div>
+  <input id="firstName" disabled value="<%=profile.firstName%>" />
+  <input id="lastName" disabled value="<%=profile.lastName%>" />
+  <input id="socialLink1" />
+  <input id="socialLink2" />
+  <input id="socialLink3" />
+  <textarea id="bio" style="color: white"><%=profile.bio%></textarea>
+  <div class="contactButton-container">
+    <button type="button" class="button primary" id="contact-submit-btn">Submit</button>
+  </div>
+</form>

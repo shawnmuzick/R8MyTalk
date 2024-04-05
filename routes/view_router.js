@@ -466,6 +466,27 @@ view_router.get("/speakerSearch", async (req, res) => {
   }
 });
 
+/**A route to render the edit speakerProfile page */
+view_router.get(
+  "/speakerProfile/edit/:uid",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      const user = req.session.user ?? null;
+      const uid = req.params.uid;
+      console.log("uid", uid);
+      const profile = await getSpeakerProfile(uid);
+      profile.profilePictureUrl = await getProfilePictureURL(uid);
+      // Render the profile page with the user's data
+      res.render("editProfile", { profile, user: user });
+    } catch (error) {
+      console.log("Error getting profile data:", error);
+      res.status(500);
+      res.send({ message: error });
+    }
+  },
+);
+
 /**A route to render the speakerProfile page */
 view_router.get("/speakerProfile/:uid", async (req, res) => {
   try {
@@ -481,4 +502,5 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     res.send({ message: error });
   }
 });
+
 export default view_router;

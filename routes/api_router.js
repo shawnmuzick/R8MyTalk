@@ -78,7 +78,6 @@ api_router.post(
   isAuthenticated,
   async (req, res) => {
     try {
-      console.log("user_id", req.params.id);
       const result = await uploadProfilePicture();
       res.status(200);
       res.json({ message: "Upload OK" });

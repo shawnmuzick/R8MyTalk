@@ -13,7 +13,9 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import qr from "qrcode";
+import { getEventRef } from "./controllers/events.js";
 import { db, storage } from "./index.js";
+import { EmojiQuestions } from "./models/EmojiQuestions.js";
 
 export function spaceToHyphen(string) {
   return string.replace(/ /g, "-");
@@ -109,7 +111,7 @@ export async function getQRURL(userFolder, eventName) {
 
 export async function readEventInfoFromDB(uid, eventName) {
   try {
-    const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
+    const eventRef = await getEventRef(uid, eventName);
     const eventDoc = await getDoc(eventRef);
     const data = eventDoc.data();
     if (eventDoc.exists()) {
@@ -169,11 +171,10 @@ export async function sendContactInfoToDB(
   eventName,
 ) {
   try {
-    const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
+    const eventRef = await getEventRef(uid, eventName);
     const eventDoc = await getDoc(eventRef);
     if (eventDoc.exists()) {
       const encodedEmail = email.replace(/\./g, "_"); //goes into firestore funny with out it
-      // opposite is needed when grabbing it
 
       await updateDoc(eventRef, {
         [encodedEmail]: arrayUnion(fullName, phoneNumber, role),
@@ -184,115 +185,63 @@ export async function sendContactInfoToDB(
   }
 }
 
-export async function sendFeedbackToDB(question, answer, uid, eventName) {
-  //if written feedback question
-  if (question == "How would you describe this event to a friend?") {
-    //change question to the name of appropiate array in Firestore
-    question = "Testimonial";
-    const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
-    // Retrieve the document
-    const eventDoc = await getDoc(eventRef);
-    try {
-      if (eventDoc.exists) {
-        //console.log("Before Addition: " + JSON.stringify(data[question], null, 2)); //this prints specific array
-        // Atomically add a new region to the "regions" array field.
-        await updateDoc(eventRef, {
-          [question]: arrayUnion(answer),
-        });
-
-        // Atomically remove a region from the "regions" array field.
-        //await updateDoc(eventRef, {
-        //[qeustion]: arrayRemove("east_coast")
-        //});
-        // Atomically add a new region to the "regions" array field.
-      } else {
-        console.log("Doc does not exist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+export async function handleQuestion(question, answer, eventRef) {
+  try {
+    await updateDoc(eventRef, { [question]: arrayUnion(answer) });
+  } catch (error) {
+    throw error;
   }
+}
 
-  //if emoji question
-  else if (
-    question == "Actionable" ||
-    question == "Engaging" ||
-    question == "Interactive" ||
-    question == "Inspiring" ||
-    question == "Relevant"
-  ) {
-    // Determine the index based on the answer
-    let index; // which answer in array to increment
-    switch (answer) {
-      case "angry":
-        index = 0;
-        break;
-      case "sad":
-        index = 1;
-        break;
-      case "ok":
-        index = 2;
-        break;
-      case "smile":
-        index = 3;
-        break;
-      case "love":
-        index = 4;
-        break;
-      default:
-        console.log("SOMETHING BAD");
-        return; // Exit the function if the answer is not recognized
-    }
-
-    const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
-
-    // Retrieve the document
-    const eventDoc = await getDoc(eventRef);
-
-    if (eventDoc.exists()) {
-      const data = eventDoc.data();
-      /**   FIRESTORE DOES NOT TREAT THE ARRAY AS AN ARRAY
+export async function handleEmojiQuestion(question, index, eventDoc, eventRef) {
+  try {
+    const data = await eventDoc.data();
+    /**   FIRESTORE DOES NOT TREAT THE ARRAY AS AN ARRAY
             RATHER AN OBJECT!!!!!
             WILL ONLY WORK HARD CODED, data.question does not work
             */
-      const originalArray = Object.keys(data[question]).map(
-        (key) => data[question][key],
-      ); //grab array from firestore
-      try {
-        const copiedArray = [...originalArray]; //copy the array locally
-        copiedArray[index] += 1; //increment that spit
+    const originalArray = Object.keys(data[question]).map(
+      (key) => data[question][key],
+    ); //grab array from firestore
+    const copiedArray = [...originalArray]; //copy the array locally
+    copiedArray[index] += 1; //increment that spit
 
-        await updateDoc(eventRef, {
-          //update the firestore array with the new array by treating as an
-          [question]: copiedArray.reduce((acc, item, i) => {
-            acc[i.toString()] = item;
-            return acc;
-          }, {}),
-        });
+    await updateDoc(eventRef, {
+      [question]: copiedArray.reduce((acc, item, i) => {
+        acc[i.toString()] = item;
+        return acc;
+      }, {}),
+    });
+  } catch (error) {
+    throw error;
+  }
+}
 
-        console.log("Array item incremented successfully.");
-      } catch {
-        console.log("Something went wrong");
+export async function sendFeedbackToDB(question, answer, uid, eventName) {
+  try {
+    const emojis = new EmojiQuestions();
+    console.log(emojis);
+
+    const eventRef = await getEventRef(uid, eventName);
+    const eventDoc = await getDoc(eventRef);
+    if (!eventDoc.exists) {
+      throw new Error("Doc does not exist");
+    }
+
+    if (question == "How would you describe this event to a friend?") {
+      await handleQuestion("Testimonial", answer, eventRef);
+    } else if (emojis.questions.includes(question)) {
+      // Determine the index based on the answer, throw if bad
+      const index = emojis.answers.indexOf(answer);
+      if (index == -1) {
+        throw new Error("SOMETHING BAD");
+      } else {
+        await handleEmojiQuestion(question, index, eventDoc, eventRef);
       }
     } else {
-      console.log("Document does not exist.");
+      await handleQuestion("CustomAnswer", answer, eventRef);
     }
-  } else {
-    const eventRef = doc(db, "theFireUsers", uid, "userEventList", eventName);
-    // Retrieve the document
-    const eventDoc = await getDoc(eventRef);
-    question = "CustomAnswer";
-
-    try {
-      if (eventDoc.exists) {
-        await updateDoc(eventRef, {
-          [question]: arrayUnion(answer),
-        });
-      } else {
-        console.log("Doc does not exist");
-      }
-    } catch (error) {
-      console.log(error); //probably put in a weird argument
-    }
+  } catch (error) {
+    throw error;
   }
 }

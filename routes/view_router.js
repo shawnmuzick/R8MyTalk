@@ -50,9 +50,7 @@ view_router.post("/qrButton", async (req, res) => {
   try {
     const user = req.session.user;
     const { rowIndex, eventName } = req.body;
-    console.log(rowIndex, eventName);
     const url = await getQRURL(user.uid, eventName);
-    console.log(url);
     res.send(url);
   } catch (error) {
     console.log(error);
@@ -63,6 +61,8 @@ view_router.post("/qrButton", async (req, res) => {
 
 /**A route to render a survey page for an event*/
 view_router.get("/survey/:uid/:eventName", (req, res) => {
+  const eventName = req.params.eventName;
+  console.log("test", eventName);
   res.render("survey");
 });
 
@@ -75,8 +75,10 @@ view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
       doc(db, "theFireUsers", user.uid, "userEventList", eventName),
     );
     await deleteEventFromStorage(eventName, user.uid);
+    res.status(200);
+    res.json({ message: `${eventName} successfully deleted` });
   } catch (error) {
-    console.log("error deleting");
+    console.log("error deleting event");
   }
 });
 
@@ -85,6 +87,7 @@ view_router.get("/review/:eventName", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = req.params.eventName;
+    console.log("test", eventName);
     const dbEventInfo = await readEventInfoFromDB(user.uid, eventName);
 
     /*If all of the metric fields are set to 0, then this event recieved no feedback. */
@@ -170,6 +173,7 @@ view_router.post("/createEvent", async (req, res) => {
 view_router.get("/feedback/:uid/:eventName", async (req, res) => {
   try {
     const { uid, eventName } = req.params;
+    console.log("test", eventName);
     let customQ = "";
     if (eventName !== "Test-Survey") {
       const theObject = await readEventInfoFromDB(uid, eventName);

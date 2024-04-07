@@ -2,6 +2,14 @@ import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
 import { db } from "../index.js";
 import { readEventInfoFromDB } from "../util.js";
 
+export async function getEventRef(uid, eventName) {
+  try {
+    return doc(db, "theFireUsers", uid, "userEventList", eventName);
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getFeedbackData(req, res) {
   try {
     const user = req.session.user;

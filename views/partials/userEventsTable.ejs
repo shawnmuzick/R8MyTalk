@@ -1,0 +1,97 @@
+<!-- User Events Table -->
+<table>
+  <thead class="thead-dark">
+    <tr>
+      <th class="fs-2 text-center">Event</th>
+      <th class="fs-3 text-center">Organization</th>
+      <th class="fs-3 text-center">Type</th>
+      <th class="fs-3 text-center">Date</th>
+      <th class="fs-3 text-center">Attendees</th>
+      <th class="fs-3 text-center">Earnings</th>
+      <th class="fs-3 text-center">Download QR</th>
+      <th class="fs-3 text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody class="fs-4">
+    <% for (let i=0; i < eventArray.length; i++) { %>
+    <tr>
+      <td>
+        <a
+          name="eventPage"
+          class="eventLink"
+          data-event-name="<%= eventArray[i].localEventName.replace(/ /g, '-') %>"
+          href="/review/<%= encodeURIComponent(eventArray[i].localEventName.trim()).replace(/%20/g, '-') %>"
+        >
+          <%= eventArray[i].localEventName %>
+        </a>
+      </td>
+
+      <td class="text-center"><%= eventArray[i].localEventFields.organizer %></td>
+      <td class="text-center"><%= eventArray[i].localEventFields.talkType %></td>
+      <td class="text-center"><%= eventArray[i].localEventFields.talkDate %></td>
+      <td class="text-center"><%= eventArray[i].localEventFields.attendees %></td>
+      <td class="text-center"><%= eventArray[i].localEventFields.eventEarnings %></td>
+      <td class="text-center">
+        <button
+          class="button icon solid fa-download"
+          name="qrButton"
+          data-row-index="<%= i %>"
+          data-event-name="<%= eventArray[i].localEventName %>"
+        ></button>
+      </td>
+      <td id="dropdown-menu" class="text-center">
+        <!-- Dropdown with ellipsis link as the trigger -->
+        <div class="dropdown custom-dropdown text-center">
+          <button
+            class="btn btn-secondary dropdown-toggle text-center"
+            type="button"
+            name="ellipsisDropdown"
+            data-event-name="<%= eventArray[i].localEventName %>"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ></button>
+          <ul class="dropdown-menu" aria-labelledby="ellipsisDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                name="editCustomQuestion"
+                data-bs-toggle="modal"
+                data-bs-target="#editQuestionModel"
+                data-bs-whatever="@getbootstrap"
+                data-question="<%= eventArray[i].localEventFields.customQuestion %>"
+                data-event-name="<%= eventArray[i].localEventName %>"
+                href="#"
+                >Edit Custom Question</a
+              >
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                name="btnUploadFile"
+                data-bs-toggle="modal"
+                data-bs-target="#uploadFileModal"
+                data-bs-whatever="@getbootstrap"
+                data-event-name="<%= eventArray[i].localEventName %>"
+                href="#"
+                >Upload Files to Share</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                name="deleteEvent"
+                data-event-name="<%= eventArray[i].localEventName %>"
+                href="#/"
+                >Delete Event</a
+              >
+            </li>
+            <li><a class="dropdown-item" href="#/">Exit</a></li>
+          </ul>
+        </div>
+      </td>
+
+      <% } %>
+    </tr>
+  </tbody>
+</table>

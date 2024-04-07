@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const response = await fetch("/getData", {
+    const response = await fetch("/api/data/events/feedback", {
       method: "POST",
       body: JSON.stringify({ eventName }), //send the name to get the right data
       headers: {

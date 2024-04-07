@@ -1,0 +1,32 @@
+<!-- Edit Question Form -->
+<form class="text-primary" action="/editCustomQ" method="POST">
+  <div class="modal-body text-center">
+    <p style="color: #272833" class="display-6 mb-3">Edit the Unique Question</p>
+  </div>
+  <div class="form-group text-dark">
+    <label for="title" class="text-dark mb-0 fs-5 text-center"
+      >What is your new unique question?</label
+    >
+    <br />
+    <input
+      type="text"
+      id="newCustomQ"
+      name="newCustomQ"
+      placeholder="New Unique Question"
+      required
+      class="text-dark border border-dark"
+    />
+    <br /><br />
+    <div class="d-flex justify-content-center">
+      <button
+        type="submit"
+        name="submitCustomQ"
+        class="btn btn-primary bg-warning border-warning"
+        style="margin-right: 1em"
+      >
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</form>

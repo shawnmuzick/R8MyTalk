@@ -23,7 +23,19 @@ form.addEventListener("submit", async (event) => {
     });
     const response = await result.json();
     console.log(response.message);
+
+    // Alert asking user if they want to view their profile page after updating
+    if (
+      confirm(
+        "Your profile has been updated successfully!\nDo you want to go to your speaker profile page?",
+      )
+    ) {
+      window.location.href = `/speakerProfile/${uid}`;
+    }
+    //If you don't want to redirect, just having this alert could work fine also
+    //alert('Your profile has been updated successfully!');
   } catch (error) {
     console.log(error);
+    alert("An error occurred while updating your profile.");
   }
 });

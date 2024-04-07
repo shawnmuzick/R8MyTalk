@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html class="black-placeholder" lang="en">
-  <head>
-    <%-include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`}) %>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/speakerstyles.css" />
-  </head>
-
-  <body class="is-preload">
-    <div id="page-wrapper">
-      <%- include('partials/navbar') %>
-      <div id="main" class="wrapper style1"><%- include('forms/profileForm',{profile}) %></div>
-
-      <%-include('partials/footer') %>
-    </div>
-    <%-include('partials/scripts') %>
-    <script src="/assets/js/speakerProfileHandler.js"></script>
-  </body>
+<head><%- include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`}) %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous"/> <%- include('partials/styles') %>
+    <link rel="stylesheet" href="/assets/css/speakerstyles.css"/>
+</head>
+<body class="is-preload">
+<div id="page-wrapper">      <%- include('partials/navbar') %>
+    <div id="main" class="wrapper style1">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <%- include('forms/profileForm') %>
+                </div>
+            </div>
+        </div>
+    </div><%- include('partials/footer') %></div>
+<%- include('partials/scripts') %>
+<script src="/assets/js/speakerProfileHandler.js"></script>
+</body>
 </html>

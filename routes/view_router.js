@@ -503,41 +503,4 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
   }
 });
 
-/** A route to enable user's to update their speaker profile */
-view_router.post(
-  "/speakerProfile/:uid/update",
-  isAuthenticated,
-  async (req, res) => {
-    try {
-      const user = req.session.user;
-      const uid = req.params.uid;
-      const { bio, socialLink1, socialLink2, socialLink3 } = req.body;
-
-      // Check if the user is updating their own profile
-      if (user.uid !== uid) {
-        return res
-          .status(403)
-          .send("You are not authorized to update this profile.");
-      }
-
-      const updateData = {};
-
-      // Add fields to the updateData object only if they have a valid value
-      if (bio) updateData.bio = bio;
-      if (socialLink1) updateData.socialLink1 = socialLink1;
-      if (socialLink2) updateData.socialLink2 = socialLink2;
-      if (socialLink3) updateData.socialLink3 = socialLink3;
-
-      // Update the user's profile data in the database
-      const userRef = doc(db, "theFireUsers", uid);
-      await updateDoc(userRef, updateData);
-
-      res.redirect(`/speakerProfile/${uid}`);
-    } catch (error) {
-      console.log("Error updating profile data:", error);
-      res.status(500).send({ message: error });
-    }
-  },
-);
-
 export default view_router;

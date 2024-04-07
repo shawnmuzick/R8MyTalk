@@ -10,6 +10,7 @@ import {
   getSpeakers,
   getStorageItems,
   searchUsers,
+  updateSpeakerProfile,
   uploadProfilePicture,
 } from "../controllers/speakers.js";
 import { __dirname } from "../index.js";
@@ -35,6 +36,22 @@ api_router.get("/data/speakers/list", async (req, res) => {
     res.send({ message: error });
   }
 });
+
+/** A route to enable user's to update their speaker profile */
+api_router.patch(
+  "/speakers/:uid/profile",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      await updateSpeakerProfile(req);
+      res.status(200);
+      res.json({ message: "profile data updated" });
+    } catch (error) {
+      console.log("Error updating profile data:", error);
+      res.status(500).send({ message: error });
+    }
+  },
+);
 
 /**A route to get profile data for a given speaker */
 api_router.get("/data/speakers/:id/profile", async (req, res) => {

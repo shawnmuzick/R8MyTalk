@@ -2,7 +2,7 @@
  * This file contains controllers related to speaker data for views
  */
 
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { getAuth } from "firebase-admin/auth";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { db, storage } from "../index.js";
@@ -130,6 +130,32 @@ export async function uploadProfilePicture(file, uid) {
     return result;
   } catch (error) {
     console.error("problem uploading", error);
+    throw error;
+  }
+}
+
+export async function updateSpeakerProfile(req) {
+  try {
+    const user = req.session.user;
+    const uid = req.params.uid;
+    const { bio, socialLink1, socialLink2, socialLink3 } = req.body;
+
+    // Check if the user is updating their own profile
+    if (user.uid !== uid) {
+      return res
+        .status(403)
+        .send("You are not authorized to update this profile.");
+    }
+
+    // Update the user's profile data in the database
+    const userRef = doc(db, "theFireUsers", uid);
+    const result = await updateDoc(userRef, {
+      Bio: bio,
+      socialLink1,
+      socialLink2,
+      socialLink3,
+    });
+  } catch (error) {
     throw error;
   }
 }

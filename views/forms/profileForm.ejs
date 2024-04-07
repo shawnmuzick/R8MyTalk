@@ -1,15 +1,15 @@
 <!-- Profile Form -->
-<form>
+<form method="POST" id="profile-form" action="/speakerProfile/<%=user.uid%>/update">
   <div class="contactButton-container">
     <h3 id="contactInfo">Your Profile</h3>
   </div>
-  <input id="firstName" disabled value="<%=profile.firstName%>" />
-  <input id="lastName" disabled value="<%=profile.lastName%>" />
-  <input id="socialLink1" />
-  <input id="socialLink2" />
-  <input id="socialLink3" />
-  <textarea id="bio" style="color: white"><%=profile.bio%></textarea>
+  <textarea id="bio" placeholder="Enter your bio..."><%=profile.bio%></textarea>
+  <input id="socialLink1" value="<%=profile.socialLink1%>"/>
+  <input id="socialLink2" value="<%=profile.socialLink2%>"/>
+  <input id="socialLink3" value="<%=profile.socialLink3%>"/>
   <div class="contactButton-container">
-    <button type="button" class="button primary" id="contact-submit-btn">Submit</button>
+    <button type="submit" class="button primary" id="contact-submit-btn">
+      Submit
+    </button>
   </div>
 </form>

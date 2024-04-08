@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/meta',{pageTitle:'Survey'}) %> <%- include('partials/styles') %>
+    <link rel="stylesheet" href="/assets/css/survey.css" />
+  </head>
+  <body style>
+    <%- include('partials/banner') %>
+
+    <section id="audienceQuestion">
+      <div><h1>Was The</h1></div>
+      <div><h1>Speakers Presentation</h1></div>
+      <div><h1 id="question">Actionable?</h1></div>
+    </section>
+
+    <section id="emojis">
+      <!-- love -->
+      <%-include('partials/surveyEmoji', {img_path: "/assets/css/images/loveFace.png", emoji_value:
+      "love", emoji_id: "selectedEmoji5"} ) %>
+
+      <!-- smile -->
+      <%-include('partials/surveyEmoji', {img_path: "/assets/css/images/smile.png", emoji_value:
+      "smile", emoji_id: "selectedEmoji4"} ) %>
+
+      <!-- ok -->
+      <%-include('partials/surveyEmoji', {img_path: "/assets/css/images/neutralFace.png",
+      emoji_value: "ok", emoji_id: "selectedEmoji3"} ) %>
+
+      <!-- sad -->
+      <%-include('partials/surveyEmoji',{img_path: "/assets/css/images/sadFace.png", emoji_value:
+      "sad", emoji_id: "selectedEmoji2"} ) %>
+
+      <!-- angry -->
+      <%-include('partials/surveyEmoji',{img_path: "/assets/css/images/angyFace.png", emoji_value:
+      "angry", emoji_id: "selectedEmoji1"} ) %>
+    </section>
+
+    <section id="survey-ending">
+      <button type="submit" class="button primary" onclick="changeQuestion()">Next</button>
+    </section>
+
+    <!-- Scripts -->
+    <%- include('partials/scripts') %>
+    <script src="/survey.js"></script>
+  </body>
+</html>

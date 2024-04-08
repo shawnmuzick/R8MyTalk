@@ -1,196 +1,162 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <%- include('partials/meta',{pageTitle:`${eventName.replace(/-/g, ' ' )} Feedback`})%> <%-
+    include('partials/styles') %>
+  </head>
 
-<head>
-    <title>Profile Page</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="/assets/css/main.css"/>
-    <noscript>
-        <link rel="stylesheet" href="/assets/css/noscript.css"/>
-    </noscript>
-</head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <%- include('partials/navbar') %>
 
-<body class="is-preload">
-<div id="page-wrapper">
-
-    <!-- Header -->
-    <%- include('partials/navbar') %>
-
-    <!-- Main -->
-    <div id="main" class="wrapper style1">
+      <!-- Main -->
+      <div id="main" class="wrapper style1">
         <div class="container">
-            <!-- Error message is placed here if caught in chartLoader.js -->
-            <div id="error-message"></div>
-            <header class="major">
-                <h2 class="feedbackHeader" id="eventNameDisplay" data-event-name="<%= eventName.replace(/ /g, '-') %>">
-                    <%= eventName.replace(/-/g, ' ') %> Feedback
-                </h2>
+          <!-- Error message is placed here if caught in chartLoader.js -->
+          <div id="error-message"></div>
+          <header class="major">
+            <h2
+              class="feedbackHeader"
+              id="eventNameDisplay"
+              data-event-name="<%= eventName.replace(/ /g, '-') %>"
+            >
+              <%= eventName.replace(/-/g, ' ' ) %> Feedback
+            </h2>
+          </header>
+          <% if (noFeedback) { %>
 
+          <h2 style="text-align: center">No Feedback Yet!</h2>
+          <% } else { %>
+
+          <!--Button to download Feedback Report CSV-->
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-top: 35px;
+              margin-bottom: 40px;
+            "
+          >
+            <button id="downloadReportButton" class="button primary" type="submit">
+              Download Feedback Report
+            </button>
+          </div>
+
+          <div class="canvas-row">
+            <div class="legend">
+              <ul>
+                <li>
+                  <span class="legend-color" style="background-color: rgb(44, 186, 0)"></span>
+                  <img class="legend-img" src="/assets/css/images/loveFace.png" alt="" />
+                </li>
+                <li>
+                  <span class="legend-color" style="background-color: rgb(163, 255, 0)"></span>
+                  <img class="legend-img" src="/assets/css/images/smile.png" alt="" />
+                </li>
+                <li>
+                  <span class="legend-color" style="background-color: rgb(255, 244, 0)"></span>
+                  <img class="legend-img" src="/assets/css/images/neutralFace.png" alt="" />
+                </li>
+                <li>
+                  <span class="legend-color" style="background-color: rgb(255, 167, 0)"></span>
+                  <img class="legend-img" src="/assets/css/images/sadFace.png" alt="" />
+                </li>
+                <li>
+                  <span class="legend-color" style="background-color: rgb(255, 0, 0)"></span>
+                  <img class="legend-img" src="/assets/css/images/angyFace.png" alt="" />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="canvas-row">
+            <%-include('partials/canvas', {name:'Actionable', id:'actionable'}) %>
+            <%-include('partials/canvas', {name:'Inspiring', id:'inspiring'}) %>
+            <%-include('partials/canvas', {name:'Relevant', id:'relevant'}) %>
+          </div>
+          <div class="canvas-row">
+            <%-include('partials/canvas', {name:'Engaging', id:'engaging'}) %>
+            <%-include('partials/canvas', {name:'Interactive', id:'interactive'}) %>
+          </div>
+
+          <section id="content">
+            <!--Testimonials-->
+            <header>
+              <h2 class="feedbackHeader">Testimonials</h2>
+              <div class="containerFeedback">
+                <div class="left-column">
+                  <ul class="alt">
+                    <% for (let i=dbEventInfo?.Testimonial?.length - 1; i>=
+                    Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
+                    <li>
+                      <div class="talk-bubble tri-right border round btm-left-in">
+                        <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
+
+                <div class="right-column">
+                  <% for (let i=dbEventInfo?.Testimonial?.length - 1; i>=
+                  Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
+                  <ul class="alt">
+                    <li>
+                      <div class="talk-bubble tri-right border round btm-right">
+                        <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <% } %>
+                </div>
+              </div>
             </header>
-            <% if (noFeedback) { %>
+          </section>
 
-                <h2 style="text-align: center;">No Feedback Yet!</h2>
-            <% } else { %>
-
-                <!--Button to download Feedback Report CSV-->
-                <div style="display: flex; justify-content: center; align-items: center; margin-top: 35px; margin-bottom: 40px;">
-                    <button id="downloadReportButton" class="button primary" type="submit">Download Feedback Report
-                    </button>
+          <section id="content">
+            <!--Testimonials-->
+            <header>
+              <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
+              <div class="containerFeedback">
+                <div class="left-column">
+                  <% for (let i=0; i < Math.floor((dbEventInfo?.CustomAnswer?.length ?? 0) / 2);
+                  i++) { %>
+                  <ul class="alt">
+                    <li>
+                      <div class="talk-bubble tri-right border round btm-left-in">
+                        <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <% } %>
                 </div>
 
-                <!--NEW CHART STUFF!!-->
-                <div class="canvas-row">
-                    <div class="legend">
-                        <ul>
-                            <li><span class="legend-color" style="background-color: rgb(44, 186, 0);"></span>
-                                <img class="legend-img" src="/assets/css/images/loveFace.png" alt="">
-                            </li>
-                            <li><span class="legend-color" style="background-color: rgb(163, 255, 0);"></span>
-                                <img class="legend-img" src="/assets/css/images/smile.png" alt="">
-                            </li>
-                            <li><span class="legend-color" style="background-color: rgb(255, 244, 0);"></span>
-                                <img class="legend-img" src="/assets/css/images/neutralFace.png" alt="">
-                            </li>
-                            <li><span class="legend-color" style="background-color: rgb(255, 167, 0);"></span>
-                                <img class="legend-img" src="/assets/css/images/sadFace.png" alt="">
-                            </li>
-                            <li>
-                                <span class="legend-color" style="background-color: rgb(255, 0, 0);"></span>
-                                <img class="legend-img" src="/assets/css/images/angyFace.png" alt="">
-                            </li>
-                        </ul>
-                    </div>
+                <div class="right-column">
+                  <% for (let i=(dbEventInfo?.CustomAnswer?.length ?? 0) - 1; i>=
+                  Math.floor(((dbEventInfo?.CustomAnswer?.length ?? 0) ?? 0) / 2); i--) { %>
+                  <ul class="alt">
+                    <li>
+                      <div class="talk-bubble tri-right border round btm-right">
+                        <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <% } %>
                 </div>
-                <div class="canvas-row">
-                    <div class="chart">
-                        <h2>Actionable</h2>
-                        <canvas id="actionable" width="250" height="250"></canvas>
-                    </div>
-                    <div class="chart">
-                        <h2>Inspiring</h2>
-                        <canvas id="inspiring" width="250" height="250"></canvas>
-                    </div>
-                    <div class="chart">
-                        <h2>Relevant</h2>
-                        <canvas id="relevant" width="250" height="250"></canvas>
-                    </div>
-                </div>
-                <div class="canvas-row">
-                    <div class="chart">
-                        <h2>Engaging</h2>
-                        <canvas id="engaging" width="250" height="250"></canvas>
-                    </div>
-                    <div class="chart">
-                        <h2>Interactive</h2>
-                        <canvas id="interactive" width="250" height="250"></canvas>
-                    </div>
-                </div>
+              </div>
+            </header>
+          </section>
 
-                <!--END NEW CHART STUFF-->
-                <!-- Content -->
-                <section id="content">
-                    <!--Testimonials-->
-                    <header>
-                        <h2 class="feedbackHeader">Testimonials</h2>
-                        <div class="containerFeedback">
-                            <div class="left-column">
-                                <ul class="alt">
-                                    <% for (let i = dbEventInfo?.Testimonial?.length - 1;
-                                            i >= Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
-                                        <li>
-                                            <div class="talk-bubble tri-right border round btm-left-in">
-                                                <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
-                                            </div>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-
-                            <div class="right-column">
-                                <% for (let i = dbEventInfo?.Testimonial?.length - 1;
-                                        i >= Math.floor((dbEventInfo?.Testimonial?.length ?? 0) / 2); i--) { %>
-                                    <ul class="alt">
-                                        <li>
-                                            <div class="talk-bubble tri-right border round btm-right">
-                                                <p class="talktext">"<%= dbEventInfo?.Testimonial?.[i] %>"</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                <% } %>
-                            </div>
-                        </div>
-                    </header>
-                </section>
-
-                <section id="content">
-                    <!--Testimonials-->
-                    <header>
-                        <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
-                        <div class="containerFeedback">
-                            <div class="left-column">
-                                <% for (let i = 0; i < Math.floor((dbEventInfo?.CustomAnswer?.length ?? 0) / 2); i++) { %>
-                                    <ul class="alt">
-                                        <li>
-                                            <div class="talk-bubble tri-right border round btm-left-in">
-                                                <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                <% } %>
-                            </div>
-
-                            <div class="right-column">
-                                <% for (let i = (dbEventInfo?.CustomAnswer?.length ?? 0) - 1; i >= Math.floor(((dbEventInfo?.CustomAnswer?.length ?? 0) ?? 0) / 2); i--) { %>
-                                    <ul class="alt">
-                                        <li>
-                                            <div class="talk-bubble tri-right border round btm-right">
-                                                <p class="talktext">"<%= dbEventInfo?.CustomAnswer?.[i] %>"</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                <% } %>
-                            </div>
-                        </div>
-                    </header>
-                </section>
-
-            <% } %>
+          <% } %>
         </div>
+      </div>
+
+      <%- include('partials/footer') %>
     </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-
-        <ul class="copyright">
-            <li>&copy; Untitled. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-        </ul>
-    </footer>
-
-</div>
-
-<!-- Scripts -->
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/jquery.scrolly.min.js"></script>
-<script src="/assets/js/jquery.dropotron.min.js"></script>
-<script src="/assets/js/jquery.scrollex.min.js"></script>
-<script src="/assets/js/browser.min.js"></script>
-<script src="/assets/js/breakpoints.min.js"></script>
-<script src="/assets/js/util.js"></script>
-<script src="/assets/js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/assets/js/chartLoader.js"></script>
-<!--NEW CHART SCRIPT-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!--^^^ viewing qr and go to Survey button-->
-
-</body>
-
+    <%- include('partials/scripts') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/chartLoader.js"></script>
+  </body>
 </html>

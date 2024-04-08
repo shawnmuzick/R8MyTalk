@@ -1,0 +1,22 @@
+<!-- Profile Form -->
+<form method="POST" id="profile-form" action="/speakerProfile/<%= user.uid %>/update">
+    <div class="mb-3"><h2 class="text-center">Update Your Profile</h2></div>
+    <div class="mb-3"><label for="bio" class="form-label h3">Bio</label> <textarea
+                class="form-control" id="bio" rows="5"
+                placeholder="Enter your bio..."><%= profile.bio %></textarea></div>
+    <div class="mb-3"><label for="socialLink1" class="form-label h4">Social Link 1</label> <input
+                type="text" class="form-control bg-white text-black" id="socialLink1"
+                value="<%= profile.socialLink1 %>"
+                placeholder="E.g., https://www.youtube.com/@your_handle"/></div>
+    <div class="mb-3"><label for="socialLink2" class="form-label h4">Social Link 2</label> <input
+                type="text" class="form-control bg-white text-black" id="socialLink2"
+                value="<%= profile.socialLink2 %>"
+                placeholder="E.g, https://twitter.com/your_handle"/></div>
+    <div class="mb-3"><label for="socialLink3" class="form-label h4">Social Link 3</label> <input
+                type="text" class="form-control bg-white text-black" id="socialLink3"
+                value="<%= profile.socialLink3 %>"
+                placeholder="E.g., https://www.instagram.com/your_handle/"/></div>
+    <div class="text-center mb-3">
+        <button type="submit" class="btn btn-primary" id="contact-submit-btn"> Submit</button>
+    </div>
+</form>

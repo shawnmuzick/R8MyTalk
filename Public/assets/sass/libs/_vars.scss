@@ -38,7 +38,7 @@ $font: (
 
 // Palette.
 $palette: (
-  bg: #eee,
+  bg: #F5F5F5,
   bg-transparent: rgba(238, 238, 238, 0.85),
   fg-bold: #000000,
   fg: rgba(0, 0, 0, 0.75),
@@ -48,10 +48,10 @@ $palette: (
   border-bg: rgba(255, 255, 255, 0.075),
   border2: rgba(238, 238, 238, 0.5),
   border2-bg: rgba(238, 238, 238, 0.25),
-  accent1: #5480f1,
+  accent1: #1D8DCD,
   accent2: #272833,
   accent2-transparent: rgba(238, 238, 238, 0.965),
-  accent3: #5480f1,
-  accent4: #39c088,
-  inputs: #ffffff,
+  accent3: #176EA1,
+  accent4: #0F496B,
+  inputs: #eee,
 );

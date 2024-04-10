@@ -1809,7 +1809,7 @@ body.is-touch {
 /* Footer */
 
 #footer {
-  background: _palette(accent2);
+  background: _palette(accent4);
   padding: $size-wrapper-pad-tb 0;
   text-align: center;
 
@@ -2873,4 +2873,83 @@ table th {
 }
 #uploadedFile {
   margin-left: 12em;
+}
+
+/* CSS for Feedback page */
+
+// Assuming this code is for a page with the class 'feedback-page'
+.feedback-page {
+  // Page wrapper styles
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // Body styles
+  body {
+    height: 100vh;
+    margin: 0;
+  }
+
+  // Question container styles
+  #question-container {
+    width: 500px;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // Textarea styles
+  #message {
+    width: 500px;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    color: black;
+  }
+
+  // Contact section textarea styles
+  section#contact-section textarea {
+    color: black;
+    background-color: #eee;
+  }
+
+  // Survey ending styles
+  #survey-ending {
+    margin-top: 10px;
+  }
+
+  // Banner content styles
+  #banner2 .content {
+    padding: 20px;
+  }
+
+  #thankYou-section {
+    display: none;
+    #thankYouMessage {
+      margin-bottom: 1em;
+    }
+    #contactButton-container2{
+      margin-top: 1em;
+    }
+  }
+}
+
+/* contactForm styling */
+#contact-section {
+  .contactButton-container {
+    label {
+      font-size: large;
+    }
+    textarea {
+      width: 30em;
+      height: 60px;
+      resize: none;
+    }
+  }
 }

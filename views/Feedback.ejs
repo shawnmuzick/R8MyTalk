@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html class="black-placeholder" lang="en">
+<html lang="en">
   <head>
     <%- include('partials/meta',{pageTitle:'Survey'})%> <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/feedback.css" />
     <link rel="stylesheet" href="/assets/css/survey.css" />
   </head>
 
-  <body>
+  <body class="feedback-page">
     <div class="page-wrapper">
       <div id="main" class="wrapper style1">
         <%- include('partials/banner') %>
@@ -29,8 +28,8 @@
 
         <%- include('forms/contactForm') %>
 
-        <section id="thankYou-section" style="display: none">
-          <h3 id="thankYouMessage" style="margin-bottom: 1em">Thank you for your feedback!</h3>
+        <section id="thankYou-section">
+          <h3 id="thankYouMessage">Thank you for your feedback!</h3>
           <% if(eventName=="Test-Survey" ) { %>
           <button class="button primary backToProfileButton" id="profileButton">
             Go back to profile page
@@ -40,7 +39,6 @@
           <div class="contactButton-container2" id="moveHigher">
             <button
               type="button"
-              style="margin-top: 1em"
               class="button primary"
               id="btnDownloadFile"
             >

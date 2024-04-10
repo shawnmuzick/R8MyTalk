@@ -2994,3 +2994,16 @@ table th {
     }
   }
 }
+
+#searchInput {
+	&::placeholder {
+		color: darkgrey !important;
+	}
+}
+
+#returnToSearchBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}

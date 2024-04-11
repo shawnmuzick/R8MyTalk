@@ -27,12 +27,20 @@
           <div class="container my-5" style="display: flex; justify-content: center">
             <h3>Update Profile Picture</h3>
           </div>
-          <% if (profile?.profilePictureUrl) { %>
           <div id="container" style="display: flex; justify-content: center; margin-bottom: 20px">
+            <% if (profile?.profilePictureUrl) { %>
             <img
+              id="profile-picture"
               src="<%=profile?.profilePictureUrl%>"
               style="width: 250px; height: 250px; border-radius: 50%"
             />
+            <% } else { %>
+            <img
+              id="profile-picture"
+              src="/images/placeHolderProfilePicture.png"
+              style="width: 250px; height: 250px; border-radius: 50%"
+            />
+            <% } %>
           </div>
           <div
             style="display: flex; justify-content: center; margin-top: -50px; margin-right: -100px"
@@ -57,7 +65,6 @@
               />
             </button>
           </div>
-          <% } %>
         </div>
       </div>
       <%- include('partials/footer') %>

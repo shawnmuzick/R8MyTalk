@@ -43,7 +43,8 @@ async function handlePictureSelection(event) {
       body: formData,
     });
     const result = await response.json();
-    console.log(result);
+    const pictureElem = document.getElementById("profile-picture");
+    pictureElem.src = result.newProfilePictureUrl;
   } catch (error) {
     console.log(error);
   }

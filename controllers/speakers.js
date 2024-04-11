@@ -4,7 +4,13 @@
 
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { getAuth } from "firebase-admin/auth";
-import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  listAll,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { db, storage } from "../index.js";
 
 export async function getSpeakers() {
@@ -117,18 +123,56 @@ export async function getStorageItems(uid) {
   }
 }
 
+export async function deleteStorageItem(itemRef) {
+  try {
+    const result = await deleteObject(itemRef);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+/**Blow out everything in the profilePicture folder,
+ * there should only ever be one item
+ */
+export async function deleteProfilePicture(uid) {
+  try {
+    const storageRef = ref(storage, uid + "/profilePicture");
+    const list = await listAll(storageRef);
+    console.log("list", list);
+    await Promise.all(
+      list.items.map(async (itemRef) => {
+        await deleteStorageItem(itemRef);
+      }),
+    );
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+/** Upload a new user profile picture in the /profilePicture folder,
+ *  named profilePicture
+ */
 export async function uploadProfilePicture(file, uid) {
   try {
     const metadata = {
       contentType: file.mimetype,
     };
+    //delete whatever's in there now
+    await deleteProfilePicture(uid);
+
+    //upload the new one
     const storageRef = ref(
       storage,
-      uid + "/" + "profilePicture/" + file.fieldName,
+      uid + "/" + "profilePicture/profilePicture",
     );
     const result = await uploadBytes(storageRef, file.buffer, metadata);
+
+    //return the url path to the new file
+    const newFileUrl = await getProfilePictureURL(uid);
     console.log("uploaded file");
-    return result;
+    return newFileUrl;
   } catch (error) {
     console.error("problem uploading", error);
     throw error;

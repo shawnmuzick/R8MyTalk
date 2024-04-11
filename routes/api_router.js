@@ -71,7 +71,9 @@ api_router.get("/data/speakers/:id/profilepicture", async (req, res) => {
   res.json({ data: pictureUrl });
 });
 
-/**A route to accept profile picture files */
+/** A route to accept profile picture files,
+ *  return the url to the new file after upload
+ */
 api_router.post(
   "/data/speakers/:id/profilepicture",
   upload.single("uploadedFile"),
@@ -85,7 +87,7 @@ api_router.post(
       const result = await uploadProfilePicture(file, uid);
       console.log("uploaded file");
       res.status(200);
-      res.json({ message: "Upload OK" });
+      res.json({ newProfilePictureUrl: result });
     } catch (error) {
       console.log(`problem uploading file ${error}`);
       res.status(500).send("Error uploading file");

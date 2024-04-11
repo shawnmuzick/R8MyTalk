@@ -78,7 +78,12 @@ api_router.post(
   isAuthenticated,
   async (req, res) => {
     try {
-      const result = await uploadProfilePicture();
+      console.log("called upload profile picture");
+      const file = req.file; //from multer
+      console.log("file", file);
+      const uid = req.params.id;
+      const result = await uploadProfilePicture(file, uid);
+      console.log("uploaded file");
       res.status(200);
       res.json({ message: "Upload OK" });
     } catch (error) {

@@ -4,7 +4,7 @@
 
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { getAuth } from "firebase-admin/auth";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../index.js";
 
 export async function getSpeakers() {
@@ -127,6 +127,7 @@ export async function uploadProfilePicture(file, uid) {
       uid + "/" + "profilePicture/" + file.fieldName,
     );
     const result = await uploadBytes(storageRef, file.buffer, metadata);
+    console.log("uploaded file");
     return result;
   } catch (error) {
     console.error("problem uploading", error);

@@ -3,14 +3,62 @@ const bioInput = document.getElementById("bio");
 const socialLink1Input = document.getElementById("socialLink1");
 const socialLink2Input = document.getElementById("socialLink2");
 const socialLink3Input = document.getElementById("socialLink3");
+const editPicture = document.getElementById("btn-edit-picture");
+
+/**This eventListener creates a file input on click and opens the file picker to prompt the user to select a file */
+editPicture.addEventListener("click", async (event) => {
+  try {
+    event.preventDefault();
+    //create the input, prompt for file
+    const inputElem = document.createElement("input");
+    inputElem.type = "file";
+    inputElem.name = "uploadedFile";
+    inputElem.id = "uploadedFile";
+
+    //hand the image off to this callback when selected
+    inputElem.addEventListener("change", handlePictureSelection);
+    inputElem.click();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/**This function uploads the file after the user selects it */
+async function handlePictureSelection(event) {
+  try {
+    event.preventDefault();
+    //recover the file from the input
+    const inputElem = event.target;
+    const file = inputElem.files[0];
+    const formData = new FormData();
+    formData.append("uploadedFile", file);
+    formData.append("eventName", "profilePicture");
+
+    //get the user id
+    const uid = getUserIdFromUrl();
+
+    //send the file
+    const response = await fetch(`/api/data/speakers/${uid}/profilepicture`, {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function getUserIdFromUrl() {
+  const currentUrl = window.location.href;
+  const url = new URL(currentUrl);
+  return url.pathname.split("/").pop();
+}
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   try {
-    const currentUrl = window.location.href;
-    const url = new URL(currentUrl);
-    const uid = url.pathname.split("/").pop();
-
+    const uid = getUserIdFromUrl();
     const result = await fetch(`/api/speakers/${uid}/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

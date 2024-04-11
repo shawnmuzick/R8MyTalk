@@ -10,5 +10,6 @@ export class Speaker {
     this.socialLink1 = data?.socialLink1 ?? "";
     this.socialLink2 = data?.socialLink2 ?? "";
     this.socialLink3 = data?.socialLink3 ?? "";
+    this.profilePictureUrl = data?.profilePictureUrl ?? "";
   }
 }

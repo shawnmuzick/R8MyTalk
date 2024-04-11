@@ -71,6 +71,7 @@ export async function getSpeakerProfile(uid) {
     const userRef = doc(db, "theFireUsers", uid);
     const userDoc = await getDoc(userRef);
     const data = userDoc.data();
+    const profilePictureUrl = await getProfilePictureURL(uid);
     return {
       firstName: data?.firstName ?? "",
       lastName: data?.lastName ?? "",
@@ -78,6 +79,7 @@ export async function getSpeakerProfile(uid) {
       socialLink1: data?.socialLink1 ?? "",
       socialLink2: data?.socialLink2 ?? "",
       socialLink3: data?.socialLink3 ?? "",
+      profilePictureUrl: profilePictureUrl ?? "",
     };
   } catch (error) {
     console.log("Error getting data: ", error);

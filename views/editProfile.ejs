@@ -27,18 +27,38 @@
           <div class="container my-5" style="display: flex; justify-content: center">
             <h3>Update Profile Picture</h3>
           </div>
-          <div id="container" style="display: flex; justify-content: center; margin-bottom: 20px">
+          <div id="container" style="display: grid; justify-content: center; align-items: center">
+            <div
+              id="profile-picture-wrapper"
+              style="border-radius: 50%; grid-column: 1; grid-row: 1; width: 265px; height: 265px"
+            ></div>
             <% if (profile?.profilePictureUrl) { %>
             <img
               id="profile-picture"
               src="<%=profile?.profilePictureUrl%>"
-              style="width: 250px; height: 250px; border-radius: 50%"
+              style="
+                margin: auto;
+                width: 250px;
+                height: 250px;
+                grid-column: 1;
+                grid-row: 1;
+                border-radius: 50%;
+                z-index: 1;
+              "
             />
             <% } else { %>
             <img
               id="profile-picture"
               src="/images/placeHolderProfilePicture.png"
-              style="width: 250px; height: 250px; border-radius: 50%"
+              style="
+                margin: auto;
+                width: 250px;
+                height: 250px;
+                grid-column: 1;
+                grid-row: 1;
+                border-radius: 50%;
+                z-index: 2;
+              "
             />
             <% } %>
           </div>
@@ -57,9 +77,11 @@
                 border: none;
                 outline: none;
                 background-color: white;
+                z-index: 3;
               "
             >
               <img
+                id="btn-icon"
                 src="/images/icon_pencil.svg"
                 style="width: 30px; height: 30px; border-radius: 50%"
               />

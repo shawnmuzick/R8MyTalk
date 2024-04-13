@@ -2530,15 +2530,14 @@ li {
 }
 
 .emoji {
-  width: 60px;
-  height: 60px;
-  background-color: #272833f6;
+  width: 90px;
+  height: 90px;
+  transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
   padding: 0.5em;
 }
 
 .emoji:hover {
-  width: 65px;
-  height: 65px;
+    transform: scale(1.2); /* Increase size on hover */
 }
 
 #emojis {
@@ -2608,7 +2607,8 @@ li {
 }
 
 .selected {
-  border: 2px solid red;
+  border-radius: 50px;
+  border: 2px solid _palette(accent3);
 }
 
 .contactButton-container {

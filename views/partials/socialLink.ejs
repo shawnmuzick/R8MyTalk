@@ -1,11 +1,11 @@
 <!-- Social Link -->
-<div style="display: flex; flex-direction: row; align-items: center">
+<div id="social-link-container">
   <a href="<%= socialLink %>" target="_blank">
     <img <% if (socialLink.toLowerCase().includes("facebook")) { %> src="/images/icon_facebook.svg"
     <% } else if (socialLink.toLowerCase().includes("instagram")) { %>
     src="/images/icon_instagram.svg" <% } else if (socialLink.toLowerCase().includes("twitter")) {
     %> src="/images/icon_twitter.svg" <% } else { %> src="/images/icon_weblink.svg" <% }%>
-    id="icon_done" style="width: 30px; height: 30px; margin: 10px;" alt="Link 1" />
+    id="icon_done"  alt="Link 1" />
   </a>
   <a href="<%= socialLink %>" target="_blank"><%= socialLink %></a>
 </div>

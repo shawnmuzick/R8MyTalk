@@ -1,7 +1,6 @@
 /**
  * This file contains controllers related to speaker data for views
  */
-
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
 import { getAuth } from "firebase-admin/auth";
 import {
@@ -12,6 +11,7 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { db, storage } from "../index.js";
+import { Speaker } from "../models/Speaker.js";
 
 export async function getSpeakers() {
   const users = [];
@@ -19,10 +19,12 @@ export async function getSpeakers() {
     const listAllUsers = async (nextPageToken) => {
       const page = await getAuth().listUsers(1000, nextPageToken);
       page.users.forEach((userRecord) => {
-        users.push({
-          uid: userRecord.uid,
-          displayName: userRecord.displayName,
-        });
+        users.push(
+          new Speaker({
+            uid: userRecord.uid,
+            displayName: userRecord.displayName,
+          }),
+        );
       });
       if (page.pageToken) {
         // get the next page if there is one
@@ -43,12 +45,11 @@ export async function searchUsers(searchQuery) {
     const allUsers = await getSpeakers();
     await Promise.all(
       allUsers.map(async (u) => {
-        u.profile = await getSpeakerProfile(u.uid);
+        u.populateProfile(await getSpeakerProfile(u.uid));
       }),
     );
     // Filter the users based on the search query
     matchingUsers = allUsers.filter((user) => {
-      console.log(user);
       const displayName = `${user.displayName}`.toLowerCase();
       const lastName = `${user.profile.lastName}`.toLowerCase();
       const firstName = `${user.profile.firstName}`.toLowerCase();

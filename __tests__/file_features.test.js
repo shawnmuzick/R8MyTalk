@@ -5,6 +5,10 @@ import session from "supertest-session";
 import server from "../index.js";
 import { __dirname } from "../index.js";
 
+const username = process.env.TEST_LOGIN_USERNAME;
+const password = process.env.TEST_LOGIN_PASSWORD;
+const eventName = process.env.TEST_EVENT_NAME;
+const eventUid = process.env.TEST_EVENT_UID;
 let loginSession;
 
 beforeEach(() => {
@@ -20,8 +24,6 @@ afterEach(() => {
  */
 describe("/uploadFile txt", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -30,7 +32,6 @@ describe("/uploadFile txt", () => {
   }
   it("upload a file", async () => {
     const authSession = await getAuthSession();
-    const eventName = process.env.TEST_EVENT_NAME;
 
     //do the file upload
     const res2 = await authSession
@@ -50,8 +51,6 @@ describe("/uploadFile txt", () => {
  */
 describe("/uploadFile pdf", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -60,7 +59,6 @@ describe("/uploadFile pdf", () => {
   }
   it("upload a file", async () => {
     const authSession = await getAuthSession();
-    const eventName = process.env.TEST_EVENT_NAME;
 
     //do the file upload
     const res2 = await authSession
@@ -80,8 +78,6 @@ describe("/uploadFile pdf", () => {
  */
 describe("/uploadFile pptx", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -90,7 +86,6 @@ describe("/uploadFile pptx", () => {
   }
   it("upload a file", async () => {
     const authSession = await getAuthSession();
-    const eventName = process.env.TEST_EVENT_NAME;
 
     //do the file upload
     const res2 = await authSession
@@ -110,8 +105,6 @@ describe("/uploadFile pptx", () => {
  */
 describe("/uploadFile xlsx", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -120,7 +113,6 @@ describe("/uploadFile xlsx", () => {
   }
   it("upload a file", async () => {
     const authSession = await getAuthSession();
-    const eventName = process.env.TEST_EVENT_NAME;
 
     //do the file upload
     const res2 = await authSession
@@ -140,8 +132,6 @@ describe("/uploadFile xlsx", () => {
  */
 describe("/uploadFile zip", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -150,7 +140,6 @@ describe("/uploadFile zip", () => {
   }
   it("upload a file", async () => {
     const authSession = await getAuthSession();
-    const eventName = process.env.TEST_EVENT_NAME;
 
     //do the file upload
     const res2 = await authSession
@@ -170,8 +159,6 @@ describe("/uploadFile zip", () => {
  */
 describe("/uploadFile failure", () => {
   async function getAuthSession() {
-    const username = process.env.TEST_LOGIN_USERNAME;
-    const password = process.env.TEST_LOGIN_PASSWORD;
     const res = await loginSession
       .post("/login")
       .send({ email: username, password: password });
@@ -191,8 +178,6 @@ describe("/uploadFile failure", () => {
  */
 describe("/downloadFile", () => {
   it("download a file", async () => {
-    const eventName = process.env.TEST_EVENT_NAME;
-    const eventUid = process.env.TEST_EVENT_UID;
     const res = await loginSession
       .post("/downloadFile")
       .send({ uid: eventUid, eventName: eventName });

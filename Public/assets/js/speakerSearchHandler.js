@@ -36,7 +36,8 @@ function getHtmlTemplate(user) {
   const template = document.getElementsByTagName("template")[0];
   const card = template.content.cloneNode(true);
   card.querySelector(".card").id = user?.uid;
-  card.querySelector("h5").textContent = `${user?.profile.firstName} ${user?.profile.lastName}`;
+  card.querySelector("h5").textContent =
+    `${user?.profile.firstName} ${user?.profile.lastName}`;
   card.querySelector("p").textContent = user?.displayName;
   card.querySelector("img").src = image;
   return card;
@@ -66,7 +67,7 @@ searchForm.addEventListener("submit", async (event) => {
 
     //add the event listeners once attached to the DOM
     const cards = document.querySelectorAll(".card");
-    for (let card of cards) {
+    for (const card of cards) {
       card.addEventListener("click", () => {
         window.location.href = `/speakerProfile/${card.id}`;
       });

@@ -1,12 +1,13 @@
 document.getElementById("exportButton").addEventListener("click", () => {
   // Prepare table data
   const tableData = [];
-  document.querySelectorAll("#content table tbody tr").forEach((row) => {
+  const rows = document.querySelectorAll("#content table tbody tr");
+  for (const row of rows) {
     const rowData = Array.from(row.children).map((cell) =>
       cell.textContent.trim(),
     );
     tableData.push(rowData.join(","));
-  });
+  }
 
   // Create CSV content
   const csvContent = ["Event,Email,Name,Phone Number,Role", ...tableData].join(

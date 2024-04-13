@@ -96,7 +96,7 @@ document
       const file = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = file;
-      a.download = urlParts.eventName + " Presentation";
+      a.download = `${urlParts.eventName} Presentation`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

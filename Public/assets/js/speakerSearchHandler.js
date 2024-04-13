@@ -11,7 +11,7 @@ function buildElement(type, className) {
 
 /** Check if the user record has a valid image src string */
 function checkForValidProfileImage(user) {
-  return user?.profile?.profilePictureUrl == ""
+  return user?.profile?.profilePictureUrl === ""
     ? "images/placeHolderProfilePicture.png"
     : user?.profile?.profilePictureUrl;
 }
@@ -57,7 +57,7 @@ function DisplayName(user) {
 /** Function to return a full name label */
 function FullName(user) {
   const e = buildElement("p", "card-text lead");
-  e.textContent = user?.profile.firstName + " " + user?.profile.lastName;
+  e.textContent = `${user?.profile.firstName} ${user?.profile.lastName}`;
   return e;
 }
 

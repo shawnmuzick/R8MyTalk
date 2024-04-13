@@ -92,7 +92,7 @@ export async function getProfilePictureURL(uid) {
   try {
     //get the picture path from the profilePicture folder
     let path = null;
-    const folderRef = ref(storage, uid + "/profilePicture");
+    const folderRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(folderRef);
     //there should only ever be one profile picture
     list.items.forEach((item) => (path = item._location.path_));
@@ -114,11 +114,9 @@ export async function getProfilePictureURL(uid) {
 export async function getStorageItems(uid) {
   try {
     const items = [];
-    const storageRef = ref(storage, uid + "/profilePicture");
+    const storageRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(storageRef);
-    console.log("list", list);
     list.items.forEach((item) => items.push(item));
-
     return items;
   } catch (error) {
     console.log(error);
@@ -140,9 +138,8 @@ export async function deleteStorageItem(itemRef) {
  */
 export async function deleteProfilePicture(uid) {
   try {
-    const storageRef = ref(storage, uid + "/profilePicture");
+    const storageRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(storageRef);
-    console.log("list", list);
     await Promise.all(
       list.items.map(async (itemRef) => {
         await deleteStorageItem(itemRef);
@@ -166,10 +163,7 @@ export async function uploadProfilePicture(file, uid) {
     await deleteProfilePicture(uid);
 
     //upload the new one
-    const storageRef = ref(
-      storage,
-      uid + "/" + "profilePicture/profilePicture",
-    );
+    const storageRef = ref(storage, `${uid}/profilePicture/profilePicture`);
     const result = await uploadBytes(storageRef, file.buffer, metadata);
 
     //return the url path to the new file
@@ -204,6 +198,7 @@ export async function updateSpeakerProfile(req) {
       socialLink3,
     });
   } catch (error) {
+    console.log("Error updating speaker profile: ", error);
     throw error;
   }
 }

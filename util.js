@@ -33,10 +33,7 @@ export async function createQR(url, userFolder, fileName, eventName) {
       qrCodeData.replace(/^data:image\/png;base64,/, ""),
       "base64",
     );
-    const storageRef = ref(
-      storage,
-      userFolder + "/" + eventName + "/" + fileName,
-    );
+    const storageRef = ref(storage, `${userFolder}/${eventName}/${fileName}`);
 
     const metadata = {
       contentType: "image/png",
@@ -57,8 +54,8 @@ export async function uploadSharedFiles(file, uid, eventName) {
     };
     const storageRef = ref(
       storage,
-      uid + "/" + spaceToHyphen(eventName) + "/" + file.fieldname,
-    ); //COMEBACK //test
+      `${uid}/${spaceToHyphen(eventName)}/${file.fieldname}`,
+    );
     const result = await uploadBytes(storageRef, file.buffer, metadata);
     return result;
   } catch (error) {
@@ -68,24 +65,19 @@ export async function uploadSharedFiles(file, uid, eventName) {
 }
 export async function deleteEventFromStorage(eventName, uid) {
   try {
-    const fileRef = ref(storage, uid + "/" + eventName + "/" + "uploadedFile");
-    const qrRef = ref(
-      storage,
-      uid + "/" + eventName + "/" + eventName + ".png",
-    );
+    const fileRef = ref(storage, `${uid}/${eventName}/uploadedFile`);
+    const qrRef = ref(storage, `${uid}/${eventName}/${eventName}.png`);
     await deleteObject(qrRef);
     await deleteObject(fileRef);
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
 export async function getFileDownloadURL(userFolder, eventName) {
   try {
-    const storageRef = ref(
-      storage,
-      userFolder + "/" + eventName + "/uploadedFile",
-    );
+    const storageRef = ref(storage, `${userFolder}/${eventName}/uploadedFile`);
     const url = await getDownloadURL(storageRef);
     return url;
   } catch (error) {
@@ -94,15 +86,14 @@ export async function getFileDownloadURL(userFolder, eventName) {
   }
 }
 
-export async function getQRURL(userFolder, eventName) {
+export async function getQRURL(userFolder, eventNameParam) {
   try {
-    eventName = spaceToHyphen(eventName);
+    eventName = spaceToHyphen(eventNameParam);
     const storageRef = ref(
       storage,
-      userFolder + "/" + eventName + "/" + eventName + ".png",
+      `${userFolder}/${eventName}/${eventName}.png`,
     );
     const url = await getDownloadURL(storageRef);
-    console.log(url);
     return url;
   } catch (error) {
     console.log(error);
@@ -189,6 +180,7 @@ export async function handleQuestion(question, answer, eventRef) {
   try {
     await updateDoc(eventRef, { [question]: arrayUnion(answer) });
   } catch (error) {
+    console.log("Error updating question doc: ", error);
     throw error;
   }
 }
@@ -233,7 +225,7 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
     } else if (emojis.questions.includes(question)) {
       // Determine the index based on the answer, throw if bad
       const index = emojis.answers.indexOf(answer);
-      if (index == -1) {
+      if (index === -1) {
         throw new Error("SOMETHING BAD");
       } else {
         await handleEmojiQuestion(question, index, eventDoc, eventRef);
@@ -242,6 +234,7 @@ export async function sendFeedbackToDB(question, answer, uid, eventName) {
       await handleQuestion("CustomAnswer", answer, eventRef);
     }
   } catch (error) {
+    console.log("Error sending feedback to db: ", error);
     throw error;
   }
 }

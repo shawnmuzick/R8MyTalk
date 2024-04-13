@@ -81,7 +81,6 @@ describe("/login and logout", () => {
       "text/plain; charset=utf-8",
     );
     expect([200, 302]).toContain(res.statusCode);
-    console.log(res.statusCode, res2.header["location"]); //log whatever we actually got back
 
     await server.close();
   });

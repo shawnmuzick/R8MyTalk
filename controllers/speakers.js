@@ -91,20 +91,18 @@ export async function getSpeakerProfile(uid) {
 export async function getProfilePictureURL(uid) {
   try {
     //get the picture path from the profilePicture folder
-    let path = null;
     const folderRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(folderRef);
     //there should only ever be one profile picture
-    list.items.forEach((item) => (path = item._location.path_));
+    const path = list.items[0]._location.path_ ?? null;
 
-    if (path) {
-      //use the path to get a download url for it
-      const storageRef = ref(storage, path);
-      const url = await getDownloadURL(storageRef);
-      return url;
-    } else {
+    if (!path) {
       return null;
     }
+    //use the path to get a download url for it
+    const storageRef = ref(storage, path);
+    const url = await getDownloadURL(storageRef);
+    return url;
   } catch (error) {
     console.log(error);
     throw error;
@@ -116,7 +114,9 @@ export async function getStorageItems(uid) {
     const items = [];
     const storageRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(storageRef);
-    list.items.forEach((item) => items.push(item));
+    for (const item of list.items) {
+      items.push(item);
+    }
     return items;
   } catch (error) {
     console.log(error);

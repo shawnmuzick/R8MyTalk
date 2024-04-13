@@ -190,11 +190,11 @@ function displayChanges() {
   document.getElementById("feedbackSection").style.display = "none";
   document.getElementById("question-container").style.display = "none";
   document.getElementById("survey-ending").style.display = "none";
-  document.getElementById("contact-section").style.display = "block";
+  document.getElementById("contact-section").className = "d-block";
 }
 
 function displayThankYou() {
-  document.getElementById("contact-section").style.display = "none";
+  document.getElementById("contact-section").className = "d-none";
   document.getElementById("thankYou-section").style.display = "block";
 }
 

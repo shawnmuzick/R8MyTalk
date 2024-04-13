@@ -7,10 +7,9 @@
   <body style>
     <%- include('partials/banner') %>
 
-    <section id="audienceQuestion">
-      <div><h1>Was The</h1></div>
-      <div><h1>Speakers Presentation</h1></div>
-      <div><h1 id="question">Actionable?</h1></div>
+    <section id="audienceQuestion" class="container text-center lead pb-5">
+      <h1>Was The Speakers Presentation</h1>
+      <h1 id="question">Actionable?</h1>
     </section>
 
     <section id="emojis">
@@ -38,9 +37,8 @@
     <section id="survey-ending">
       <button type="submit" class="button primary" onclick="changeQuestion()">Next</button>
     </section>
-
+    <%-include('partials/footer') %>
     <!-- Scripts -->
-    <%- include('partials/scripts') %>
     <script src="/survey.js"></script>
   </body>
 </html>

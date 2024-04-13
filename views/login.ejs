@@ -10,20 +10,20 @@
 
       <!-- Main -->
       <div id="main" class="wrapper style1">
-        <div class="container">
-          <header class="major">
+        <div class="container text-center">
+          <header class="major zrnic-font h4">
             <h2>Login</h2>
           </header>
-          <img src="assets/css/images/loginlogo2.png" class="center" alt="" />
+          <img src="assets/css/images/R8MyTalkLogo.svg" class="w-50 mb-5" alt="R8MyTalk Logo"/>
 
           <section id="content">
-            <div class="jumbotron text-center text-primary">
+            <div class="jumbotron text-center zrnic-font h4">
               <% if (error && error.customData) { %>
               <h2><%= error.customData %></h2>
               <% } else { %> <% } %>
               <!-- Login form -->
               <%- include('forms/loginForm') %>
-              <li><a href="/register">Don't Have Account?</a></li>
+              <a href="/register">Don't Have Account?</a>
             </div>
           </section>
         </div>

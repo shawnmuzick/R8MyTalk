@@ -2,6 +2,13 @@ const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
+/** A function to build DOM elements */
+function buildElement(type, className) {
+  const e = document.createElement(type);
+  e.className = className;
+  return e;
+}
+
 /** Check if the user record has a valid image src string */
 function checkForValidProfileImage(user) {
   return user?.profile?.profilePictureUrl == ""
@@ -10,34 +17,26 @@ function checkForValidProfileImage(user) {
 }
 
 /** Build a Bootstrap card element for the user record */
-function buildUserCardElement() {
-  const userCard = document.createElement("div");
-  userCard.className = "card mb-3 mx-auto";
+function UserCard() {
+  const userCard = buildElement("div", "card mb-3 mx-auto");
   userCard.style.maxWidth = "540px";
   userCard.style.cursor = "pointer";
   return userCard;
 }
 
-/** Build a row element for a user card */
-function buildRowElement() {
-  const row = document.createElement("div");
-  row.className = "row g-0";
-  return row;
-}
-
 /** Build a column element for a user card */
-function buildColumnElement() {
-  const imageColumn = document.createElement("div");
-  imageColumn.className =
-    "col-md-4 d-flex justify-content-center align-items-center";
+function ImageColumn() {
+  const imageColumn = buildElement(
+    "div",
+    "col-md-4 d-flex justify-content-center align-items-center"
+  );
   imageColumn.style.height = "100%";
   return imageColumn;
 }
 
 /** Build an image element for a user card */
-function buildPictureElement(imageSrc) {
-  const profilePicture = document.createElement("img");
-  profilePicture.className = "img-fluid rounded-start";
+function ProfilePicture(imageSrc) {
+  const profilePicture = buildElement("img", "img-fluid rounded-start");
   profilePicture.src = imageSrc;
   profilePicture.alt = "Profile Picture";
   return profilePicture;
@@ -48,19 +47,31 @@ function clearSearchResults() {
   searchResults.innerHTML = "";
 }
 
+/** Function to return a display name header */
+function DisplayName(user) {
+  const e = buildElement("h5", "card-title h1");
+  e.textContent = user?.displayName;
+  return e;
+}
+
+/** Function to return a full name label */
+function FullName(user) {
+  const e = buildElement("p", "card-text lead");
+  e.textContent = user?.profile.firstName + " " + user?.profile.lastName;
+  return e;
+}
+
 /** Display a message to the user if no results found */
 function handleNoResults() {
-  const noResultsMessage = document.createElement("p");
+  const noResultsMessage = buildElement("p", "lead");
   noResultsMessage.textContent = "No users found.";
-  noResultsMessage.className = "lead";
   searchResults.appendChild(noResultsMessage);
 }
 
 /** Display a message to the user if error*/
 function handleSearchError(error) {
-  const err = document.createElement("p");
+  const err = buildElement("p", "lead");
   err.textContent = `Error searching: ${error}`;
-  err.className = "lead";
   searchResults.appendChild(err);
 }
 
@@ -84,28 +95,17 @@ searchForm.addEventListener("submit", async (event) => {
     //otherwise, build the user profile cards
     data.forEach((user) => {
       const image = checkForValidProfileImage(user);
-      const userCard = buildUserCardElement();
-      const row = buildRowElement();
-      const imageColumn = buildColumnElement();
-      const profilePicture = buildPictureElement(image);
-      imageColumn.appendChild(profilePicture);
+      const userCard = UserCard();
+      const row = buildElement("div", "row g-0");
+      const imageColumn = ImageColumn();
+      imageColumn.appendChild(ProfilePicture(image));
       row.appendChild(imageColumn);
 
-      const bodyColumn = document.createElement("div");
-      bodyColumn.className =
-        "col-md-8 justify-content-center align-items-center";
-      const cardBody = document.createElement("div");
-      cardBody.className = "card-body";
+      const bodyColumn = buildElement("div", "col-md-8 justify-content-center align-items-center");
+      const cardBody = buildElement("div", "card-body");
 
-      const displayNameElement = document.createElement("h5");
-      displayNameElement.className = "card-title h1";
-      displayNameElement.textContent = user?.displayName;
-      cardBody.appendChild(displayNameElement);
-      const fullNameElement = document.createElement("p");
-      fullNameElement.className = "card-text lead";
-      fullNameElement.textContent =
-        user?.profile.firstName + " " + user?.profile.lastName;
-      cardBody.appendChild(fullNameElement);
+      cardBody.appendChild(DisplayName(user));
+      cardBody.appendChild(FullName(user));
 
       // Event listener redirects to profile page when card is clicked
       userCard.addEventListener("click", () => {

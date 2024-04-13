@@ -29,11 +29,10 @@ api_router.get("/data/speakers/:id/events/list", getEventList);
 api_router.get("/data/speakers/list", async (req, res) => {
   try {
     const users = await getSpeakers();
-    res.json({ data: users });
+    res.status(200).json({ data: users });
   } catch (error) {
-    console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
+    console.log("Error getting speaker list: ", error);
+    res.status(500).send({ message: error });
   }
 });
 
@@ -44,8 +43,7 @@ api_router.patch(
   async (req, res) => {
     try {
       await updateSpeakerProfile(req);
-      res.status(200);
-      res.json({ message: "profile data updated" });
+      res.status(200).json({ message: "profile data updated" });
     } catch (error) {
       console.log("Error updating profile data:", error);
       res.status(500).send({ message: error });
@@ -57,18 +55,22 @@ api_router.patch(
 api_router.get("/data/speakers/:id/profile", async (req, res) => {
   try {
     const profile = await getSpeakerProfile(req.params.id);
-    res.json({ data: profile });
+    res.status(200).json({ data: profile });
   } catch (error) {
     console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 });
 
 /**A route to get the profile picture url for a specific speaker */
 api_router.get("/data/speakers/:id/profilepicture", async (req, res) => {
-  const pictureUrl = await getProfilePictureURL(req.params.id);
-  res.json({ data: pictureUrl });
+  try {
+    const pictureUrl = await getProfilePictureURL(req.params.id);
+    res.status(200).json({ data: pictureUrl });
+  } catch (error) {
+    console.log("Error getting profile picture: ", error);
+    res.status(500).send({ message: error });
+  }
 });
 
 /** A route to accept profile picture files,
@@ -80,17 +82,13 @@ api_router.post(
   isAuthenticated,
   async (req, res) => {
     try {
-      console.log("called upload profile picture");
       const file = req.file; //from multer
-      console.log("file", file);
       const uid = req.params.id;
       const result = await uploadProfilePicture(file, uid);
-      console.log("uploaded file");
-      res.status(200);
-      res.json({ newProfilePictureUrl: result });
+      res.status(200).json({ newProfilePictureUrl: result });
     } catch (error) {
       console.log(`problem uploading file ${error}`);
-      res.status(500).send("Error uploading file");
+      res.status(500).send({ message: error });
     }
   },
 );
@@ -100,18 +98,22 @@ api_router.get("/data/speakers/search", async (req, res) => {
   try {
     const searchQuery = req.query.q;
     const matchingUsers = await searchUsers(searchQuery);
-    res.json({ data: matchingUsers });
+    res.status(200).json({ data: matchingUsers });
   } catch (error) {
     console.log("Error searching users:", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 });
 
 /**A route to get the firebase storage items for a specific speaker */
 api_router.get("/data/speakers/:id/storage", async (req, res) => {
-  const itemList = await getStorageItems(req.params.id);
-  res.json({ data: itemList });
+  try {
+    const itemList = await getStorageItems(req.params.id);
+    res.status(200).json({ data: itemList });
+  } catch (error) {
+    console.log("Error searching storage:", error);
+    res.status(500).send({ message: error });
+  }
 });
 
 /********************************************************

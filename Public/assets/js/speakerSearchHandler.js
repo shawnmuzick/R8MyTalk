@@ -28,7 +28,7 @@ function UserCard() {
 function ImageColumn() {
   const imageColumn = buildElement(
     "div",
-    "col-md-4 d-flex justify-content-center align-items-center"
+    "col-md-4 d-flex justify-content-center align-items-center",
   );
   imageColumn.style.height = "100%";
   return imageColumn;
@@ -101,7 +101,10 @@ searchForm.addEventListener("submit", async (event) => {
       imageColumn.appendChild(ProfilePicture(image));
       row.appendChild(imageColumn);
 
-      const bodyColumn = buildElement("div", "col-md-8 justify-content-center align-items-center");
+      const bodyColumn = buildElement(
+        "div",
+        "col-md-8 justify-content-center align-items-center",
+      );
       const cardBody = buildElement("div", "card-body");
 
       cardBody.appendChild(DisplayName(user));

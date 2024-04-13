@@ -18,7 +18,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { DateTime } from "luxon";
-import { getSpeakers } from "../controllers/speakers.js";
 import {
   getProfilePictureURL,
   getSpeakerProfile,
@@ -53,16 +52,14 @@ view_router.post("/qrButton", async (req, res) => {
     const url = await getQRURL(user.uid, eventName);
     res.send(url);
   } catch (error) {
-    console.log(error);
-    res.status(500);
-    res.send({ message: error });
+    console.log("Error creating QR code: ", error);
+    res.status(500).send({ message: error });
   }
 });
 
 /**A route to render a survey page for an event*/
 view_router.get("/survey/:uid/:eventName", (req, res) => {
   const eventName = req.params.eventName;
-  console.log("test", eventName);
   res.render("survey");
 });
 
@@ -75,10 +72,10 @@ view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
       doc(db, "theFireUsers", user.uid, "userEventList", eventName),
     );
     await deleteEventFromStorage(eventName, user.uid);
-    res.status(200);
-    res.json({ message: `${eventName} successfully deleted` });
+    res.status(200).json({ message: `${eventName} successfully deleted` });
   } catch (error) {
     console.log("error deleting event");
+    res.status(500).send({ message: error });
   }
 });
 
@@ -87,7 +84,6 @@ view_router.get("/review/:eventName", isAuthenticated, async (req, res) => {
   try {
     const user = req.session.user;
     const eventName = req.params.eventName;
-    console.log("test", eventName);
     const dbEventInfo = await readEventInfoFromDB(user.uid, eventName);
 
     /*If all of the metric fields are set to 0, then this event recieved no feedback. */
@@ -197,10 +193,12 @@ view_router.post("/feedbackSelection", (req, res) => {
     if (eventName !== "Test-Survey" && answer.length > 4) {
       sendFeedbackToDB(question, answer, uid, eventName);
     }
-    res.json({ status: "Success", message: "Data received successfully." });
+    res
+      .status(200)
+      .json({ status: "Success", message: "Data received successfully." });
   } catch (error) {
     console.log(error);
-    res.json({ status: "error", message: error });
+    res.status(500).json({ status: "error", message: error });
   }
 });
 
@@ -219,7 +217,8 @@ view_router.post("/editCustomQ", async (req, res) => {
     );
     await updateDoc(docRef, { customQuestion: customQ });
   } catch (error) {
-    console.log(error);
+    console.log("Error editing custom question: ", error);
+    res.status(500).send({ message: error });
   }
 });
 
@@ -267,13 +266,10 @@ view_router.post("/downloadFile", async (req, res) => {
     const { uid, eventName } = req.body;
     console.log("params:", uid, eventName);
     const downloadURL = await getFileDownloadURL(uid, eventName);
-    console.log("url", downloadURL);
-    res.status(200);
-    res.send(downloadURL);
+    res.status(200).send(downloadURL);
   } catch (error) {
-    console.log(error);
-    res.status(500);
-    res.send({ message: error });
+    console.log("Error downloading file: ", error);
+    res.status(500).send({ message: error });
   }
 });
 
@@ -291,11 +287,10 @@ view_router.post(
       const eventName = req.body.eventName;
       const fileToUpload = req.file; //from multer middleware
       const result = await uploadSharedFiles(fileToUpload, user.uid, eventName);
-      res.status(200);
-      res.send({ message: "Upload OK" });
+      res.status(200).send({ message: "Upload OK" });
     } catch (error) {
       console.log(`problem uploading file ${error}`);
-      res.status(500).send("Error uploading file");
+      res.status(500).send({ message: "Error uploading file" });
     }
   },
 );
@@ -318,9 +313,13 @@ view_router.get("/homePage", (req, res) => {
 
 /**A route to render the contacts page */
 view_router.get("/contacts", isAuthenticated, async (req, res) => {
-  const user = req.session.user;
-  const contacts = await readContactInfoFromDb(user.uid);
-  res.render("contacts", { user, contacts });
+  try {
+    const user = req.session.user;
+    const contacts = await readContactInfoFromDb(user.uid);
+    res.render("contacts", { user, contacts });
+  } catch (error) {
+    res.status(500).send({ mesage: "Error getting contacts file" });
+  }
 });
 
 /**A route to display the user login page */
@@ -337,7 +336,6 @@ view_router.post("/login", async (req, res) => {
       req.body.password,
     );
     req.session.user = userCredential.user;
-    console.log(`log in ${req.body.email} `);
     res.redirect("/profilePage");
   } catch (error) {
     error.customData = "Invalid Login";
@@ -353,7 +351,6 @@ view_router.get("/logout", async (req, res) => {
     if (error) {
       console.log(error);
     }
-    console.log(`logged out`);
     res.clearCookie("connectr.sid");
     res.redirect("/homePage");
   });
@@ -383,15 +380,6 @@ view_router.post("/register", async (req, res) => {
     //fields we want to add directly tied to the user
     const newDocRef = doc(db, "theFireUsers", user.uid);
     await setDoc(newDocRef, {
-      firstName: req.body.firstName ?? "",
-      lastName: req.body.lastName ?? "",
-      bio: "",
-      socialLink1: "",
-      socialLink2: "",
-      socialLink3: "",
-    });
-
-    console.log({
       firstName: req.body.firstName ?? "",
       lastName: req.body.lastName ?? "",
       bio: "",
@@ -452,21 +440,12 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
 /**A route to render the speakerSearch page */
 view_router.get("/speakerSearch", async (req, res) => {
   try {
-    const users = await getSpeakers();
-    await Promise.all(
-      users.map(async (u) => {
-        u.profile = await getSpeakerProfile(u.uid);
-      }),
-    );
-
     //to populate the navbar
     const user = req.session.user ?? null;
-    console.log(users);
-    res.render("speakerSearch", { users, user });
+    res.render("speakerSearch", { user });
   } catch (error) {
     console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 });
 
@@ -478,15 +457,13 @@ view_router.get(
     try {
       const user = req.session.user ?? null;
       const uid = req.params.uid;
-      console.log("uid", uid);
       const profile = await getSpeakerProfile(uid);
       profile.profilePictureUrl = await getProfilePictureURL(uid);
       // Render the profile page with the user's data
       res.render("editProfile", { profile, user: user });
     } catch (error) {
       console.log("Error getting profile data:", error);
-      res.status(500);
-      res.send({ message: error });
+      res.status(500).send({ message: error });
     }
   },
 );
@@ -498,12 +475,10 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     const uid = req.params.uid;
     const profile = await getSpeakerProfile(uid);
     profile.profilePictureUrl = await getProfilePictureURL(uid);
-    // Render the profile page with the user's data
     res.render("speakerProfile", { profile, user: user });
   } catch (error) {
     console.log("Error getting profile data:", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 });
 

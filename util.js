@@ -205,6 +205,7 @@ export async function handleEmojiQuestion(question, index, eventDoc, eventRef) {
       }, {}),
     });
   } catch (error) {
+    console.log("Error updating emoji question: ", error);
     throw error;
   }
 }

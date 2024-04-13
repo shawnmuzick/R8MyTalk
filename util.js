@@ -88,7 +88,7 @@ export async function getFileDownloadURL(userFolder, eventName) {
 
 export async function getQRURL(userFolder, eventNameParam) {
   try {
-    eventName = spaceToHyphen(eventNameParam);
+    const eventName = spaceToHyphen(eventNameParam);
     const storageRef = ref(
       storage,
       `${userFolder}/${eventName}/${eventName}.png`,

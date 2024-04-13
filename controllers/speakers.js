@@ -94,7 +94,7 @@ export async function getProfilePictureURL(uid) {
     const folderRef = ref(storage, `${uid}/profilePicture`);
     const list = await listAll(folderRef);
     //there should only ever be one profile picture
-    const path = list.items[0]._location.path_ ?? null;
+    const path = list?.items[0]?._location?.path_ ?? null;
 
     if (!path) {
       return null;

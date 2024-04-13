@@ -195,7 +195,7 @@ html {
 
 html,
 body {
-  background: #f5f5f5;
+  background: #eaebeb;
 }
 
 body.is-preload *,
@@ -224,7 +224,7 @@ input,
 select,
 textarea {
   color: rgba(0, 0, 0, 0.75);
-  font-family: "Roboto", Helvetica, sans-serif;
+  font-family: Helvetica, "Roboto", sans-serif;
   font-size: 15pt;
   font-weight: 100;
   line-height: 1.75em;
@@ -235,7 +235,6 @@ a {
   -webkit-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
   -ms-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  border-bottom: dotted 1px;
   color: #1d8dcd;
   text-decoration: none;
 }
@@ -341,10 +340,10 @@ sup {
 
 hr {
   border: 0;
-  border-bottom: solid 1px rgba(221, 0, 255, 0.3);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.3);
   margin: 3em 0;
   border: 0;
-  border-bottom: solid 1px rgba(221, 0, 255, 0.3);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.3);
   margin: 3em 0;
 }
 hr.major {
@@ -353,7 +352,7 @@ hr.major {
 }
 
 blockquote {
-  border-left: solid 4px rgba(221, 0, 255, 0.3);
+  border-left: solid 4px rgba(255, 255, 255, 0.3);
   font-style: italic;
   margin: 0 0 2em 0;
   padding: 0.5em 0 0.5em 2em;
@@ -469,7 +468,7 @@ pre code {
 }
 @-moz-keyframes spinner-hide {
   0% {
-    color: rgb(34, 255, 0);
+    color: rgba(238, 238, 238, 0.15);
     z-index: 100001;
     -moz-transform: scale(1) rotate(0deg);
     -webkit-transform: scale(1) rotate(0deg);
@@ -477,7 +476,7 @@ pre code {
     transform: scale(1) rotate(0deg);
   }
   99% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: 100001;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -485,31 +484,7 @@ pre code {
     transform: scale(0.5) rotate(360deg);
   }
   100% {
-    color: #f5f5f5;
-    z-index: -1;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  0% {
-    color: rgb(34, 255, 0);
-    z-index: 100001;
-    -moz-transform: scale(1) rotate(0deg);
-    -webkit-transform: scale(1) rotate(0deg);
-    -ms-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  99% {
-    color: #f5f5f5;
-    z-index: 100001;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  100% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: -1;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -519,7 +494,7 @@ pre code {
 }
 @-webkit-keyframes spinner-hide {
   0% {
-    color: rgb(34, 255, 0);
+    color: rgba(238, 238, 238, 0.15);
     z-index: 100001;
     -moz-transform: scale(1) rotate(0deg);
     -webkit-transform: scale(1) rotate(0deg);
@@ -527,7 +502,7 @@ pre code {
     transform: scale(1) rotate(0deg);
   }
   99% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: 100001;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -535,31 +510,7 @@ pre code {
     transform: scale(0.5) rotate(360deg);
   }
   100% {
-    color: #f5f5f5;
-    z-index: -1;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  0% {
-    color: rgb(34, 255, 0);
-    z-index: 100001;
-    -moz-transform: scale(1) rotate(0deg);
-    -webkit-transform: scale(1) rotate(0deg);
-    -ms-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  99% {
-    color: #f5f5f5;
-    z-index: 100001;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  100% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: -1;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -569,7 +520,7 @@ pre code {
 }
 @-ms-keyframes spinner-hide {
   0% {
-    color: rgb(34, 255, 0);
+    color: rgba(238, 238, 238, 0.15);
     z-index: 100001;
     -moz-transform: scale(1) rotate(0deg);
     -webkit-transform: scale(1) rotate(0deg);
@@ -577,7 +528,7 @@ pre code {
     transform: scale(1) rotate(0deg);
   }
   99% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: 100001;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -585,31 +536,7 @@ pre code {
     transform: scale(0.5) rotate(360deg);
   }
   100% {
-    color: #f5f5f5;
-    z-index: -1;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  0% {
-    color: rgb(34, 255, 0);
-    z-index: 100001;
-    -moz-transform: scale(1) rotate(0deg);
-    -webkit-transform: scale(1) rotate(0deg);
-    -ms-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  99% {
-    color: #f5f5f5;
-    z-index: 100001;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  100% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: -1;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -619,7 +546,7 @@ pre code {
 }
 @keyframes spinner-hide {
   0% {
-    color: rgb(34, 255, 0);
+    color: rgba(238, 238, 238, 0.15);
     z-index: 100001;
     -moz-transform: scale(1) rotate(0deg);
     -webkit-transform: scale(1) rotate(0deg);
@@ -627,7 +554,7 @@ pre code {
     transform: scale(1) rotate(0deg);
   }
   99% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: 100001;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -635,31 +562,7 @@ pre code {
     transform: scale(0.5) rotate(360deg);
   }
   100% {
-    color: #f5f5f5;
-    z-index: -1;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  0% {
-    color: rgb(34, 255, 0);
-    z-index: 100001;
-    -moz-transform: scale(1) rotate(0deg);
-    -webkit-transform: scale(1) rotate(0deg);
-    -ms-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  99% {
-    color: #f5f5f5;
-    z-index: 100001;
-    -moz-transform: scale(0.5) rotate(360deg);
-    -webkit-transform: scale(0.5) rotate(360deg);
-    -ms-transform: scale(0.5) rotate(360deg);
-    transform: scale(0.5) rotate(360deg);
-  }
-  100% {
-    color: #f5f5f5;
+    color: #eaebeb;
     z-index: -1;
     -moz-transform: scale(0.5) rotate(360deg);
     -webkit-transform: scale(0.5) rotate(360deg);
@@ -943,7 +846,7 @@ body.landing:before {
   -webkit-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
-  color: rgb(34, 255, 0);
+  color: rgba(238, 238, 238, 0.15);
   content: "\f1ce";
   cursor: default;
   display: block;
@@ -964,21 +867,7 @@ body.landing:after {
   -webkit-animation: overlay-hide 1.5s ease-in forwards !important;
   -ms-animation: overlay-hide 1.5s ease-in forwards !important;
   animation: overlay-hide 1.5s ease-in forwards !important;
-  background: #f5f5f5;
-  content: "";
-  display: block;
-  height: 100%;
-  left: 0;
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: -1;
-  -moz-animation: overlay-hide 1.5s ease-in forwards !important;
-  -webkit-animation: overlay-hide 1.5s ease-in forwards !important;
-  -ms-animation: overlay-hide 1.5s ease-in forwards !important;
-  animation: overlay-hide 1.5s ease-in forwards !important;
-  background: #f5f5f5;
+  background: #eaebeb;
   content: "";
   display: block;
   height: 100%;
@@ -2300,9 +2189,9 @@ textarea {
   -webkit-transition: border-color 0.2s ease-in-out;
   -ms-transition: border-color 0.2s ease-in-out;
   transition: border-color 0.2s ease-in-out;
-  background: #eee;
+  background: #f5f5f5;
   border-radius: 4px;
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   color: inherit;
   display: block;
   outline: 0;
@@ -2327,7 +2216,7 @@ textarea:focus {
 }
 
 select {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'%3E%3Cpath d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='rgba(221, 0, 255, 0.3)' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'%3E%3Cpath d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='rgba(255, 255, 255, 0.3)' /%3E%3C/svg%3E");
   background-size: 1.25rem;
   background-repeat: no-repeat;
   background-position: calc(100% - 1rem) center;
@@ -2337,7 +2226,7 @@ select {
 }
 select option {
   color: #000000;
-  background: #f5f5f5;
+  background: #eaebeb;
 }
 select:focus::-ms-value {
   background-color: transparent;
@@ -2402,7 +2291,7 @@ input[type="radio"] + label:before {
 input[type="checkbox"] + label:before,
 input[type="radio"] + label:before {
   border-radius: 4px;
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   content: "";
   display: inline-block;
   font-size: 0.8em;
@@ -2434,33 +2323,33 @@ input[type="radio"] + label:before {
 }
 
 ::-webkit-input-placeholder {
-  color: rgba(255, 0, 0, 0.5) !important;
+  color: rgba(238, 238, 238, 0.5) !important;
   opacity: 1;
 }
 
 :-moz-placeholder {
-  color: rgba(255, 0, 0, 0.5) !important;
+  color: rgba(238, 238, 238, 0.5) !important;
   opacity: 1;
 }
 
 ::-moz-placeholder {
-  color: rgba(255, 0, 0, 0.5) !important;
+  color: rgba(238, 238, 238, 0.5) !important;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
-  color: rgba(255, 0, 0, 0.5) !important;
+  color: rgba(238, 238, 238, 0.5) !important;
   opacity: 1;
 }
 
 /* Box */
 .box {
   border-radius: 4px;
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   margin-bottom: 2em;
   padding: 1.5em;
   border-radius: 4px;
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   margin-bottom: 2em;
   padding: 1.5em;
 }
@@ -2551,20 +2440,11 @@ input[type="radio"] + label:before {
   font-weight: 400;
 }
 .icon.alt:before {
-  color: #f5f5f5 !important;
+  color: #eaebeb !important;
   text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000;
 }
 .icon.major {
-  background: #272833;
-  border-radius: 100%;
-  cursor: default;
-  display: inline-block;
-  height: 6em;
-  line-height: 5.65em;
-  margin: 0 0 2em 0;
-  text-align: center;
-  width: 6em;
-  background: #272833;
+  background: rgba(238, 238, 238, 0.96);
   border-radius: 100%;
   cursor: default;
   display: inline-block;
@@ -2605,7 +2485,7 @@ input[type="radio"] + label:before {
   font-weight: 400;
 }
 .icon.major.alt:before {
-  color: #272833 !important;
+  color: rgba(238, 238, 238, 0.96) !important;
   text-shadow: 1px 0 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000;
 }
 
@@ -2704,7 +2584,7 @@ ul.alt {
   padding-left: 0;
 }
 ul.alt li {
-  border-top: solid 1px rgba(221, 0, 255, 0.3);
+  border-top: solid 1px rgba(255, 255, 255, 0.3);
   padding: 0.5em 0;
 }
 ul.alt li:first-child {
@@ -2898,7 +2778,7 @@ table {
   width: 100%;
 }
 table tbody tr {
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   border-left: 0;
   border-right: 0;
 }
@@ -2916,17 +2796,17 @@ table th {
   text-align: left;
 }
 table thead {
-  border-bottom: solid 1px rgba(221, 0, 255, 0.3);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.3);
 }
 table tfoot {
-  border-top: solid 1px rgba(221, 0, 255, 0.3);
+  border-top: solid 1px rgba(255, 255, 255, 0.3);
 }
 table.alt {
   border-collapse: separate;
   border-collapse: separate;
 }
 table.alt tbody tr td {
-  border: solid 1px rgba(221, 0, 255, 0.3);
+  border: solid 1px rgba(255, 255, 255, 0.3);
   border-left-width: 0;
   border-top-width: 0;
 }
@@ -2966,7 +2846,7 @@ input[type="button"],
   background-color: transparent;
   border-radius: 4px;
   border: 0;
-  box-shadow: inset 0 0 0 1px rgba(221, 0, 255, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
   color: #000000 !important;
   cursor: pointer;
   display: inline-block;
@@ -3051,7 +2931,7 @@ input[type="button"].disabled,
 input[type="button"]:disabled,
 .button.disabled,
 .button:disabled {
-  background-color: rgba(221, 0, 255, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
   box-shadow: none !important;
   color: #000000 !important;
   cursor: default;
@@ -3496,7 +3376,7 @@ body.is-touch .spotlight {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  background: #272833;
+  background: rgba(238, 238, 238, 0.96);
   content: "";
   display: block;
   height: 1em;
@@ -3508,7 +3388,7 @@ body.is-touch .spotlight {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  background: #272833;
+  background: rgba(238, 238, 238, 0.96);
   content: "";
   display: block;
   height: 1em;
@@ -3626,7 +3506,7 @@ body.landing #header {
 /* Banner */
 #banner {
   background-attachment: fixed;
-  background-color: #272833;
+  background-color: rgba(238, 238, 238, 0.96);
   background-image: url("../../assets/css/images/hero.png");
   background-position: center center;
   background-size: cover;
@@ -3754,12 +3634,12 @@ body.is-touch #banner {
   font-weight: 400;
 }
 #footer .icons .icon.alt:before {
-  color: #272833 !important;
-  text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 rgba(255, 0, 0, 0.5),
-    0 1px 0 rgba(255, 0, 0, 0.5), 0 -1px 0 rgba(255, 0, 0, 0.5);
+  color: rgba(238, 238, 238, 0.96) !important;
+  text-shadow: 1px 0 0 rgba(238, 238, 238, 0.5), -1px 0 0 rgba(238, 238, 238, 0.5),
+    0 1px 0 rgba(238, 238, 238, 0.5), 0 -1px 0 rgba(238, 238, 238, 0.5);
 }
 #footer .copyright {
-  color: rgba(255, 0, 0, 0.5);
+  color: rgba(238, 238, 238, 0.5);
   font-size: 0.8em;
   line-height: 1em;
   margin: 2em 0 0 0;
@@ -3767,7 +3647,7 @@ body.is-touch #banner {
   text-align: center;
 }
 #footer .copyright li {
-  border-left: solid 1px rgba(221, 0, 255, 0.3);
+  border-left: solid 1px rgba(255, 255, 255, 0.3);
   display: inline-block;
   list-style: none;
   margin-left: 1.5em;
@@ -3862,79 +3742,7 @@ body.is-touch #banner {
     overflow: hidden;
   }
   .spotlight .content {
-    background-color: #f5f5f5;
-    border-width: 0 !important;
-    border-top-width: 0.35em !important;
-    bottom: auto !important;
-    left: auto !important;
-    padding: 4.5em 2.5em 2.5em 2.5em !important;
-    position: relative;
-    right: auto !important;
-    text-align: center;
-    top: auto !important;
-    width: 100% !important;
-  }
-  .spotlight .content ul.actions {
-    -moz-justify-content: center;
-    -webkit-justify-content: center;
-    -ms-justify-content: center;
-    justify-content: center;
-    width: 100%;
-    margin-left: 0;
-  }
-  .spotlight .content ul.actions li:first-child {
-    padding-left: 0;
-  }
-  .spotlight .goto-next {
-    display: none;
-  }
-  /* Wrapper */
-  .wrapper {
-    padding: 4.5em 2.5em 2.5em 2.5em;
-  }
-  /* Banner */
-  #banner {
-    background-attachment: scroll;
-  }
-  #banner .goto-next {
-    height: 7em;
-  }
-  #banner .content {
-    padding: 9em 0;
-    text-align: center;
-  }
-  #banner .content header {
-    display: block;
-    margin: 0 0 2em 0;
-    text-align: center;
-  }
-  #banner .content .image {
-    margin: 0;
-  }
-  /* Footer */
-  #footer {
-    padding: 4.5em 0;
-  }
-  /* Basic */
-  body,
-  input,
-  select,
-  textarea {
-    font-size: 12pt;
-  }
-  /* Spotlight */
-  .spotlight {
-    background-attachment: scroll;
-    height: auto;
-  }
-  .spotlight .image.main {
-    display: block;
-    margin: 0;
-    max-height: 40vh;
-    overflow: hidden;
-  }
-  .spotlight .content {
-    background-color: #f5f5f5;
+    background-color: #eaebeb;
     border-width: 0 !important;
     border-top-width: 0.35em !important;
     bottom: auto !important;
@@ -4106,7 +3914,7 @@ body.is-touch #banner {
     top: 0;
     width: 100%;
     z-index: 10001;
-    background: #272833;
+    background: rgba(238, 238, 238, 0.96);
     box-shadow: 0 0.125em 0.125em 0 rgba(0, 0, 0, 0.125);
   }
   #titleBar .title {
@@ -4145,7 +3953,7 @@ body.is-touch #banner {
   }
   #titleBar .toggle:before {
     background: #1d8dcd;
-    color: rgba(255, 0, 0, 0.5);
+    color: rgba(238, 238, 238, 0.5);
     content: "\f0c9";
     display: block;
     font-size: 18px;
@@ -4178,12 +3986,12 @@ body.is-touch #banner {
     top: 0;
     width: 275px;
     z-index: 10002;
-    background: #f0f0f0;
+    background: #e5e6e6;
     padding: 0.75em 1.25em;
   }
   #navPanel .link {
     border: 0;
-    border-top: solid 1px rgba(221, 0, 255, 0.05);
+    border-top: solid 1px rgba(255, 255, 255, 0.05);
     color: rgba(0, 0, 0, 0.75);
     display: block;
     height: 3em;
@@ -5058,4 +4866,28 @@ table th {
   justify-content: center;
   align-items: center;
   margin: 20px;
+}
+
+@font-face {
+  font-family: "Zrnic";
+  src: url("fonts/zrnic_0.ttf") format("truetype");
+}
+.zrnic-font {
+  font-family: "Zrnic", sans-serif;
+  font-weight: 400;
+}
+
+#social-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#social-link-container img {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
+}
+#social-link-container img:hover {
+  transform: scale(1.2); /* Increase size on hover */
 }

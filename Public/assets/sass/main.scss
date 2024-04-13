@@ -291,7 +291,7 @@ a {
       "color #{_duration(transition)} ease-in-out"
     )
   );
-  border-bottom: dotted 1px;
+  //border-bottom: dotted 1px;
   color: _palette(accent1);
   text-decoration: none;
 
@@ -3006,4 +3006,31 @@ table th {
 	justify-content: center;
 	align-items: center;
 	margin: 20px;
+}
+
+// Making the Zrnic font usable
+@font-face {
+  font-family: 'Zrnic';
+  src: url("fonts/zrnic_0.ttf") format('truetype');
+}
+
+.zrnic-font {
+  font-family: 'Zrnic', sans-serif;
+  font-weight: 400; // Adjust the font-weight if needed
+}
+
+// socialLink partial styles
+#social-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  img {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
+  }
+  img:hover{
+    transform: scale(1.2); /* Increase size on hover */
+  }
 }

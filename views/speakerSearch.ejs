@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('partials/meta',{pageTitle:'Speaker Directory'}) %>
-    <%- include('partials/styles') %>
+    <%- include('partials/meta',{pageTitle:'Speaker Directory'}) %> <%- include('partials/styles')
+    %>
   </head>
-
   <body>
-    <div id="page-wrapper">
+    <div id="container">
       <%- include('partials/navbar') %> <%- include('partials/profileResultCard') %>
-
-      <!-- Main -->
       <div id="main" class="wrapper style1">
         <div class="container">
           <header class="major">
-            <label for="searchInput" class="h2">Speaker Search</label>
+            <label for="searchInput" class="h1 zrnic-font my-5">Speaker Search</label>
             <form id="searchForm">
               <div class="input-group mb-3">
                 <input
@@ -23,13 +20,13 @@
                   placeholder="Enter Speaker's Name..."
                 />
                 <button class="btn btn-light" type="submit" name="search" value="SEARCH">
-                  SEARCH
+                  <img src="/images/magnifying-glass-solid.svg" alt="Search" />
                 </button>
               </div>
             </form>
           </header>
           <!-- Content -->
-          <section id="content">
+          <section id="">
             <!-- This div is filled by speakerSearchHandler.js -->
             <div id="searchResults" class="text-center"></div>
           </section>

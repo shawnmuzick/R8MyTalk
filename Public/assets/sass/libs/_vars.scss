@@ -24,8 +24,8 @@ $size: (
 // Font.
 $font: (
   family: (
-    "Roboto",
     Helvetica,
+    "Roboto",
     sans-serif,
   ),
   family-fixed: (
@@ -38,7 +38,7 @@ $font: (
 
 // Palette.
 $palette: (
-  bg: #F5F5F5,
+  bg: #EAEBEB,
   bg-transparent: rgba(238, 238, 238, 0.85),
   fg-bold: #000000, //used for 'title' text color
   fg: rgba(0, 0, 0, 0.75), //used for general text color
@@ -49,9 +49,9 @@ $palette: (
   border2: rgba(238, 238, 238, 0.5),
   border2-bg: rgba(238, 238, 238, 0.25),
   accent1: #1D8DCD,
-  accent2: #272833,
+  accent2: rgba(238, 238, 238, 0.96),
   accent2-transparent: rgba(238, 238, 238, 0.965),
   accent3: #176EA1,
   accent4: #0F496B,
-  inputs: #eee,
+  inputs: #F5F5F5,
 );

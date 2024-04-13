@@ -35,8 +35,8 @@ function getHtmlTemplate(user) {
   const image = checkForValidProfileImage(user);
   const template = document.getElementsByTagName("template")[0];
   const card = template.content.cloneNode(true);
-  card.querySelector("h5").textContent =
-    `${user?.profile.firstName} ${user?.profile.lastName}`;
+  card.querySelector(".card").id = user?.uid;
+  card.querySelector("h5").textContent = `${user?.profile.firstName} ${user?.profile.lastName}`;
   card.querySelector("p").textContent = user?.displayName;
   card.querySelector("img").src = image;
   return card;
@@ -61,14 +61,16 @@ searchForm.addEventListener("submit", async (event) => {
 
     //otherwise, build the user profile cards
     data.forEach((user) => {
-      const userCard = getHtmlTemplate(user);
-
-      // Event listener redirects to profile page when card is clicked
-      userCard.addEventListener("click", () => {
-        window.location.href = `/speakerProfile/${user.uid}`;
-      });
-      searchResults.appendChild(userCard);
+      searchResults.appendChild(getHtmlTemplate(user));
     });
+
+    //add the event listeners once attached to the DOM
+    const cards = document.querySelectorAll(".card");
+    for (let card of cards) {
+      card.addEventListener("click", () => {
+        window.location.href = `/speakerProfile/${card.id}`;
+      });
+    }
   } catch (error) {
     handleSearchError(error);
   }

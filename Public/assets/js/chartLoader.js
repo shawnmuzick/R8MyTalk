@@ -1,14 +1,13 @@
 //load the chart data
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    var dbEventInfo;
     const eventNameElement = document.getElementById("eventNameDisplay");
     const eventName = eventNameElement.getAttribute("data-event-name"); //get the eventname from the title
-    var actChart = document.getElementById("actionable")?.getContext("2d");
-    var engChart = document.getElementById("engaging")?.getContext("2d");
-    var insChart = document.getElementById("inspiring")?.getContext("2d");
-    var intChart = document.getElementById("interactive")?.getContext("2d");
-    var relChart = document.getElementById("relevant")?.getContext("2d");
+    const actChart = document.getElementById("actionable")?.getContext("2d");
+    const engChart = document.getElementById("engaging")?.getContext("2d");
+    const insChart = document.getElementById("inspiring")?.getContext("2d");
+    const intChart = document.getElementById("interactive")?.getContext("2d");
+    const relChart = document.getElementById("relevant")?.getContext("2d");
 
     /**
      * if any of the canvases are missing, the template didn't render them
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("error response");
       throw new Error("Failed to fetch data");
     }
-    dbEventInfo = await response.json();
+    const dbEventInfo = await response.json();
     createDoughnut(actChart, dbEventInfo.Actionable);
     createDoughnut(engChart, dbEventInfo.Engaging);
     createDoughnut(insChart, dbEventInfo.Inspiring);
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     // Message will show up in error-message div on eventPage.ejs if caught
     const errorMessageElement = document.getElementById("error-message");
-    errorMessageElement.textContent = "An error occurred: " + error.message;
+    errorMessageElement.textContent = `An error occurred: ${error.message}`;
   }
 });
 

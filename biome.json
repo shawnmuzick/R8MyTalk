@@ -11,7 +11,8 @@
     "ignore": [
       "./Public/assets/js/*.min.*",
       "./Public/assets/js/main.js",
-      "./Public/assets/js/util.js"
+      "./Public/assets/js/util.js",
+      "./coverage/*"
     ]
   },
   "formatter": {
@@ -21,7 +22,8 @@
     "ignore": [
       "./Public/assets/js/*.min.*",
       "./Public/assets/js/main.js",
-      "./Public/assets/js/util.js"
+      "./Public/assets/js/util.js",
+      "./coverage/*"
     ]
   }
 }

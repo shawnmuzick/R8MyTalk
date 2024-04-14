@@ -6,6 +6,7 @@ export async function getEventRef(uid, eventName) {
   try {
     return doc(db, "theFireUsers", uid, "userEventList", eventName);
   } catch (error) {
+    console.log("Error getting event ref: ", error);
     throw error;
   }
 }
@@ -18,8 +19,7 @@ export async function getFeedbackData(req, res) {
     res.send(dbEventInfo);
   } catch (error) {
     console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 }
 
@@ -39,10 +39,9 @@ export async function getEventList(req, res) {
         events.push({ eventName: talkEvent.id, eventDate: data.talkDate });
       }),
     );
-    res.json({ data: events });
+    res.status(200).json({ data: events });
   } catch (error) {
     console.log("Error getting data: ", error);
-    res.status(500);
-    res.send({ message: error });
+    res.status(500).send({ message: error });
   }
 }

@@ -2489,8 +2489,8 @@ li {
 }
 
 .emoji {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
   padding: 0.5em;
 }
@@ -2991,5 +2991,106 @@ table th {
   }
   img:hover{
     transform: scale(1.2); /* Increase size on hover */
+  }
+}
+
+#survey-phone-responsive {
+  @media only screen and (max-device-width: 480px) {
+    body {
+      orientation: portrait;
+    }
+  }
+
+  #questionElement,
+  #feedbackSection {
+    margin-top: -2em;
+  }
+
+  .contactButton-container2 {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+
+  @media only screen and (max-width: 508px) {
+    #thankYouMessage {
+      text-align: center;
+    }
+    body {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    section {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    #survey-ending button {
+      font-size: 14px;
+      min-width: 75px;
+    }
+    #container {
+      max-width: 350px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #questionElement {
+      text-align: center;
+      max-width: 300px;
+      margin-left: -8em;
+    }
+    #message {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  @media (min-width: 430px) and (max-width: 508px) {
+    #container {
+      max-width: 350px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #contact-section {
+      max-width: 350px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contactButton-container textarea {
+      max-width: 25em;
+      margin-left: -1.5em;
+    }
+    .contactButton-container button {
+      font-size: 14px;
+      min-width: 75px;
+    }
+    .contactButton-container2 button {
+      font-size: 14px;
+      min-width: 225px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    #contact-section {
+      max-width: 250px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contactButton-container textarea {
+      max-width: 20em;
+      margin-left: -2.25em;
+    }
+    .contactButton-container button {
+      font-size: 14px;
+      min-width: 65px;
+    }
+    .contactButton-container2 button {
+      font-size: 14px;
+      min-width: 200px;
+    }
   }
 }

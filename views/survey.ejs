@@ -2,9 +2,8 @@
 <html lang="en">
   <head>
     <%- include('partials/meta',{pageTitle:'Survey'}) %> <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/survey.css" />
   </head>
-  <body style>
+  <body id="survey-phone-responsive">
     <%- include('partials/banner') %>
 
     <section id="audienceQuestion" class="container text-center lead pb-5">
@@ -34,8 +33,8 @@
       "angry", emoji_id: "selectedEmoji1"} ) %>
     </section>
 
-    <section id="survey-ending">
-      <button type="submit" class="button primary" onclick="changeQuestion()">Next</button>
+    <section id="survey-ending" class="p-2">
+      <button type="submit" class="button primary zrnic-font lead" onclick="changeQuestion()">Next</button>
     </section>
     <%-include('partials/footer') %>
     <!-- Scripts -->

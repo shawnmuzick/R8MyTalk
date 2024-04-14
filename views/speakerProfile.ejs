@@ -2,42 +2,34 @@
 <html class="black-placeholder" lang="en">
   <head>
     <%-include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`}) %>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
     <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/speakerstyles.css" />
   </head>
 
-  <body class="is-preload">
+  <body>
     <div id="page-wrapper">
       <%- include('partials/navbar') %>
 
       <!-- Main -->
-      <div id="main" class="wrapper style1">
+      <div class="container mt-5">
         <!-- if we have a profile picture, format this way -->
         <% if (profile?.profilePictureUrl) { %>
-        <div id="container" style="display: flex; justify-content: center; margin-bottom: 20px">
-          <img
+        <div id="container" class="text-center mb-4">
+          <img class="rounded-circle w-50"
             src="<%=profile?.profilePictureUrl%>"
-            style="width: 250px; height: 250px; border-radius: 50%"
           />
         </div>
         <div class="container">
-          <header class="major">
-            <p class="display-4" style="margin: 0px"><%= profile.firstName %></p>
-            <p class="display-4" style="margin: 0px"><%= profile.lastName %></p>
+          <header class="major zrnic-font">
+            <p class="display-4 m-0"><%= profile.firstName %></p>
+            <p class="display-4 m-0"><%= profile.lastName %></p>
           </header>
         </div>
 
         <!-- otherwise, format this way -->
         <% } else { %>
         <div class="container">
-          <header class="major">
-            <p class="display-4" style="margin: 0px">
+          <header class="major zrnic-font">
+            <p class="display-4 m-0">
               <%= profile.firstName %> <%= profile.lastName %>
             </p>
           </header>
@@ -48,7 +40,7 @@
           <div class="container">
             <div class="profile-content">
               <div class="profile-bio">
-                <h2>Bio</h2>
+                <h2 class="zrnic-font">Bio</h2>
                 <p class="lead"><%= profile.bio || 'No bio available' %></p>
               </div>
             </div>
@@ -58,8 +50,8 @@
         <section>
           <div class="container">
             <div class="profile-social">
-              <h3>Social Links</h3>
-              <ul>
+              <h2 class="zrnic-font">Social Links</h2>
+              <ul class="lead">
                 <% if (profile.socialLink1) { %> <%-
                 include('partials/socialLink',{socialLink:profile.socialLink1}) %> <% } %> <% if
                 (profile.socialLink2) { %> <%-
@@ -70,9 +62,7 @@
             </div>
           </div>
         </section>
-        <a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light"
-          >Back to Search Results</a
-        >
+        <a href="/speakerSearch" id="returnToSearchBtn" class="btn btn-light">Back to Search Results</a>
       </div>
 
       <%-include('partials/footer') %>

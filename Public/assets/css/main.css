@@ -4242,8 +4242,8 @@ li {
 }
 
 .emoji {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
   padding: 0.5em;
 }
@@ -4887,4 +4887,98 @@ table th {
 }
 #social-link-container img:hover {
   transform: scale(1.2); /* Increase size on hover */
+}
+
+@media only screen and (max-device-width: 480px) {
+  #survey-phone-responsive body {
+    orientation: portrait;
+  }
+}
+#survey-phone-responsive #questionElement,
+#survey-phone-responsive #feedbackSection {
+  margin-top: -2em;
+}
+#survey-phone-responsive .contactButton-container2 {
+  text-align: center;
+  margin-bottom: 2em;
+}
+@media only screen and (max-width: 508px) {
+  #survey-phone-responsive #thankYouMessage {
+    text-align: center;
+  }
+  #survey-phone-responsive body {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #survey-phone-responsive section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #survey-phone-responsive img {
+    max-width: 100%;
+    height: auto;
+  }
+  #survey-phone-responsive #survey-ending button {
+    font-size: 14px;
+    min-width: 75px;
+  }
+  #survey-phone-responsive #container {
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #survey-phone-responsive #questionElement {
+    text-align: center;
+    max-width: 300px;
+    margin-left: -8em;
+  }
+  #survey-phone-responsive #message {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+@media (min-width: 430px) and (max-width: 508px) {
+  #survey-phone-responsive #container {
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #survey-phone-responsive #contact-section {
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #survey-phone-responsive .contactButton-container textarea {
+    max-width: 25em;
+    margin-left: -1.5em;
+  }
+  #survey-phone-responsive .contactButton-container button {
+    font-size: 14px;
+    min-width: 75px;
+  }
+  #survey-phone-responsive .contactButton-container2 button {
+    font-size: 14px;
+    min-width: 225px;
+  }
+}
+@media (max-width: 430px) {
+  #survey-phone-responsive #contact-section {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #survey-phone-responsive .contactButton-container textarea {
+    max-width: 20em;
+    margin-left: -2.25em;
+  }
+  #survey-phone-responsive .contactButton-container button {
+    font-size: 14px;
+    min-width: 65px;
+  }
+  #survey-phone-responsive .contactButton-container2 button {
+    font-size: 14px;
+    min-width: 200px;
+  }
 }

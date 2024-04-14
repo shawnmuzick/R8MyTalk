@@ -423,6 +423,8 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
   } catch (error) {
     console.log("SOMETHING BAD HAPPENED: ", error);
   }
+  user.profile = await getSpeakerProfile(user.uid);
+  user.profile.profilePictureUrl = await getProfilePictureURL(user.uid);
 
   //if user logged in, render profilePage
   if (req.session.user) {
@@ -480,6 +482,10 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     console.log("Error getting profile data:", error);
     res.status(500).send({ message: error });
   }
+});
+
+view_router.get("/eventSettings", async (req, res) => {
+  res.render("eventSettings");
 });
 
 export default view_router;

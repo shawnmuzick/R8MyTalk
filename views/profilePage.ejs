@@ -24,42 +24,24 @@
       <div id="main" class="wrapper style1">
         <div class="container">
           <header class="major">
-            <h2>Hi, <%= user.displayName %></h2>
+            <h2>Events</h2>
           </header>
+
+          <!-- This will load the eventInfo modal -->
+          <div class="d-flex align-items-center justify-content-center mb-1">
+            <button
+              type="submit"
+              class="button primary moveButtonRight"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@getbootstrap"
+            >
+              Create Event
+            </button>
+          </div>
 
           <!-- Content -->
           <section id="content">
-            <!-- This will load the eventInfo modal -->
-            <div class="table-container">
-              <div class="d-flex align-items-center justify-content-center mb-1">
-                <button
-                  type="submit"
-                  class="button primary moveButtonRight"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  data-bs-whatever="@getbootstrap"
-                >
-                  Create Event
-                </button>
-                <form action="/goToTestSurveyButton" method="post">
-                  <button
-                    name="goToTestSurveyButton"
-                    class="button primary"
-                    id="testSurvey"
-                    data-bs-toggle="modal"
-                    data-bs-target="#survey"
-                    data-bs-whatever="@survey"
-                    style="margin-top: 35px; padding-left: 40px; padding-right: 40px"
-                  >
-                    Test Survey
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            <br />
-            <br />
-
             <div
               class="modal fade"
               id="exampleModal"
@@ -121,7 +103,7 @@
             </div>
 
             <div class="table-wrapper">
-              <%- include('partials/userEventsTable',{eventArray:eventArray}) %>
+              <%- include('partials/userEventsTable',{eventArray:eventArray, user:user}) %>
             </div>
           </section>
         </div>

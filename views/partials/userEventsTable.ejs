@@ -2,16 +2,16 @@
 <table>
   <thead class="thead-dark">
     <tr>
-      <th class="fs-2 text-center">Event</th>
-      <th class="fs-3 text-center">Organization</th>
-      <th class="fs-3 text-center">Type</th>
-      <th class="fs-3 text-center">Date</th>
-      <th class="fs-3 text-center">Attendees</th>
-      <th class="fs-3 text-center">Earnings</th>
-      <th class="fs-3 text-center">Quick Actions</th>
+      <th class="fs-4 text-center">Event</th>
+      <th class="fs-4 text-center">Organization</th>
+      <th class="fs-4 text-center">Type</th>
+      <th class="fs-4 text-center">Date</th>
+      <th class="fs-4 text-center">Attendees</th>
+      <th class="fs-4 text-center">Earnings</th>
+      <th class="fs-4 text-center">Quick Actions</th>
     </tr>
   </thead>
-  <tbody class="fs-4">
+  <tbody class="fs-5">
     <% for (let i=0; i < eventArray.length; i++) { %>
     <tr>
       <td>
@@ -25,11 +25,11 @@
         </a>
       </td>
 
-      <td class="text-center"><%= eventArray[i].localEventFields.organizer %></td>
-      <td class="text-center"><%= eventArray[i].localEventFields.talkType %></td>
-      <td class="text-center"><%= eventArray[i].localEventFields.talkDate %></td>
-      <td class="text-center"><%= eventArray[i].localEventFields.attendees %></td>
-      <td class="text-center"><%= eventArray[i].localEventFields.eventEarnings %></td>
+      <td class="text-center fs-5"><%= eventArray[i].localEventFields.organizer %></td>
+      <td class="text-center fs-5"><%= eventArray[i].localEventFields.talkType %></td>
+      <td class="text-center fs-5"><%= eventArray[i].localEventFields.talkDate %></td>
+      <td class="text-center fs-5"><%= eventArray[i].localEventFields.attendees %></td>
+      <td class="text-center fs-5"><%= eventArray[i].localEventFields.eventEarnings %></td>
       <td id="dropdown-menu" class="text-center">
         <button
           class="btn btn-secondary dropdown-toggle text-center"
@@ -84,6 +84,7 @@
               class="dropdown-item"
               name="deleteEvent"
               data-event-name="<%= eventArray[i].localEventName %>"
+              data-user-id="<%= user?.uid %>"
               href="#/"
               >Delete Event</a
             >

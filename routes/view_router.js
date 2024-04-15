@@ -59,24 +59,7 @@ view_router.post("/qrButton", async (req, res) => {
 
 /**A route to render a survey page for an event*/
 view_router.get("/survey/:uid/:eventName", (req, res) => {
-  const eventName = req.params.eventName;
   res.render("survey");
-});
-
-/**A route to delete an event from storage */
-view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
-  try {
-    const user = req.session.user;
-    const eventName = spaceToHyphen(req.body.eventName);
-    await deleteDoc(
-      doc(db, "theFireUsers", user.uid, "userEventList", eventName),
-    );
-    await deleteEventFromStorage(eventName, user.uid);
-    res.status(200).json({ message: `${eventName} successfully deleted` });
-  } catch (error) {
-    console.log("error deleting event");
-    res.status(500).send({ message: error });
-  }
 });
 
 /**A route to render the review page for a given eventname parameter */

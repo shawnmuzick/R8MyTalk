@@ -4061,7 +4061,7 @@ table th {
 
 @font-face {
   font-family: "Zrnic";
-  src: url("fonts/zrnic_0.ttf") format("truetype");
+  src: url("/fonts/zrnic_0.ttf") format("truetype");
 }
 .zrnic-font {
   font-family: "Zrnic", sans-serif;

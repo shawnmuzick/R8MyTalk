@@ -3,3 +3,4 @@ node_modules
 coverage
 __tests__/test_file.*
 admin-service-key.json
+Public/css/*

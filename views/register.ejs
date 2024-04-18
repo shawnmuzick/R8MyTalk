@@ -15,7 +15,7 @@
             <h2>Register</h2>
           </header>
 
-          <img src="assets/css/images/R8MyTalkLogo.svg" class="w-50 mb-5" alt="R8MyTalk Logo"/>
+          <%- include('partials/logo') %>
 
           <section id="content">
             <div class="jumbotron text-center text-primary">
@@ -23,7 +23,7 @@
               <h2><%= error.customData %></h2>
 
               <% } %> <%- include('forms/registerForm') %>
-                <br>
+              <br />
               <a href="/login" class="zrnic-font display-6">Already Have Account?</a>
             </div>
           </section>

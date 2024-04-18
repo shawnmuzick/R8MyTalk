@@ -1,23 +1,90 @@
 <!DOCTYPE html>
 <html class="black-placeholder" lang="en">
+
 <head><%- include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`}) %>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-          crossorigin="anonymous"/> <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/speakerstyles.css"/>
+    <%- include('partials/styles') %>
 </head>
 <body class="is-preload">
-<div id="page-wrapper">      <%- include('partials/navbar') %>
+<div id="page-wrapper">
+  <%- include('partials/navbar') %>
     <div id="main" class="wrapper style1">
         <div class="container my-5">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-8 zrnic-font lead">
                     <%- include('forms/profileForm') %>
                 </div>
             </div>
         </div>
-    </div><%- include('partials/footer') %></div>
-<%- include('partials/scripts') %>
-<script src="/assets/js/speakerProfileHandler.js"></script>
-</body>
+        <div class="container my-5">
+          <hr />
+          <div class="container my-5" style="display: flex; justify-content: center">
+            <h3>Update Profile Picture</h3>
+          </div>
+          <div id="container" style="display: grid; justify-content: center; align-items: center">
+            <div
+              id="profile-picture-wrapper"
+              style="border-radius: 50%; grid-column: 1; grid-row: 1; width: 265px; height: 265px"
+            ></div>
+            <% if (profile?.profilePictureUrl) { %>
+            <img
+              id="profile-picture"
+              src="<%=profile?.profilePictureUrl%>"
+              style="
+                margin: auto;
+                width: 250px;
+                height: 250px;
+                grid-column: 1;
+                grid-row: 1;
+                border-radius: 50%;
+                z-index: 1;
+              "
+            />
+            <% } else { %>
+            <img
+              id="profile-picture"
+              src="/images/placeHolderProfilePicture.png"
+              style="
+                margin: auto;
+                width: 250px;
+                height: 250px;
+                grid-column: 1;
+                grid-row: 1;
+                border-radius: 50%;
+                z-index: 2;
+              "
+            />
+            <% } %>
+          </div>
+          <div
+            style="display: flex; justify-content: center; margin-top: -50px; margin-right: -100px"
+          >
+            <button
+              id="btn-edit-picture"
+              style="
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                border: none;
+                outline: none;
+                background-color: white;
+                z-index: 3;
+              "
+            >
+              <img
+                id="btn-icon"
+                src="/images/icon_pencil.svg"
+                style="width: 30px; height: 30px; border-radius: 50%"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <%- include('partials/footer') %>
+    </div>
+    <%- include('partials/scripts') %>
+    <script src="/assets/js/speakerProfileHandler.js"></script>
+  </body>
 </html>

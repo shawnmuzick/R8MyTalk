@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html class="black-placeholder" lang="en">
+<html lang="en">
   <head>
     <%- include('partials/meta',{pageTitle:'Survey'})%> <%- include('partials/styles') %>
-    <link rel="stylesheet" href="/assets/css/feedback.css" />
-    <link rel="stylesheet" href="/assets/css/survey.css" />
   </head>
 
-  <body>
-    <div class="page-wrapper">
-      <div id="main" class="wrapper style1">
-        <%- include('partials/banner') %>
+<body id="survey-phone-responsive" class="feedback-page">
+    <div id="main" class="wrapper">
+      <%- include('partials/banner') %>
 
-        <div id="container">
-          <!-- Square question container -->
-          <section id="question-container">
-            <h3 id="questionElement" data-variable="<%= customQ %>"><%= customQ %></h3>
-          </section>
-
-          <section id="feedbackSection">
-            <!-- Square textbox -->
-            <textarea name="message" id="message" placeholder="Enter your message"></textarea>
-          </section>
+      <div class="container">
+        <div class="row justify-content-center">
+            <section id="question-container" class="mt-5">
+              <label for="message" class="lead mx-auto" id="questionElement" data-variable="<%= customQ %>"><%= customQ %></label>
+            </section>
+            <section id="feedbackSection" class="">
+              <textarea name="message" id="message" class="form-control mx-auto" rows="3" placeholder="Enter your message"></textarea>
+            </section>
         </div>
 
         <section id="survey-ending">
-          <button type="button" class="button primary" id="feedbackButton">Next</button>
+          <button type="button" class="button primary zrnic-font lead" id="feedbackButton">Next</button>
         </section>
 
         <%- include('forms/contactForm') %>
 
-        <section id="thankYou-section" style="display: none">
-          <h3 id="thankYouMessage" style="margin-bottom: 1em">Thank you for your feedback!</h3>
+        <section id="thankYou-section" class="text-center mx-auto lead zrnic-font">
+          <h3 id="thankYouMessage">Thank you for your feedback!</h3>
           <% if(eventName=="Test-Survey" ) { %>
           <button class="button primary backToProfileButton" id="profileButton">
             Go back to profile page
@@ -38,12 +33,7 @@
 
           <% }else{ %>
           <div class="contactButton-container2" id="moveHigher">
-            <button
-              type="button"
-              style="margin-top: 1em"
-              class="button primary"
-              id="btnDownloadFile"
-            >
+            <button type="button" class="button primary mt-4" id="btnDownloadFile">
               Download Presentation Now!!!
             </button>
           </div>
@@ -51,7 +41,7 @@
         </section>
       </div>
     </div>
-    <%- include('partials/footer') %> <%- include('partials/scripts') %>
+    <%- include('partials/footer') %>
     <script src="/feedback.js"></script>
   </body>
 </html>

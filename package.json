@@ -26,7 +26,6 @@
   "license": "ISC",
   "dependencies": {
     "@firebase/firestore": "^4.6.0",
-    "chart.js": "^4.4.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.10",
@@ -41,7 +40,8 @@
     "luxon": "^3.4.4",
     "multer": "^1.4.5-lts.1",
     "open": "^9.1.0",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "sass": "^1.75.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3",

@@ -19,7 +19,7 @@
     "dev-lint": "npx @biomejs/biome check --apply ./ && npx @biomejs/biome lint ./",
     "dev-build": "npm run dev-format && npm run dev-lint",
     "dev-test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dev-sass-build": "sass --no-source-map ./Public/sass/main.scss ./Public/assets/css/main.css && sass --no-source-map ./Public/sass/noscript.scss ./Public/assets/css/noscript.css"
+    "dev-sass-build": "sass --no-source-map ./Public/sass/main.scss ./Public/css/main.css && sass --no-source-map ./Public/sass/noscript.scss ./Public/css/noscript.css"
   },
   "keywords": [],
   "author": "",

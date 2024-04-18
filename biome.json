@@ -8,12 +8,22 @@
     "rules": {
       "recommended": true
     },
-    "ignore": ["./Public/js/*.min.*", "./Public/js/main.js", "./Public/js/util.js", "./coverage/*"]
+    "ignore": [
+      "./Public/js/*.min.*",
+      "./Public/js/main.js",
+      "./Public/js/util.js",
+      "./coverage/*"
+    ]
   },
   "formatter": {
     "indentWidth": 2,
     "indentStyle": "space",
     "lineWidth": 80,
-    "ignore": ["./Public/js/*.min.*", "./Public/js/main.js", "./Public/js/util.js", "./coverage/*"]
+    "ignore": [
+      "./Public/js/*.min.*",
+      "./Public/js/main.js",
+      "./Public/js/util.js",
+      "./coverage/*"
+    ]
   }
 }

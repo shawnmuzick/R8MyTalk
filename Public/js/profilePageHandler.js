@@ -187,7 +187,11 @@ function resetUploadForm() {
 uploadButton.addEventListener("click", async (event) => {
   event.preventDefault(); //Prevent default link behavior
   updateUploadMessage("Please wait while your file uploads...");
-  updateUploadIcon("/images/icon_material_progress.svg", "visible", "1s spinner-rotate infinite");
+  updateUploadIcon(
+    "/images/icon_material_progress.svg",
+    "visible",
+    "1s spinner-rotate infinite",
+  );
 
   try {
     const response = await fetch("/uploadFile", {
@@ -202,14 +206,16 @@ uploadButton.addEventListener("click", async (event) => {
     console.log(error);
     updateUploadIcon("/images/icon_material_error.svg", "", "visible");
     updateUploadMessage(
-      `${error}: Please close this window and try again or contact your Administrator`
+      `${error}: Please close this window and try again or contact your Administrator`,
     );
   }
 });
 
-document.getElementById("btnCloseFile").addEventListener("click", async (event) => {
-  resetUploadForm();
-});
+document
+  .getElementById("btnCloseFile")
+  .addEventListener("click", async (event) => {
+    resetUploadForm();
+  });
 
 function formatCurrency(input) {
   // Get the input value without non-numeric characters

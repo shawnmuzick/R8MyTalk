@@ -112,7 +112,7 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   try {
     const uid = getUserIdFromUrl();
-    const result = await fetch(`/api/speakers/${uid}/profile`, {
+    const result = await fetch(`/api/data/speakers/${uid}/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -59,24 +59,7 @@ view_router.post("/qrButton", async (req, res) => {
 
 /**A route to render a survey page for an event*/
 view_router.get("/survey/:uid/:eventName", (req, res) => {
-  const eventName = req.params.eventName;
   res.render("survey");
-});
-
-/**A route to delete an event from storage */
-view_router.post("/deleteEvent", isAuthenticated, async (req, res) => {
-  try {
-    const user = req.session.user;
-    const eventName = spaceToHyphen(req.body.eventName);
-    await deleteDoc(
-      doc(db, "theFireUsers", user.uid, "userEventList", eventName),
-    );
-    await deleteEventFromStorage(eventName, user.uid);
-    res.status(200).json({ message: `${eventName} successfully deleted` });
-  } catch (error) {
-    console.log("error deleting event");
-    res.status(500).send({ message: error });
-  }
 });
 
 /**A route to render the review page for a given eventname parameter */
@@ -423,6 +406,8 @@ view_router.get("/profilePage", isAuthenticated, async (req, res) => {
   } catch (error) {
     console.log("SOMETHING BAD HAPPENED: ", error);
   }
+  user.profile = await getSpeakerProfile(user.uid);
+  user.profile.profilePictureUrl = await getProfilePictureURL(user.uid);
 
   //if user logged in, render profilePage
   if (req.session.user) {
@@ -480,6 +465,10 @@ view_router.get("/speakerProfile/:uid", async (req, res) => {
     console.log("Error getting profile data:", error);
     res.status(500).send({ message: error });
   }
+});
+
+view_router.get("/eventSettings", async (req, res) => {
+  res.render("eventSettings");
 });
 
 export default view_router;

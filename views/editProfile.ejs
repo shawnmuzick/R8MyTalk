@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="black-placeholder" lang="en">
-
-<head><%- include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`}) %>
-    <%- include('partials/styles') %>
-</head>
-<body class="is-preload">
-<div id="page-wrapper">
-  <%- include('partials/navbar') %>
-    <div id="main" class="wrapper style1">
+  <head>
+    <%- include('partials/meta',{ pageTitle:`${profile.firstName} ${profile.lastName}'s Profile`})
+    %> <%- include('partials/styles') %>
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <%- include('partials/navbar') %>
+      <div id="main" class="wrapper style1">
         <div class="container my-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8 zrnic-font lead">
-                    <%- include('forms/profileForm') %>
-                </div>
-            </div>
+          <div class="row justify-content-center">
+            <div class="col-md-8 zrnic-font lead"><%- include('forms/profileForm') %></div>
+          </div>
         </div>
+
         <div class="container my-5">
           <hr />
           <div class="container my-5" style="display: flex; justify-content: center">
@@ -85,6 +84,6 @@
       <%- include('partials/footer') %>
     </div>
     <%- include('partials/scripts') %>
-    <script src="/assets/js/speakerProfileHandler.js"></script>
+    <script src="/js/speakerProfileHandler.js"></script>
   </body>
 </html>

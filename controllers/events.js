@@ -1,6 +1,25 @@
-import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
-import { db } from "../index.js";
-import { readEventInfoFromDB } from "../util.js";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+} from "@firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from "../index.js";
+import { readEventInfoFromDB, spaceToHyphen } from "../util.js";
+
+export async function deleteEventFromStorage(eventName, uid) {
+  try {
+    const fileRef = ref(storage, `${uid}/${eventName}/uploadedFile`);
+    const qrRef = ref(storage, `${uid}/${eventName}/${eventName}.png`);
+    await deleteObject(qrRef);
+    await deleteObject(fileRef);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function getEventRef(uid, eventName) {
   try {
@@ -45,3 +64,20 @@ export async function getEventList(req, res) {
     res.status(500).send({ message: error });
   }
 }
+
+export const Events = {
+  deleteEvent: async (req, res) => {
+    try {
+      const user = req.session.user;
+      const eventName = spaceToHyphen(req.params.eventName);
+      await deleteDoc(
+        doc(db, "theFireUsers", user.uid, "userEventList", eventName),
+      );
+      await deleteEventFromStorage(eventName, user.uid);
+      res.status(200).json({ message: `${eventName} successfully deleted` });
+    } catch (error) {
+      console.log("error deleting event");
+      res.status(500).send({ message: error });
+    }
+  },
+};

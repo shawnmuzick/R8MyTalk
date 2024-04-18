@@ -57,9 +57,10 @@ async function HandleButtonQR(event) {
 async function HandleButtonDeleteEvent(event) {
   event.preventDefault();
   const eventName = event.target.getAttribute("data-event-name");
+  const uid = event.target.getAttribute("data-user-id");
   try {
-    const response = await fetch("/deleteEvent", {
-      method: "POST",
+    const response = await fetch(`/api/data/events/${uid}/${eventName}`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         eventName: eventName,
@@ -114,6 +115,7 @@ async function HandleButtonGoToSurvey(event) {
     window.location.reload();
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 

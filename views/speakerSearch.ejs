@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('partials/meta',{pageTitle:'Speaker Directory'}) %>
-    <%- include('partials/styles') %>
+    <%- include('partials/meta',{pageTitle:'Speaker Directory'}) %> <%- include('partials/styles')
+    %>
   </head>
   <body>
     <div id="container">
-      <%- include('partials/navbar') %>
-      <%- include('partials/profileResultCard') %>
+      <%- include('partials/navbar') %> <%- include('partials/profileResultCard') %>
       <div id="main" class="wrapper style1">
         <div class="container">
           <header class="major">
@@ -21,7 +20,7 @@
                   placeholder="Enter Speaker's Name..."
                 />
                 <button class="btn btn-light" type="submit" name="search" value="SEARCH">
-                  <img src="/images/magnifying-glass-solid.svg" alt="Search">
+                  <img src="/images/magnifying-glass-solid.svg" alt="Search" />
                 </button>
               </div>
             </form>
@@ -38,6 +37,6 @@
     </div>
 
     <%- include('partials/scripts') %>
-    <script src="/assets/js/speakerSearchHandler.js"></script>
+    <script src="/js/speakerSearchHandler.js"></script>
   </body>
 </html>

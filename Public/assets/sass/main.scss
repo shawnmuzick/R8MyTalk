@@ -39,13 +39,45 @@
     ),
   )
 );
+@include breakpoints(
+  (
+    xlarge: (
+      1281px,
+      1680px,
+    ),
+    large: (
+      981px,
+      1280px,
+    ),
+    medium: (
+      737px,
+      980px,
+    ),
+    small: (
+      481px,
+      736px,
+    ),
+    xsmall: (
+      null,
+      480px,
+    ),
+  )
+);
 
 // Mixins.
 
 @mixin line-icon($bg: _palette(bg), $fg: _palette(fg-bold)) {
   @include icon;
   $size: 1px;
+  @mixin line-icon($bg: _palette(bg), $fg: _palette(fg-bold)) {
+    @include icon;
+    $size: 1px;
 
+    &:before {
+      color: $bg !important;
+      text-shadow: $size 0 0 $fg, ($size * -1) 0 0 $fg, 0 $size 0 $fg, 0 ($size * -1) 0 $fg;
+    }
+  }
   &:before {
     color: $bg !important;
     text-shadow: $size 0 0 $fg, ($size * -1) 0 0 $fg, 0 $size 0 $fg, 0 ($size * -1) 0 $fg;
@@ -259,7 +291,7 @@ a {
       "color #{_duration(transition)} ease-in-out"
     )
   );
-
+  //border-bottom: dotted 1px;
   color: _palette(accent1);
   text-decoration: none;
 
@@ -1725,7 +1757,6 @@ body.landing {
   background-attachment: fixed;
   background-color: _palette(accent2);
   background-image: url("../../assets/css/images/hero.png");
-  //background-image: url("../../images/banner.jpg");
   background-position: center center;
   background-size: cover;
   box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.25);
@@ -1811,7 +1842,6 @@ body.is-touch {
 
 #footer {
   background: _palette(accent4);
-
   padding: $size-wrapper-pad-tb 0;
   text-align: center;
 
@@ -2418,6 +2448,15 @@ body.is-touch {
   }
 }
 
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 #logo a span {
   display: inline-block;
   animation: letterAppear 0.5s ease-in-out forwards;
@@ -2498,7 +2537,7 @@ li {
 }
 
 .emoji:hover {
-    transform: scale(1.2); /* Increase size on hover */
+  transform: scale(1.2); /* Increase size on hover */
 }
 
 #emojis {
@@ -2866,10 +2905,6 @@ table th {
   text-decoration: underline;
 }
 
-.dropdown-toggle {
-  margin-left: -12em;
-}
-
 .backToProfileButton {
   margin-left: 2.5em;
 }
@@ -2936,7 +2971,7 @@ table th {
     #thankYouMessage {
       margin-bottom: 1em;
     }
-    #contactButton-container2{
+    #contactButton-container2 {
       margin-top: 1em;
     }
   }
@@ -2957,26 +2992,26 @@ table th {
 }
 
 #searchInput {
-	&::placeholder {
-		color: darkgrey !important;
-	}
+  &::placeholder {
+    color: darkgrey !important;
+  }
 }
 
 #returnToSearchBtn {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 
 // Making the Zrnic font usable
 @font-face {
-  font-family: 'Zrnic';
-  src: url("fonts/zrnic_0.ttf") format('truetype');
+  font-family: "Zrnic";
+  src: url("fonts/zrnic_0.ttf") format("truetype");
 }
 
 .zrnic-font {
-  font-family: 'Zrnic', sans-serif;
+  font-family: "Zrnic", sans-serif;
   font-weight: 400; // Adjust the font-weight if needed
 }
 
@@ -2991,7 +3026,7 @@ table th {
     margin: 10px;
     transition: transform 0.3s ease-in-out; /* Add smooth transition effect */
   }
-  img:hover{
+  img:hover {
     transform: scale(1.2); /* Increase size on hover */
   }
 }
@@ -3094,14 +3129,5 @@ table th {
       font-size: 14px;
       min-width: 200px;
     }
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 }

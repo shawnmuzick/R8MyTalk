@@ -13,7 +13,7 @@
       <div id="main" class="wrapper style1">
         <div class="container">
           <header class="major">
-            <h1 class="zrnic-font h1">Hi, <%= user.displayName %></h1>
+            <h1 class="zrnic-font h1">Events</h1>
           </header>
 
           <!-- Content -->
@@ -45,9 +45,8 @@
               </div>
             </div>
 
-            <br />
-            <br />
-
+          <!-- Content -->
+          <section id="content">
             <div
               class="modal fade"
               id="exampleModal"
@@ -109,7 +108,7 @@
             </div>
 
             <div class="table-wrapper">
-              <%- include('partials/userEventsTable',{eventArray:eventArray}) %>
+              <%- include('partials/userEventsTable',{eventArray:eventArray, user:user}) %>
             </div>
           </section>
         </div>
@@ -120,7 +119,7 @@
 
     <%- include('partials/scripts') %>
 
-    <script src="/assets/js/profilePageHandler.js"></script>
+    <script src="/js/profilePageHandler.js"></script>
     <!--^^^ viewing qr and go to Survey button-->
   </body>
 </html>

@@ -9,9 +9,9 @@
       "recommended": true
     },
     "ignore": [
-      "./Public/assets/js/*.min.*",
-      "./Public/assets/js/main.js",
-      "./Public/assets/js/util.js",
+      "./Public/js/*.min.*",
+      "./Public/js/main.js",
+      "./Public/js/util.js",
       "./coverage/*"
     ]
   },
@@ -20,9 +20,9 @@
     "indentStyle": "space",
     "lineWidth": 80,
     "ignore": [
-      "./Public/assets/js/*.min.*",
-      "./Public/assets/js/main.js",
-      "./Public/assets/js/util.js",
+      "./Public/js/*.min.*",
+      "./Public/js/main.js",
+      "./Public/js/util.js",
       "./coverage/*"
     ]
   }

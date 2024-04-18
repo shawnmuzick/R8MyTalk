@@ -33,7 +33,6 @@ describe("/login", () => {
     );
     //302 if we're already logged in for some reason
     expect([200, 302]).toContain(res.statusCode);
-    console.log(res.statusCode, res.header["location"]); //log whatever we actually got back
 
     await server.close();
   });

@@ -69,15 +69,7 @@
 @mixin line-icon($bg: _palette(bg), $fg: _palette(fg-bold)) {
   @include icon;
   $size: 1px;
-  @mixin line-icon($bg: _palette(bg), $fg: _palette(fg-bold)) {
-    @include icon;
-    $size: 1px;
 
-    &:before {
-      color: $bg !important;
-      text-shadow: $size 0 0 $fg, ($size * -1) 0 0 $fg, 0 $size 0 $fg, 0 ($size * -1) 0 $fg;
-    }
-  }
   &:before {
     color: $bg !important;
     text-shadow: $size 0 0 $fg, ($size * -1) 0 0 $fg, 0 $size 0 $fg, 0 ($size * -1) 0 $fg;
@@ -1509,9 +1501,6 @@ body.is-touch {
 
 .wrapper {
   padding: $size-wrapper-pad-tb 0 ($size-wrapper-pad-tb - _size(element-margin)) 0;
-
-  &.style1 {
-  }
 
   &.style2 {
     background: _palette(accent1);
@@ -3007,7 +2996,7 @@ table th {
 // Making the Zrnic font usable
 @font-face {
   font-family: "Zrnic";
-  src: url("fonts/zrnic_0.ttf") format("truetype");
+  src: url("/fonts/zrnic_0.ttf") format("truetype");
 }
 
 .zrnic-font {

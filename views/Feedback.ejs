@@ -4,22 +4,36 @@
     <%- include('partials/meta',{pageTitle:'Survey'})%> <%- include('partials/styles') %>
   </head>
 
-<body id="survey-phone-responsive" class="feedback-page">
+  <body id="survey-phone-responsive" class="feedback-page">
     <div id="main" class="wrapper">
       <%- include('partials/banner') %>
 
       <div class="container">
         <div class="row justify-content-center">
-            <section id="question-container" class="mt-5">
-              <label for="message" class="lead mx-auto" id="questionElement" data-variable="<%= customQ %>"><%= customQ %></label>
-            </section>
-            <section id="feedbackSection" class="">
-              <textarea name="message" id="message" class="form-control mx-auto" rows="3" placeholder="Enter your message"></textarea>
-            </section>
+          <section id="question-container" class="mt-5">
+            <label
+              for="message"
+              class="lead mx-auto"
+              id="questionElement"
+              data-variable="<%= customQ %>"
+              ><%= customQ %></label
+            >
+          </section>
+          <section id="feedbackSection" class="">
+            <textarea
+              name="message"
+              id="message"
+              class="form-control mx-auto"
+              rows="3"
+              placeholder="Enter your message"
+            ></textarea>
+          </section>
         </div>
 
         <section id="survey-ending">
-          <button type="button" class="button primary zrnic-font lead" id="feedbackButton">Next</button>
+          <button type="button" class="button primary zrnic-font lead" id="feedbackButton">
+            Next
+          </button>
         </section>
 
         <%- include('forms/contactForm') %>
@@ -42,6 +56,6 @@
       </div>
     </div>
     <%- include('partials/footer') %>
-    <script src="/feedback.js"></script>
+    <script src="/js/feedback.js"></script>
   </body>
 </html>

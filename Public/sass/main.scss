@@ -2751,7 +2751,7 @@ body.modal-opened .navbar {
 
 .feedbackHeader {
   text-align: center;
-  font-size: 52px;
+  font-size: 42px;
   margin-top: 42px;
 }
 
@@ -2790,7 +2790,7 @@ body.modal-opened .navbar {
   position: relative;
   width: auto;
   height: auto;
-  background-color: rgba(255, 255, 255, 0.075);
+  background-color: rgb(245, 245, 245);
 }
 
 .border {
@@ -2818,7 +2818,7 @@ body.modal-opened .navbar {
   bottom: -40px;
   border: 20px solid;
   border-style: solid;
-  border-color: #666 transparent transparent #666;
+  border-color: #e1e1e1 transparent transparent #e1e1e1;
 }
 
 .tri-right.btm-left-in:after {
@@ -2831,7 +2831,7 @@ body.modal-opened .navbar {
   top: auto;
   bottom: -20px;
   border: 12px solid;
-  border-color: #2d2e36 transparent transparent #2d2e36;
+  border-color: #cdcdcd transparent transparent #cdcdcd;
 }
 
 .tri-right.border.btm-right:before {
@@ -2843,7 +2843,7 @@ body.modal-opened .navbar {
   right: 30px;
   bottom: -40px;
   border: 20px solid;
-  border-color: #666 #666 transparent transparent;
+  border-color: #e1e1e1 #e1e1e1 transparent transparent;
 }
 
 .tri-right.btm-right:after {
@@ -2856,17 +2856,17 @@ body.modal-opened .navbar {
   top: auto;
   bottom: -20px;
   border: 12px solid;
-  border-color: #2d2e36 #2d2e36 transparent transparent;
+  border-color: #cdcdcd #cdcdcd transparent transparent;
 }
 
 .talktext {
   padding: 1em;
-  font-size: auto;
+  font-size: x-large;
   text-align: center;
   line-height: 1.5em;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  width: 450px;
+  width: 350px;
 }
 
 /*END CHAT BUBBLE*/
@@ -3118,4 +3118,44 @@ table th {
       min-width: 200px;
     }
   }
+}
+
+// This determines the colors of the legend on an event's Feedback page
+.legend {
+  .very-positive {
+    background-color: rgb(44, 186, 0);
+  }
+  .positive {
+    background-color: rgb(163, 255, 0);
+  }
+  .neutral {
+    background-color: rgb(255, 244, 0);
+  }
+  .negative {
+    background-color: rgb(255, 167, 0);
+  }
+  .very-negative {
+    background-color: rgb(255, 0, 0);
+  }
+}
+
+// This changes the colors on the create event form to use accent1 from vars
+.bg-warning {
+  background-color: _palette(accent1) !important;
+}
+
+// These changes ensure a profile picture with a large vertical length fits well
+.rounded-circle {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 250px;
+    }
+}
+
+.card {
+  max-height: 150px;
+  overflow: hidden;
 }

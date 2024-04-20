@@ -10,12 +10,12 @@
 
       <!-- Main -->
       <div id="main" class="wrapper style1">
-        <div class="container">
-          <header class="major">
+        <div class="container text-center">
+          <header class="major zrnic-font h4">
             <h2>Register</h2>
           </header>
 
-          <img src="assets/css/images/loginlogo2.png" class="center" alt="" />
+          <%- include('partials/logo') %>
 
           <section id="content">
             <div class="jumbotron text-center text-primary">
@@ -23,7 +23,8 @@
               <h2><%= error.customData %></h2>
 
               <% } %> <%- include('forms/registerForm') %>
-              <li><a href="/login">Already Have Account?</a></li>
+              <br />
+              <a href="/login" class="zrnic-font display-6">Already Have Account?</a>
             </div>
           </section>
         </div>

@@ -50,14 +50,11 @@ function changeQuestion() {
       // Reset the current emoji
       selectedEmoji = null;
       const curURL = window.location.href;
-      console.log(curURL);
     } else {
       // Last question reached, load the form portion
       //const {uid, eventName} = req.params;
       const urlParts = parseURL(window.location.href);
-
-      window.location.href =
-        "/feedback/" + urlParts.uid + "/" + urlParts.eventName;
+      window.location.href = `/feedback/${urlParts.uid}/${urlParts.eventName}`;
     }
   } else {
     alert("Please make a selection");
@@ -81,9 +78,7 @@ function parseURL(url) {
 }
 
 function sendEmojiData(selectedEmoji) {
-  let question;
-
-  question = document.getElementById("question").textContent;
+  const question = document.getElementById("question").textContent;
   const curURL = window.location.href;
   const urlParts = parseURL(curURL);
 
@@ -113,9 +108,9 @@ function sendEmojiData(selectedEmoji) {
 }
 
 function toggleSelection(clickedImage) {
-  var allImages = document.getElementsByClassName("emoji");
+  const allImages = document.getElementsByClassName("emoji");
 
-  for (var i = 0; i < allImages.length; i++) {
+  for (let i = 0; i < allImages.length; i++) {
     allImages[i].classList.remove("selected");
   }
 
@@ -123,9 +118,9 @@ function toggleSelection(clickedImage) {
 }
 
 function removeSelection() {
-  var allImages = document.getElementsByClassName("emoji");
+  const allImages = document.getElementsByClassName("emoji");
 
-  for (var i = 0; i < allImages.length; i++) {
+  for (let i = 0; i < allImages.length; i++) {
     allImages[i].classList.remove("selected");
   }
 }

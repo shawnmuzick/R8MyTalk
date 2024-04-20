@@ -17,7 +17,7 @@
           <div id="error-message"></div>
           <header class="major">
             <h2
-              class="feedbackHeader"
+              class="feedbackHeader zrnic-font"
               id="eventNameDisplay"
               data-event-name="<%= eventName.replace(/ /g, '-') %>"
             >
@@ -26,20 +26,12 @@
           </header>
           <% if (noFeedback) { %>
 
-          <h2 style="text-align: center">No Feedback Yet!</h2>
+          <h2 class="text-center">No Feedback Yet!</h2>
           <% } else { %>
 
           <!--Button to download Feedback Report CSV-->
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-top: 35px;
-              margin-bottom: 40px;
-            "
-          >
-            <button id="downloadReportButton" class="button primary" type="submit">
+          <div class="d-flex justify-content-center mb-5">
+            <button id="downloadReportButton" class="button primary zrnic-font lead" type="submit">
               Download Feedback Report
             </button>
           </div>
@@ -48,42 +40,53 @@
             <div class="legend">
               <ul>
                 <li>
-                  <span class="legend-color" style="background-color: rgb(44, 186, 0)"></span>
+                  <span class="legend-color very-positive"></span>
                   <img class="legend-img" src="/assets/css/images/loveFace.png" alt="" />
                 </li>
                 <li>
-                  <span class="legend-color" style="background-color: rgb(163, 255, 0)"></span>
+                  <span class="legend-color positive"></span>
                   <img class="legend-img" src="/assets/css/images/smile.png" alt="" />
                 </li>
                 <li>
-                  <span class="legend-color" style="background-color: rgb(255, 244, 0)"></span>
+                  <span class="legend-color neutral"></span>
                   <img class="legend-img" src="/assets/css/images/neutralFace.png" alt="" />
                 </li>
                 <li>
-                  <span class="legend-color" style="background-color: rgb(255, 167, 0)"></span>
+                  <span class="legend-color negative"></span>
                   <img class="legend-img" src="/assets/css/images/sadFace.png" alt="" />
                 </li>
                 <li>
-                  <span class="legend-color" style="background-color: rgb(255, 0, 0)"></span>
+                  <span class="legend-color very-negative"></span>
                   <img class="legend-img" src="/assets/css/images/angyFace.png" alt="" />
                 </li>
               </ul>
             </div>
           </div>
-          <div class="canvas-row">
-            <%-include('partials/canvas', {name:'Actionable', id:'actionable'}) %>
-            <%-include('partials/canvas', {name:'Inspiring', id:'inspiring'}) %>
-            <%-include('partials/canvas', {name:'Relevant', id:'relevant'}) %>
-          </div>
-          <div class="canvas-row">
-            <%-include('partials/canvas', {name:'Engaging', id:'engaging'}) %>
-            <%-include('partials/canvas', {name:'Interactive', id:'interactive'}) %>
+
+          <div class="container zrnic-font">
+            <div class="row">
+              <div class="col d-flex justify-content-center mb-4">
+                <%-include('partials/canvas', {name:'Actionable', id:'actionable'}) %>
+              </div>
+              <div class="col d-flex justify-content-center mb-4">
+                <%-include('partials/canvas', {name:'Inspiring', id:'inspiring'}) %>
+              </div>
+              <div class="col d-flex justify-content-center mb-4">
+                <%-include('partials/canvas', {name:'Relevant', id:'relevant'}) %>
+              </div>
+              <div class="col d-flex justify-content-center mb-4">
+                <%-include('partials/canvas', {name:'Engaging', id:'engaging'}) %>
+              </div>
+              <div class="col d-flex justify-content-center mb-4">
+                <%-include('partials/canvas', {name:'Interactive', id:'interactive'}) %>
+              </div>
+            </div>
           </div>
 
           <section id="content">
             <!--Testimonials-->
             <header>
-              <h2 class="feedbackHeader">Testimonials</h2>
+              <h2 class="feedbackHeader zrnic-font">Testimonials</h2>
               <div class="containerFeedback">
                 <div class="left-column">
                   <ul class="alt">
@@ -117,7 +120,7 @@
           <section id="content">
             <!--Testimonials-->
             <header>
-              <h2 class="feedbackHeader">Responses to "<%= customQ %> "</h2>
+              <h2 class="feedbackHeader zrnic-font">Responses to "<%= customQ %> "</h2>
               <div class="containerFeedback">
                 <div class="left-column">
                   <% for (let i=0; i < Math.floor((dbEventInfo?.CustomAnswer?.length ?? 0) / 2);
@@ -147,7 +150,6 @@
               </div>
             </header>
           </section>
-
           <% } %>
         </div>
       </div>
@@ -157,6 +159,6 @@
 
     <%- include('partials/scripts') %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/assets/js/chartLoader.js"></script>
+    <script src="/js/chartLoader.js"></script>
   </body>
 </html>

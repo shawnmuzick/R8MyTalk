@@ -2,7 +2,7 @@ const uploadedFile = document.getElementById("uploadedFile");
 const fileName = document.getElementById("uploadedFileName");
 const uploadButton = document.getElementById("btnSubmitFile");
 const fileData = new FormData();
-var EVENT_NAME; // we need to grab event name
+let EVENT_NAME; // we need to grab event name
 
 /**
  * Update the selected event global variable
@@ -10,7 +10,6 @@ var EVENT_NAME; // we need to grab event name
 function UpdateGlobalEventName(event) {
   if (event.target.name === "ellipsisDropdown") {
     EVENT_NAME = event.target.getAttribute("data-event-name");
-    console.log("Global Event Name:" + EVENT_NAME);
   }
 }
 
@@ -43,7 +42,7 @@ async function HandleButtonQR(event) {
     const file = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = file;
-    a.download = eventName + "QR";
+    a.download = `${eventName}QR`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -58,9 +57,10 @@ async function HandleButtonQR(event) {
 async function HandleButtonDeleteEvent(event) {
   event.preventDefault();
   const eventName = event.target.getAttribute("data-event-name");
+  const uid = event.target.getAttribute("data-user-id");
   try {
-    const response = await fetch("/deleteEvent", {
-      method: "POST",
+    const response = await fetch(`/api/data/events/${uid}/${eventName}`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         eventName: eventName,
@@ -115,6 +115,7 @@ async function HandleButtonGoToSurvey(event) {
     window.location.reload();
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
@@ -200,13 +201,12 @@ uploadButton.addEventListener("click", async (event) => {
     });
     const result = await response.json();
     updateUploadIcon("/images/icon_material_done.svg", "", "visible");
-    updateUploadMessage(result.message + ": You may close this window");
+    updateUploadMessage(`${result.message}: You may close this window`);
   } catch (error) {
     console.log(error);
     updateUploadIcon("/images/icon_material_error.svg", "", "visible");
     updateUploadMessage(
-      error +
-        ": Please close this window and try again or contact your Administrator",
+      `${error}: Please close this window and try again or contact your Administrator`,
     );
   }
 });
@@ -216,3 +216,10 @@ document
   .addEventListener("click", async (event) => {
     resetUploadForm();
   });
+
+function formatCurrency(input) {
+  // Get the input value without non-numeric characters
+  const numericValue = input.value.replace(/[^0-9]/g, "");
+  // Format the numeric value with a dollar sign
+  input.value = "$" + numericValue;
+}

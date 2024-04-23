@@ -1281,7 +1281,7 @@ input[type="button"],
   &.primary {
     background-color: _palette(accent1);
     box-shadow: none;
-    color: _palette(fg-bold) !important;
+    color: _palette(fg-bold-light) !important;
 
     &:hover {
       background-color: lighten(_palette(accent1), 5);

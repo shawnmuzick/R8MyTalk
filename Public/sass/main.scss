@@ -3152,10 +3152,21 @@ table th {
   @media (max-width: 768px) {
     width: 250px;
     height: 250px;
-    }
+  }
 }
 
 .card {
   max-height: 150px;
   overflow: hidden;
+}
+
+/*Full page height*/
+#page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  #main {
+    flex-grow: 1;
+  }
 }

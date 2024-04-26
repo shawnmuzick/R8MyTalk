@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  updateDoc,
 } from "@firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { db, storage } from "../index.js";
@@ -23,7 +24,13 @@ export async function deleteEventFromStorage(eventName, uid) {
 
 export async function getEventRef(uid, eventName) {
   try {
-    return doc(db, "theFireUsers", uid, "userEventList", eventName);
+    return doc(
+      db,
+      "theFireUsers",
+      uid,
+      "userEventList",
+      spaceToHyphen(eventName),
+    );
   } catch (error) {
     console.log("Error getting event ref: ", error);
     throw error;
@@ -77,6 +84,19 @@ export const Events = {
       res.status(200).json({ message: `${eventName} successfully deleted` });
     } catch (error) {
       console.log("error deleting event");
+      res.status(500).send({ message: error });
+    }
+  },
+  updateCustomQuestion: async (req, res) => {
+    try {
+      const user = req.session.user;
+      const customQ = req.body.customQuestion;
+      const eventName = req.params.id;
+      const docRef = await getEventRef(user.uid, eventName);
+      await updateDoc(docRef, { customQuestion: customQ });
+      res.status(200).json({ message: "Update OK!" });
+    } catch (error) {
+      console.log("Error editing custom question: ", error);
       res.status(500).send({ message: error });
     }
   },

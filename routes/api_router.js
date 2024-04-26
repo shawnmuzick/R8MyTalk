@@ -56,4 +56,10 @@ api_router.delete(
   Events.deleteEvent,
 );
 
+/**A route to edit custom event questions */
+api_router.post(
+  "/data/events/:id/editCustomQ",
+  isAuthenticated,
+  Events.updateCustomQuestion,
+);
 export default api_router;

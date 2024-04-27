@@ -787,6 +787,7 @@ input[type="radio"] {
     position: relative;
 
     &:before {
+      background-color: #eee;
       border-radius: _size(border-radius);
       border: solid 1px _palette(border);
       content: "";

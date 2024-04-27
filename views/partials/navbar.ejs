@@ -21,7 +21,8 @@
       <% if (user) { %>
       <li><a href="/contacts">My Leads</a></li>
       <li>
-        <%if(user.profile.profilePictureUrl == " "){ %>
+        <%if(user.profile.profilePictureUrl == " " || user.profile.profilePictureUrl == "" ||
+        user.profile.profilePictureUrl == undefined){ %>
         <img
           style="margin-top: 5px; border-radius: 50%; width: 50px; height: 50px"
           src="/images/placeHolderProfilePicture.png"

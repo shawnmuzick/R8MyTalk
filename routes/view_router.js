@@ -8,9 +8,19 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { DateTime } from "luxon";
-import { getProfilePictureURL, getSpeakerProfile } from "../controllers/speakers.js";
+import {
+  getProfilePictureURL,
+  getSpeakerProfile,
+} from "../controllers/speakers.js";
 import { __dirname } from "../index.js";
 import { auth, db } from "../index.js";
 import { upload } from "../middleware/config_multer.js";
@@ -97,7 +107,12 @@ view_router.post("/createEvent", async (req, res) => {
   const talkType = req.body.talkType;
 
   try {
-    const newDocRef = collection(db, "theFireUsers/", user.uid, "userEventList");
+    const newDocRef = collection(
+      db,
+      "theFireUsers/",
+      user.uid,
+      "userEventList",
+    );
 
     //what we want to put into the db
     //no longer using enjoy or improve
@@ -159,7 +174,9 @@ view_router.post("/feedbackSelection", (req, res) => {
     if (eventName !== "Test-Survey" && answer.length > 4) {
       sendFeedbackToDB(question, answer, uid, eventName);
     }
-    res.status(200).json({ status: "Success", message: "Data received successfully." });
+    res
+      .status(200)
+      .json({ status: "Success", message: "Data received successfully." });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "error", message: error });
@@ -172,7 +189,13 @@ view_router.post("/editCustomQ", async (req, res) => {
     const user = req.session.user;
     const customQ = req.body.customQuestion;
     const eventName = req.body.eventName;
-    const docRef = doc(db, "theFireUsers", user.uid, "userEventList", spaceToHyphen(eventName));
+    const docRef = doc(
+      db,
+      "theFireUsers",
+      user.uid,
+      "userEventList",
+      spaceToHyphen(eventName),
+    );
     await updateDoc(docRef, { customQuestion: customQ });
   } catch (error) {
     console.log("Error editing custom question: ", error);
@@ -250,7 +273,7 @@ view_router.post(
       console.log(`problem uploading file ${error}`);
       res.status(500).send({ message: "Error uploading file" });
     }
-  }
+  },
 );
 
 /********************************************************
@@ -291,7 +314,7 @@ view_router.post("/login", async (req, res) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     req.session.user = userCredential.user;
     res.redirect("/profilePage");
@@ -328,7 +351,7 @@ view_router.post("/register", async (req, res) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       req.body.email,
-      req.body.password
+      req.body.password,
     );
     const user = userCredential.user;
     await updateProfile(user, { displayName: req.body.userName });
@@ -410,19 +433,23 @@ view_router.get("/speakerSearch", async (req, res) => {
 });
 
 /**A route to render the edit speakerProfile page */
-view_router.get("/speakerProfile/edit/:uid", isAuthenticated, async (req, res) => {
-  try {
-    const user = req.session.user ?? null;
-    const uid = req.params.uid;
-    const profile = await getSpeakerProfile(uid);
-    profile.profilePictureUrl = await getProfilePictureURL(uid);
-    // Render the profile page with the user's data
-    res.render("editProfile", { profile, user: user });
-  } catch (error) {
-    console.log("Error getting profile data:", error);
-    res.status(500).send({ message: error });
-  }
-});
+view_router.get(
+  "/speakerProfile/edit/:uid",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      const user = req.session.user ?? null;
+      const uid = req.params.uid;
+      const profile = await getSpeakerProfile(uid);
+      profile.profilePictureUrl = await getProfilePictureURL(uid);
+      // Render the profile page with the user's data
+      res.render("editProfile", { profile, user: user });
+    } catch (error) {
+      console.log("Error getting profile data:", error);
+      res.status(500).send({ message: error });
+    }
+  },
+);
 
 /**A route to render the speakerProfile page */
 view_router.get("/speakerProfile/:uid", async (req, res) => {

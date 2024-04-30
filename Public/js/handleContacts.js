@@ -1,3 +1,5 @@
+/** An event listener to generate a csv of contact data from the table display
+ */
 document.getElementById("exportButton").addEventListener("click", () => {
   // Prepare table data
   const tableData = [];

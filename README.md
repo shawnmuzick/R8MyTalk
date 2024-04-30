@@ -74,3 +74,8 @@ refactor	– refactoring code
 test 		– create new tests or fix existing ones
 revert 		– revert some previous commit
 ```
+
+### Linter Settings
+
+BiomeJS is used as the linter for this project. You can check the configuration in biome.json
+Of note, the noForEach rule is disabled. The is beause the ForEach method used on FireBase objects is a cutom method on that object by the module developers (Google). They are not iterable by the language, and thus for...of will fail.

@@ -1,4 +1,8 @@
 import multer from "multer";
+
+/** Initialize the multer middleware to capture file uploads
+ * and attach them to req.file
+ */
 export const upload = multer({
   limits: {
     fileSize: 1000000000, // 1000MB

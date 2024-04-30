@@ -1,3 +1,6 @@
+/** A class representing a Speaker, and their
+ * associated profile data
+ */
 export class Speaker {
   constructor(data) {
     this.uid = data?.uid;

@@ -248,5 +248,5 @@ function formatCurrency(input) {
   // Get the input value without non-numeric characters
   const numericValue = input.value.replace(/[^0-9]/g, "");
   // Format the numeric value with a dollar sign
-  input.value = "$" + numericValue;
+  input.value = `$${numericValue}`;
 }

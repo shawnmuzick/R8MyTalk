@@ -78,9 +78,16 @@ async function HandleButtonDeleteEvent(event) {
  */
 async function HandleButtonSubmitCustomQuestion(event) {
   event.preventDefault();
+  const icon = document.getElementById("edit_question_icon_done");
+  updateUploadIcon(
+    icon,
+    "/images/icon_material_progress.svg",
+    "visible",
+    "1s spinner-rotate infinite",
+  );
   const newCustomQ = document.getElementById("newCustomQ").value;
   try {
-    const response = await fetch("/editCustomQ", {
+    const response = await fetch(`/api/data/events/${EVENT_NAME}/editCustomQ`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -89,9 +96,14 @@ async function HandleButtonSubmitCustomQuestion(event) {
       }),
     });
     const result = await response.json();
-    window.location.reload();
+    updateUploadIcon(icon, "/images/icon_material_done.svg", "", "visible");
+    document.getElementById("question-result-message").innerText =
+      `${result.message}: You may close this window`;
   } catch (error) {
     console.log(error);
+    updateUploadIcon(icon, "/images/icon_material_error.svg", "", "visible");
+    document.getElementById("question-result-message").innerText =
+      `${error}: Please close this window and try again or contact your Administrator`;
   }
 }
 
@@ -157,8 +169,7 @@ document.addEventListener("change", () => {
  * @param {string} visibility - the visibility property
  * @param {string} animation - the animation string
  */
-function updateUploadIcon(src, visibility, animation) {
-  const icon = document.getElementById("icon_done");
+function updateUploadIcon(icon, src, visibility, animation) {
   icon.style.animation = animation;
   icon.src = src;
   icon.style.visibility = visibility;
@@ -172,11 +183,16 @@ function updateUploadMessage(message) {
   document.getElementById("upload-result-message").innerText = message;
 }
 
-function resetUploadForm() {
+function resetUploadForm(icon) {
   const input = document.getElementById("uploadedFile");
   input.files = null;
-  updateUploadIcon("/images/icon_material_done.svg", "hidden", "");
+  updateUploadIcon(icon, "/images/icon_material_done.svg", "hidden", "");
   updateUploadMessage("");
+}
+function resetEditQuestionForm(icon) {
+  const input = document.getElementById("newCustomQ");
+  input.value = null;
+  updateUploadIcon(icon, "/images/icon_material_done.svg", "hidden", "");
 }
 
 /**This function uploads a file to the endpont via the fetch API
@@ -187,7 +203,9 @@ function resetUploadForm() {
 uploadButton.addEventListener("click", async (event) => {
   event.preventDefault(); //Prevent default link behavior
   updateUploadMessage("Please wait while your file uploads...");
+  const icon = document.getElementById("icon_done");
   updateUploadIcon(
+    icon,
     "/images/icon_material_progress.svg",
     "visible",
     "1s spinner-rotate infinite",
@@ -200,11 +218,11 @@ uploadButton.addEventListener("click", async (event) => {
       body: fileData,
     });
     const result = await response.json();
-    updateUploadIcon("/images/icon_material_done.svg", "", "visible");
+    updateUploadIcon(icon, "/images/icon_material_done.svg", "", "visible");
     updateUploadMessage(`${result.message}: You may close this window`);
   } catch (error) {
     console.log(error);
-    updateUploadIcon("/images/icon_material_error.svg", "", "visible");
+    updateUploadIcon(icon, "/images/icon_material_error.svg", "", "visible");
     updateUploadMessage(
       `${error}: Please close this window and try again or contact your Administrator`,
     );
@@ -214,12 +232,21 @@ uploadButton.addEventListener("click", async (event) => {
 document
   .getElementById("btnCloseFile")
   .addEventListener("click", async (event) => {
-    resetUploadForm();
+    const icon = document.getElementById("icon_done");
+    resetUploadForm(icon);
+  });
+
+document
+  .getElementById("customQuestionCloseBtn")
+  .addEventListener("click", async (event) => {
+    const icon = document.getElementById("edit_question_icon_done");
+    resetUploadForm(icon);
+    document.getElementById("question-result-message").innerText = "";
   });
 
 function formatCurrency(input) {
   // Get the input value without non-numeric characters
   const numericValue = input.value.replace(/[^0-9]/g, "");
   // Format the numeric value with a dollar sign
-  input.value = "$" + numericValue;
+  input.value = `$${numericValue}`;
 }

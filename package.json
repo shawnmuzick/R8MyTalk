@@ -12,14 +12,13 @@
     "transform": {}
   },
   "scripts": {
-    "prod": "npm run dev-sass-build && node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-start": "nodemon index.js",
+    "prod": "npm run build-sass && node index.js",
+    "dev": "npm run build-sass && nodemon index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev-format": "npx @biomejs/biome format ./ --write",
     "dev-lint": "npx @biomejs/biome check --apply ./ && npx @biomejs/biome lint ./",
     "dev-build": "npm run dev-format && npm run dev-lint",
-    "dev-test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "dev-sass-build": "sass --no-source-map ./Public/sass/main.scss ./Public/css/main.css && sass --no-source-map ./Public/sass/noscript.scss ./Public/css/noscript.css"
+    "build-sass": "sass --no-source-map ./Public/sass/main.scss ./Public/css/main.css && sass --no-source-map ./Public/sass/noscript.scss ./Public/css/noscript.css"
   },
   "keywords": [],
   "author": "",

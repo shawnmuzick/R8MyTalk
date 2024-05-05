@@ -5,6 +5,7 @@
 @import "libs/breakpoints";
 @import "libs/html-grid";
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic");
+@import url("/css/fontawesome-all.min.css");
 
 /*
 	Landed by HTML5 UP
@@ -787,6 +788,7 @@ input[type="radio"] {
     position: relative;
 
     &:before {
+      background-color: #eee;
       border-radius: _size(border-radius);
       border: solid 1px _palette(border);
       content: "";
@@ -1281,7 +1283,7 @@ input[type="button"],
   &.primary {
     background-color: _palette(accent1);
     box-shadow: none;
-    color: _palette(fg-bold) !important;
+    color: _palette(fg-bold-light) !important;
 
     &:hover {
       background-color: lighten(_palette(accent1), 5);
@@ -3152,10 +3154,21 @@ table th {
   @media (max-width: 768px) {
     width: 250px;
     height: 250px;
-    }
+  }
 }
 
 .card {
   max-height: 150px;
   overflow: hidden;
+}
+
+/*Full page height*/
+#page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  #main {
+    flex-grow: 1;
+  }
 }
